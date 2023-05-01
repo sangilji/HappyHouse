@@ -24,7 +24,6 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.authorizeRequests()
-                .antMatchers("/user/**").authenticated()
                 .antMatchers("/manger/**").access("hasRole('ADMIN') or hasRole('MANAGER')")
                 .antMatchers("/admin/**").access("hasRole('ADMIN')")
                 .anyRequest().permitAll()

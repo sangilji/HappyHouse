@@ -13,19 +13,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/user")
 @RequiredArgsConstructor
-public class UserController {
+@RequestMapping("/user")
+public class MemberController {
 
     private final MemberService memberService;
 
     //회원가입
     @PostMapping("")
-    public ResponseEntity<?> join(@Validated @RequestBody MemberJoinDto memberJoinDto, BindingResult bindingResult){
-        if (bindingResult.hasErrors()) {
-            return new ResponseEntity<>(bindingResult, HttpStatus.BAD_REQUEST);
-        }
-        memberService.save(memberJoinDto);
+    public ResponseEntity<?> join( @RequestBody MemberJoinDto memberJoinDto) throws Exception {
+
+        boolean saveMember = memberService.save(memberJoinDto);
 
         return new ResponseEntity<>("완료", HttpStatus.OK);
     }
