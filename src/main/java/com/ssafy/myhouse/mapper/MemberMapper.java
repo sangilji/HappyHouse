@@ -11,4 +11,8 @@ public interface MemberMapper {
     int join(Member member) throws SQLException; // 회원가입
 
     Member findByUserId(String userId);
+
+    boolean existsByUserId(String userId);
+
+    boolean existsByEmail(String email);
 }

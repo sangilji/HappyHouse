@@ -13,7 +13,8 @@ public class MemberService {
 
     private final MemberMapper memberMapper;
     private final BCryptPasswordEncoder encoder;
-    public boolean save(MemberJoinDto memberJoinDto) throws Exception{
+
+    public boolean save(MemberJoinDto memberJoinDto) throws Exception {
         if (duplicatedMember(memberJoinDto)) {
             return false;
         }
@@ -26,11 +27,25 @@ public class MemberService {
                 .build();
 
         memberMapper.join(member);
-
         return true;
     }
 
     private boolean duplicatedMember(MemberJoinDto memberJoinDto) {
+        if (isExistsByUserId(memberJoinDto)) {
+            return true;
+        }
+        if (isExistsByEmail(memberJoinDto)) {
+            return true;
+        }
         return false;
     }
+
+    private boolean isExistsByUserId(MemberJoinDto memberJoinDto) {
+        return memberMapper.existsByUserId(memberJoinDto.getUserId());
+    }
+
+    private boolean isExistsByEmail(MemberJoinDto memberJoinDto) {
+        return memberMapper.existsByEmail(memberJoinDto.getEmail());
+    }
+
 }
