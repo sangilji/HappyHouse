@@ -5,7 +5,7 @@
 <mapper namespace="com.ssafy.myhouse.mapper.MemberMapper">
 
     <insert id="join" parameterType="Member">
-        insert into member values(null,#{userId},#{password},#{name},#{email},#{role});
+        insert into member values(null,#{userId},#{password},#{name},#{email},#{address},#{number},#{role});
     </insert>
 
     <select id="findByUserId" parameterType="string" resultType="Member">
@@ -13,18 +13,14 @@
         from member where userId = #{userId};
     </select>
 
-    <select id="findByUserId" parameterType="string" resultType="Member">
-        select *
-        from member where userId = #{userId};
-    </select>
 
     <select id="existsByUserId" parameterType="string" resultType="boolean">
-        select *
+        select if(count(*) =1,1,0)
         from member where userId = #{userId};
     </select>
 
     <select id="existsByEmail" parameterType="string" resultType="boolean">
-        select *
+        select if(count(*) =1,1,0)
         from member where email = #{email};
     </select>
 </mapper>

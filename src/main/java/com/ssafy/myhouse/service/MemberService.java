@@ -23,6 +23,8 @@ public class MemberService {
                 .password(encoder.encode(memberJoinDto.getPassword()))
                 .name(memberJoinDto.getName())
                 .email(memberJoinDto.getEmail())
+                .address(memberJoinDto.getAddress())
+                .number(memberJoinDto.getNumber())
                 .role(memberJoinDto.getRole())
                 .build();
 
@@ -48,4 +50,7 @@ public class MemberService {
         return memberMapper.existsByEmail(memberJoinDto.getEmail());
     }
 
+    public int delete(String userId) throws Exception{
+        return memberMapper.deleteByUserId(userId);
+    }
 }

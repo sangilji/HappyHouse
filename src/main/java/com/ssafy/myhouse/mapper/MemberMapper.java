@@ -15,4 +15,6 @@ public interface MemberMapper {
     boolean existsByUserId(String userId);
 
     boolean existsByEmail(String email);
+
+    int deleteByUserId(String userId) throws SQLException;
 }

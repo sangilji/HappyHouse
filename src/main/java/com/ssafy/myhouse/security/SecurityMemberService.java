@@ -1,8 +1,7 @@
-package com.ssafy.myhouse.service;
+package com.ssafy.myhouse.security;
 
 import com.ssafy.myhouse.mapper.MemberMapper;
 import com.ssafy.myhouse.vo.Member;
-import com.ssafy.myhouse.vo.SecurityMember;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;

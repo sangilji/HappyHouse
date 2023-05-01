@@ -15,5 +15,7 @@ public class Member {
     private String password;
     private String email;
     private String name;
+    private String address;
+    private String number;
     private String role;
 }
