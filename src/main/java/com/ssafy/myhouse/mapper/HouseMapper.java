@@ -13,7 +13,7 @@ public interface HouseMapper {
 
     List<House> selectAll() throws SQLException; // 모든 집 목록
 
-    House selectOne(String aptCode) throws SQLException; // 해당 번호의 글 한 개
+    House selectOne(String no) throws SQLException; // 해당 번호의 글 한 개
 
     int insert(Review review) throws SQLException; // 새 댓글 등록
 

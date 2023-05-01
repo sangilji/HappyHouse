@@ -32,10 +32,10 @@ public class HouseController {
     }
 
     @Description("부동산 하나의 정보 조회+댓글 전체 조회")
-    @GetMapping("/home/{aptCode}")
-    public ResponseEntity<?> selectOne(@PathVariable String aptCode) throws Exception{
+    @GetMapping("/home/{no}/{aptCode}")
+    public ResponseEntity<?> selectOne(@PathVariable String no,@PathVariable String aptCode) throws Exception{
         Map<String, Object> map = new HashMap<>();
-        map.put("houseInfo",service.selectOne(aptCode));
+        map.put("houseInfo",service.selectOne(no));
         map.put("review",service.selectAllReview(aptCode));
         return ResponseEntity.ok().body(map);
     }

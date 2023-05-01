@@ -21,8 +21,8 @@ public class HouseServiceImpl implements HouseService{
     }
 
     @Override
-    public House selectOne(String aptCode) throws SQLException {
-        return mapper.selectOne(aptCode);
+    public House selectOne(String no) throws SQLException {
+        return mapper.selectOne(no);
     }
 
     @Override
