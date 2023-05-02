@@ -1,7 +1,7 @@
 package com.ssafy.myhouse.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ssafy.myhouse.vo.MemberLoginDto;
+import com.ssafy.myhouse.vo.LoginMemberDto;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -22,8 +22,8 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
         if (request.getContentType().equals(MimeTypeUtils.APPLICATION_JSON_VALUE)) {
             // json
             try {
-                MemberLoginDto loginDto = objectMapper.readValue(
-                        request.getReader().lines().collect(Collectors.joining()), MemberLoginDto.class);
+                LoginMemberDto loginDto = objectMapper.readValue(
+                        request.getReader().lines().collect(Collectors.joining()), LoginMemberDto.class);
                 authenticationToken = new UsernamePasswordAuthenticationToken(loginDto.getUserId(), loginDto.getPassword());
             } catch (Exception e) {
                 throw new AuthenticationServiceException("Request Content-Type(application/json) Parsing Error");

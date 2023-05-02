@@ -2,7 +2,8 @@ package com.ssafy.myhouse.service;
 
 import com.ssafy.myhouse.mapper.MemberMapper;
 import com.ssafy.myhouse.vo.Member;
-import com.ssafy.myhouse.vo.MemberJoinDto;
+import com.ssafy.myhouse.vo.JoinMemberDto;
+import com.ssafy.myhouse.vo.ModifyMemberDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,43 +15,60 @@ public class MemberService {
     private final MemberMapper memberMapper;
     private final BCryptPasswordEncoder encoder;
 
-    public boolean save(MemberJoinDto memberJoinDto) throws Exception {
-        if (duplicatedMember(memberJoinDto)) {
+    public boolean save(JoinMemberDto memberDto) throws Exception {
+        if (duplicatedMember(memberDto)) {
             return false;
         }
         Member member = Member.builder()
-                .userId(memberJoinDto.getUserId())
-                .password(encoder.encode(memberJoinDto.getPassword()))
-                .name(memberJoinDto.getName())
-                .email(memberJoinDto.getEmail())
-                .address(memberJoinDto.getAddress())
-                .number(memberJoinDto.getNumber())
-                .role(memberJoinDto.getRole())
+                .userId(memberDto.getUserId())
+                .password(encoder.encode(memberDto.getPassword()))
+                .name(memberDto.getName())
+                .email(memberDto.getEmail())
+                .address(memberDto.getAddress())
+                .number(memberDto.getNumber())
+                .role(memberDto.getRole())
                 .build();
 
         memberMapper.join(member);
         return true;
     }
 
-    private boolean duplicatedMember(MemberJoinDto memberJoinDto) {
-        if (isExistsByUserId(memberJoinDto)) {
+    private boolean duplicatedMember(JoinMemberDto joinMemberDto) {
+        if (isExistsByUserId(joinMemberDto)) {
             return true;
         }
-        if (isExistsByEmail(memberJoinDto)) {
+        if (isExistsByEmail(joinMemberDto)) {
             return true;
         }
         return false;
     }
 
-    private boolean isExistsByUserId(MemberJoinDto memberJoinDto) {
-        return memberMapper.existsByUserId(memberJoinDto.getUserId());
+    private boolean isExistsByUserId(JoinMemberDto joinMemberDto) {
+        return memberMapper.existsByUserId(joinMemberDto.getUserId());
     }
 
-    private boolean isExistsByEmail(MemberJoinDto memberJoinDto) {
-        return memberMapper.existsByEmail(memberJoinDto.getEmail());
+    private boolean isExistsByEmail(JoinMemberDto joinMemberDto) {
+        return memberMapper.existsByEmail(joinMemberDto.getEmail());
     }
 
     public int delete(String userId) throws Exception{
         return memberMapper.deleteByUserId(userId);
+    }
+
+    public Member findOne(String userId) {
+        return memberMapper.findByUserId(userId);
+    }
+
+    public int update(ModifyMemberDto memberDto) {
+
+        Member member = Member.builder()
+                .userId(memberDto.getUserId())
+                .password(encoder.encode(memberDto.getPassword()))
+                .name(memberDto.getName())
+                .email(memberDto.getEmail())
+                .address(memberDto.getAddress())
+                .number(memberDto.getNumber())
+                .build();
+        return memberMapper.updateMember(member);
     }
 }

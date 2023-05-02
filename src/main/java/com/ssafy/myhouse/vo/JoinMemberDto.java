@@ -2,15 +2,10 @@ package com.ssafy.myhouse.vo;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.validator.constraints.Length;
-
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
 
 @Getter
 @Setter
-public class MemberJoinDto {
+public class JoinMemberDto {
 
     private int id;
 

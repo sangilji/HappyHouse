@@ -23,4 +23,20 @@
         select if(count(*) =1,1,0)
         from member where email = #{email};
     </select>
+
+    <delete id="deleteByUserId" parameterType="string">
+        delete
+        from member
+        where userId = #{userId};
+    </delete>
+
+    <update id="updateMember" parameterType="Member">
+        update member
+        set password = #{password},
+            name = #{name},
+            email = #{email},
+            address = #{address},
+            number = #{number}
+        where userId = #{userId};
+    </update>
 </mapper>
