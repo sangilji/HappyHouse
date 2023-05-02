@@ -92,7 +92,6 @@ public class HouseController {
     @Description("댓글 입력")
     @PostMapping(value = "/home/{aptCode}")
     public Map<String,String> add(@RequestBody Review review) throws Exception{ // 사용자가 입력한 값을 받아와서 DB에 INSERT
-
         houseService.insert(review);
         Map<String,String> map=new HashMap<>();
         map.put("result", "review insert success!");
@@ -100,7 +99,7 @@ public class HouseController {
     }
 
     @Description("댓글 수정")
-    @PutMapping("/home/{aptCode}")
+    @PutMapping("/home/{aptCode}/{reviewId}")
     public Map<String,String> update(@RequestBody Review review) throws Exception {
         int x= houseService.update(review);
         Map<String,String> map=new HashMap<>();

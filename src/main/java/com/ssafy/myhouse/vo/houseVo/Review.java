@@ -7,14 +7,15 @@ import lombok.Setter;
 @Setter
 public class Review {
     private String reviewId;
-    private String userId;
+    private String id;
     private String createdDate;
     private String content;
     private String residenceType; //남향 북향?
     private String residenceYear; //살았는 기간
     private String residenceFloor; //층수
-    private String star; //평점
+    private String stars; //평점
     private String likes;
     private String ulikes;
+    private String aptCode;
 
 }
