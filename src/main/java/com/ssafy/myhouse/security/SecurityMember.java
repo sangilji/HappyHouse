@@ -1,5 +1,6 @@
-package com.ssafy.myhouse.vo;
+package com.ssafy.myhouse.security;
 
+import com.ssafy.myhouse.vo.Member;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -25,6 +26,8 @@ public class SecurityMember implements UserDetails {
     public String getPassword() {
         return member.getPassword();
     }
+
+
 
     @Override
     public String getUsername() {
