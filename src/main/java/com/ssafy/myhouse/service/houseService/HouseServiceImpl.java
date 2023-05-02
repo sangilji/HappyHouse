@@ -1,19 +1,22 @@
 package com.ssafy.myhouse.service.houseService;
 
 import com.ssafy.myhouse.mapper.HouseMapper;
+import com.ssafy.myhouse.vo.houseVo.Address;
 import com.ssafy.myhouse.vo.houseVo.House;
+import com.ssafy.myhouse.vo.houseVo.HouseDto;
 import com.ssafy.myhouse.vo.houseVo.Review;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 @Service
-public class HouseServiceImpl implements HouseService{
-    @Autowired
-    HouseMapper mapper;
+@RequiredArgsConstructor
+public class HouseServiceImpl implements HouseService {
 
+    private final HouseMapper mapper;
 
     @Override
     public List<House> selectAll() throws SQLException {
@@ -41,19 +44,31 @@ public class HouseServiceImpl implements HouseService{
     }
 
     @Override
-    public List<House> findByAddress(String address) throws SQLException {
-        return mapper.findByAddress(address);
+    public List<HouseDto> searchByAddress(Address address) throws SQLException {
+        return mapper.searchByAddress(address);
     }
 
     @Override
-    public int interestAdd(String aptCode) throws SQLException {
-        return mapper.interestAdd(aptCode);
+    public List<HouseDto> searchByDong(String dong) throws SQLException {
+        return mapper.searchByDong(dong);
     }
 
     @Override
-    public int interestDelete(String aptCode) throws SQLException {
-        return mapper.interestDelete(aptCode);
+    public int interestAdd(Map<String,String> map) throws Exception {
+        if (existsInterestByUserIdAndAptCode(map)){
+            return mapper.updateInterest(map);
+        }
+        return mapper.interestAdd(map);
     }
+
+    private boolean existsInterestByUserIdAndAptCode(Map<String, String> map) {
+        return mapper.findInterestByUserIdAndAptCode(map);
+    }
+
+//    @Override
+//    public int interestDelete(String aptCode) throws SQLException {
+//        return mapper.interestDelete(aptCode);
+//    }
 
     @Override
     public List<Review> selectAllReview(String aptCode) throws SQLException {

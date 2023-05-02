@@ -34,6 +34,10 @@ public class SecurityMember implements UserDetails {
         return member.getUserId();
     }
 
+    public int getId(){
+        return member.getId();
+    }
+
     @Override
     public boolean isAccountNonExpired() {
         return true;
