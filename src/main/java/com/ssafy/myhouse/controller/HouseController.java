@@ -73,6 +73,13 @@ public class HouseController {
         return new ResponseEntity<>("찜 완료", HttpStatus.OK);
     }
 
+    @Description("찜 목록 보기")
+    @GetMapping("/home/interests")
+    public ResponseEntity<?> findInterests(@AuthenticationPrincipal SecurityMember member) throws Exception{
+        List<HouseDto> houses = houseService.findInterestsByMemberId(member.getId());
+        return new ResponseEntity<>(houses, HttpStatus.OK);
+    }
+
 //    @Description("부동산 찜 상자에서 빼기")
 //    @PutMapping("/home/{aptCode}/interestDelete")
 //    public Map<String,String> interestDelete(@PathVariable String aptCode) throws SQLException {
@@ -94,7 +101,7 @@ public class HouseController {
 
     @Description("댓글 수정")
     @PutMapping("/home/{aptCode}")
-    public Map<String,String> update(@RequestBody Review review) throws SQLException {
+    public Map<String,String> update(@RequestBody Review review) throws Exception {
         int x= houseService.update(review);
         Map<String,String> map=new HashMap<>();
         map.put("result","review update success!");
@@ -103,7 +110,7 @@ public class HouseController {
 
     @Description("댓글 삭제")
     @DeleteMapping("/home/{aptCode}/{reviewId}")
-    public Map<String,String> update(@PathVariable String reviewId) throws SQLException {
+    public Map<String,String> update(@PathVariable String reviewId) throws Exception {
         int x = houseService.delete(reviewId);
         Map<String, String> map = new HashMap<>();
         map.put("result", "review delete success!");

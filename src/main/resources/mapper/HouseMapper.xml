@@ -60,4 +60,17 @@
         insert into user_houseinfo values(#{id},#{aptCode},true);
     </insert>
 
+    <select id="findInterestsByMemberId" parameterType="int" resultType="HouseDto">
+        SELECT member_id                                             as id,
+               houseinfo_aptcode                                     as aptcode,
+               apartmentname,
+               concat(d.sidoName, ' ', d.gugunName, ' ', d.dongName) as address
+        FROM user_houseinfo uh
+                 inner join houseinfo h
+                            on uh.houseinfo_aptcode = h.aptcode
+                 inner join dongcode d
+                            on h.dongcode = d.dongcode
+        where member_id = #{id}
+          and flag = true
+    </select>
 </mapper>

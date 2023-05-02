@@ -65,9 +65,14 @@ public class HouseServiceImpl implements HouseService {
         return mapper.existsInterestByUserIdAndAptCode(map);
     }
 
+    @Override
+    public List<HouseDto> findInterestsByMemberId(int id) throws Exception {
+        return mapper.findInterestsByMemberId(id);
+    }
 //    @Override
 //    public int interestDelete(String aptCode) throws SQLException {
 //        return mapper.interestDelete(aptCode);
+
 //    }
 
     @Override

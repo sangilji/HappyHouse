@@ -37,4 +37,6 @@ public interface HouseMapper {
     boolean existsInterestByUserIdAndAptCode(Map<String, String> map);
 
     int updateInterest(Map<String, String> map);
+
+    List<HouseDto> findInterestsByMemberId(int id) throws SQLException;
 }
