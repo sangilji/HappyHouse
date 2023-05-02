@@ -36,7 +36,7 @@ public class HouseController {
 
     @Description("주소로 정보 조회")
     @GetMapping("/home/search")
-    public ResponseEntity<?> searchByAddress(@RequestBody Address address) throws Exception{
+    public ResponseEntity<?> searchByAddress(@ModelAttribute Address address) throws Exception{
         List<HouseDto> houses = houseService.searchByAddress(address);
         return new ResponseEntity<>(houses, HttpStatus.OK);
     }

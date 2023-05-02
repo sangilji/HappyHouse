@@ -17,7 +17,7 @@
         from housedeal hd inner join (SELECT hi.aptCode, hi.apartmentName, concat(sidoName,' ',gugunName,' ',dong,' ',roadName,' ',jibun) address, lng, lat
                                       FROM houseinfo hi
                                                INNER JOIN dongcode dc ON hi.dongCode = dc.dongCode
-                                      WHERE dc.sidoName = #{sidoName} AND dc.gugunName = #{gugunName} AND dc.dongName = #{dongName})
+                                      WHERE dc.sidoName = #{sidoName} AND dc.gugunName  like concat('%',#{gugunName},'%') AND dc.dongName like concat('%',#{dongName},'%'))
             tmp on hd.aptCode = tmp.aptCode
         group by hd.aptCode;
     </select>
