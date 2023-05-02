@@ -44,20 +44,20 @@
         where aptCode=#{aptCode}
     </select>
 
-<!--    <select id="existsInterestByUserIdAndAptCode" parameterMap="map" resultType="boolean">-->
-<!--        select if(count(*)=1,1,0)-->
-<!--        from user_houseinfo-->
-<!--        where member_id=#{id} and houseinfo_aptcode = #{aptCode}-->
-<!--    </select>-->
+    <select id="existsInterestByUserIdAndAptCode" parameterType="map" resultType="boolean">
+        select if(count(*)=1,1,0)
+        from user_houseinfo
+        where member_id=#{id} and houseinfo_aptcode = #{aptCode}
+    </select>
 
-<!--    <update id="updateInterest" parameterMap="map">-->
-<!--        update user_houseinfo-->
-<!--        set flag = !flag-->
-<!--        where member_id=#{id} and houseinfo_aptcode = #{aptCode}-->
-<!--    </update>-->
+    <update id="updateInterest" parameterType="map">
+        update user_houseinfo
+        set flag = !flag
+        where member_id=#{id} and houseinfo_aptcode = #{aptCode}
+    </update>
 
-<!--    <insert id="join" parameterMap="map">-->
-<!--        insert into user_houseinfo values(#{id},#{aptCode},true);-->
-<!--    </insert>-->
+    <insert id="addInterest" parameterType="map">
+        insert into user_houseinfo values(#{id},#{aptCode},true);
+    </insert>
 
 </mapper>

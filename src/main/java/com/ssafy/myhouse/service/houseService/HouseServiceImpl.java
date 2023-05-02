@@ -58,11 +58,11 @@ public class HouseServiceImpl implements HouseService {
         if (existsInterestByUserIdAndAptCode(map)){
             return mapper.updateInterest(map);
         }
-        return mapper.interestAdd(map);
+        return mapper.addInterest(map);
     }
 
     private boolean existsInterestByUserIdAndAptCode(Map<String, String> map) {
-        return mapper.findInterestByUserIdAndAptCode(map);
+        return mapper.existsInterestByUserIdAndAptCode(map);
     }
 
 //    @Override

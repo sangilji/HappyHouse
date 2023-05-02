@@ -59,7 +59,7 @@ public class HouseController {
 
 
     @Description("부동산 찜 상자에 넣기")
-    @PutMapping("/home/{aptCode}/interestAdd")
+    @PostMapping("/home/{aptCode}/interestAdd")
     public ResponseEntity<?> interestAdd(@AuthenticationPrincipal SecurityMember member, @PathVariable String aptCode) throws Exception {
         if (member == null) {
             HttpHeaders headers = new HttpHeaders();
@@ -85,6 +85,7 @@ public class HouseController {
     @Description("댓글 입력")
     @PostMapping(value = "/home/{aptCode}")
     public Map<String,String> add(@RequestBody Review review) throws Exception{ // 사용자가 입력한 값을 받아와서 DB에 INSERT
+
         houseService.insert(review);
         Map<String,String> map=new HashMap<>();
         map.put("result", "review insert success!");

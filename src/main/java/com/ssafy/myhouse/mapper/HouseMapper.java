@@ -28,13 +28,13 @@ public interface HouseMapper {
 
     List<HouseDto> searchByDong(String address) throws SQLException;//동 기준으로 검색
 
-    int interestAdd(Map<String, String> map) throws SQLException;
+    int addInterest(Map<String, String> map) throws SQLException;
 
     int interestDelete(String aptCode) throws SQLException;
 
     List<Review> selectAllReview(String aptCode) throws SQLException; //모든 댓글 목록
 
-    boolean findInterestByUserIdAndAptCode(Map<String, String> map);
+    boolean existsInterestByUserIdAndAptCode(Map<String, String> map);
 
     int updateInterest(Map<String, String> map);
 }

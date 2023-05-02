@@ -1,5 +1,10 @@
 package com.ssafy.myhouse.vo.houseVo;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class Review {
     private String reviewId;
     private String userId;
@@ -9,7 +14,7 @@ public class Review {
     private String residenceYear; //살았는 기간
     private String residenceFloor; //층수
     private String star; //평점
-    private String like;
-    private String ulike;
+    private String likes;
+    private String ulikes;
 
 }
