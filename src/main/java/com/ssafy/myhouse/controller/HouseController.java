@@ -92,7 +92,7 @@ public class HouseController {
     }
 
     @Description("댓글 수정")
-    @PutMapping("/home/{aptCode}")
+    @PutMapping("/home/{aptCode}/{reviewId}")
     public Map<String,String> update(@RequestBody Review review) throws SQLException {
         int x= houseService.update(review);
         Map<String,String> map=new HashMap<>();

@@ -44,6 +44,25 @@
         where aptCode=#{aptCode}
     </select>
 
+    <insert id="insert" parameterType="Review">
+        insert into review
+        values(null,#{id},#{aptCode},#{residenceType},#{residenceYear},#{residenceFloor},#{content},#{stars},#{likes},#{ulikes},sysdate());
+    </insert>
+
+    <delete id="delete" parameterType="Review">
+        delete from review
+        where review_id=#{reviewId};
+    </delete>
+
+    <update id="update" parameterType="Review">
+        update review set residenceType=#{residenceType},
+                          residenceYear=#{residenceYear},
+                          residenceFloor=#{residenceFloor},
+                          content=#{content},
+                          stars=#{stars}
+        where review_id=#{reviewId};
+    </update>
+
 <!--    <select id="existsInterestByUserIdAndAptCode" parameterMap="map" resultType="boolean">-->
 <!--        select if(count(*)=1,1,0)-->
 <!--        from user_houseinfo-->

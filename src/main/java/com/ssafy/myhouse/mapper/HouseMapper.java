@@ -37,4 +37,6 @@ public interface HouseMapper {
     boolean findInterestByUserIdAndAptCode(Map<String, String> map);
 
     int updateInterest(Map<String, String> map);
+
+
 }
