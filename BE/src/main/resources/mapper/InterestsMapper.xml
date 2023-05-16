@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.myhouse.mapper.InterestsMapper">
+
+    <select id="existsInterestByUserIdAndAptCode" parameterType="map" resultType="boolean">
+        select if(count(*)=1,1,0)
+        from user_houseinfo
+        where member_id=#{id} and houseinfo_aptcode = #{aptCode}
+    </select>
+
+    <update id="updateInterest" parameterType="map">
+        update user_houseinfo
+        set flag = !flag
+        where member_id=#{id} and houseinfo_aptcode = #{aptCode}
+    </update>
+
+
+    <insert id="addInterest" parameterType="map">
+        insert into user_houseinfo values(#{id},#{aptCode},true);
+    </insert>
+
+    <select id="findInterestsByMemberId" parameterType="int" resultType="HouseDto">
+        SELECT member_id                                             as id,
+               houseinfo_aptcode                                     as aptcode,
+               apartmentname,
+               concat(d.sidoName, ' ', d.gugunName, ' ', d.dongName) as address
+        FROM user_houseinfo uh
+                 inner join houseinfo h
+                            on uh.houseinfo_aptcode = h.aptcode
+                 inner join dongcode d
+                            on h.dongcode = d.dongcode
+        where member_id = #{id}
+          and flag = true
+    </select>
+</mapper>
