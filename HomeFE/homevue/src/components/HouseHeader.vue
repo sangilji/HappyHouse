@@ -1,20 +1,42 @@
 <template>
-	<header>
-		<nav>
+	<div>
 		<div>
-		<h2 class="left-box" @click="home">Happy House</h2>
-		<h1 class="map-box" id="map" @click="map">지도</h1>
-		<h1 class="heart-box" id="heart" @click="heart">찜</h1>
-		<h1 class="board-box" id="board" @click="board">공지사항</h1>
-		<h1 class="mypage-box" id="mypage" @click="mypage">마이페이지</h1>
-		<img class="signup" alt="signUp" src="../assets/signup-button.png" @click="signup"/>
-		<img class="login" alt="login" src="../assets/login-button.png" @click="login"/>
+			<b-navbar toggleable="lg" type="white">
+    <b-navbar-brand @click="home" >HappyHouse</b-navbar-brand>
+
+    <b-collapse id="nav-collapse" is-nav >
+    <b-navbar-nav class="collapse navbar-collapse justify-content-end">
+        <b-nav-item>
+			<h2 class="map-box" id="map" @click="map">지도</h2>
+		</b-nav-item>
+        <b-nav-item>
+			<h2 class="heart-box" id="heart" @click="heart">찜</h2>
+		</b-nav-item>
+        <b-nav-item>
+			<h2 class="board-box" id="board" @click="board">공지사항</h2>
+		</b-nav-item>
+        <b-nav-item>
+			<h2 class="mypage-box" id="mypage" @click="mypage">마이페이지</h2>
+		</b-nav-item>
+        <b-nav-item>
+			<img class="signup" alt="signUp" src="../assets/signup-button.png" @click="signup"/>
+		</b-nav-item>
+		<b-nav-item >
+			<img class="login" alt="login" src="../assets/login-button.png" @click="login"/>
+		</b-nav-item>
+    </b-navbar-nav>    
+    </b-collapse>
+</b-navbar>
+</div>
+
+		<div>
 		</div>
 		<div class="banner" @click="home">
-		<img  alt="House logo" src="../assets/header/Banner.png" />
+			<img center src="../assets/header/Banner.png" class="img-fluid" alt="Responsive image">
+		<!-- <img  alt="House logo" src="../assets/header/Banner.png" /> -->
 		</div>
-	</nav>
-	</header>
+	</div>
+	
 	
 </template>
 
@@ -48,47 +70,26 @@
 </script>
 
 <style scoped>
-	.banner{
-		top:20px;left: 10px;
-		position: relative;
-	}
+	
 	h1 {
 		color: #231656;
 		font-weight: 900;
 		margin: 2.5rem 0 1.5rem;
 	}
+	h2 {
+		color: #231656;
+		font-weight: 900;
+		margin: 2.5rem 0 1.5rem;
+	}
 	.left-box {
-  position: absolute;
-  top: 20px; left: 210px;
-}
-.map-box {
-  position: absolute;
-  top: 0; right: 900px;
-  color: #231656;
-}
-.heart-box {
-  position: absolute;
-  top: 0; right: 830px;
-  color: #231656;
-}
-.board-box {
-  position: absolute;
-  top: 0; right: 670px;
-  color: #231656;
-}
-.mypage-box {
-  position: absolute;
-  top: 0; right: 490px;
-  color: #231656;
-}
-.signup{
-	width:160px;
 	position: absolute;
-	top: 40px; right: 270px;
+	top: 20px; left: 210px;
+}
+
+.signup{
+	width:130px;
 }
 .login{
-	width:154px;
-	position: absolute;
-	top: 37px; right: 110px;
+	width:120px;
 }
 </style>
