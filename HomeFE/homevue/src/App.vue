@@ -2,8 +2,8 @@
 	<div id="app">			
 		<!-- {{ this.$store.state.country }} -->
     <nav>
-			<router-link to="/input">추가</router-link> &nbsp;
-			<router-link to="/list">목록</router-link>			
+			<!-- <router-link to="/input">추가</router-link> &nbsp;
+			<router-link to="/list">목록</router-link>			 -->
 		</nav>
 		<router-view key="$route.path"></router-view>
     <!-- key="$route.path": 같은 경로일때 로드가 되지 않는 문제..절대 경로로 확인되는 경로를 다시 연결하여 노출시키는 방법이다. -->
