@@ -1,7 +1,8 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import memberStore from "./memberStore";
 import createPersistedState from "vuex-persistedstate";
+import boardStore from "@/store/boardStore";
+import memberStore from "./memberStore";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -9,7 +10,9 @@ export default new Vuex.Store({
   getters: {},
   mutations: {},
   actions: {},
-  modules: { memberStore },
+  modules: {memberStore,
+    boardStore,
+  },
   plugins: [
     createPersistedState({
       // 브라우저 종료시 제거하기 위해 localStorage가 아닌 sessionStorage로 변경. (default: localStorage)

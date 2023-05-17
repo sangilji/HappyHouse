@@ -29,6 +29,43 @@ const routes = [
   //   component: () =>
   //     import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
   // },
+  {
+    path: "/board",
+    name: "board",
+    component: () => import(/* webpackChunkName: "board" */ "@/views/AppBoard"),
+    redirect: "/board/list",
+    children: [
+      {
+        path: "list",
+        name: "boardlist",
+        component: () => import(/* webpackChunkName: "board" */ "@/components/board/BoardMain"),
+      },
+      {
+        path: "write",
+        name: "boardwrite",
+        // beforeEnter: onlyAuthUser,
+        component: () => import(/* webpackChunkName: "board" */ "@/components/board/BoardWrite"),
+      },
+      {
+        path: "view/:articleno",
+        name: "boardview",
+        // beforeEnter: onlyAuthUser,
+        component: () => import(/* webpackChunkName: "board" */ "@/components/board/BoardView"),
+      },
+      // {
+      //   path: "modify",
+      //   name: "boardmodify",
+      //   beforeEnter: onlyAuthUser,
+      //   component: () => import(/* webpackChunkName: "board" */ "@/components/board/BoardModify"),
+      // },
+      // {
+      //   path: "delete/:articleno",
+      //   name: "boarddelete",
+      //   beforeEnter: onlyAuthUser,
+      //   component: () => import(/* webpackChunkName: "board" */ "@/components/board/BoardDelete"),
+      // },
+    ],
+  },
 ];
 
 const router = new VueRouter({
