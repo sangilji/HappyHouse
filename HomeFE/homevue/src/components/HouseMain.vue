@@ -7,28 +7,118 @@
     <input type="text">
     <i class="fas fa-keyboard"></i>
     <i class="fas fa-microphone"></i>
+    <img src="../assets/main/search-button.png" alt="searchButton" class="search-button" @click="search">
+</div>
+    
+<br>
+<div class="row row-cols-1" style="text-align:center; margin: 2.0rem 5.0rem 6.5rem; ">
+    <div class="col">
+    <b-card-group>
+    <b-list-group horizontal class="row">
+        <b-list-group-item @click="houseinfo" style="background-color: #E2EBED;" class="col-3">
+        <div class="card">
+            <img src="../assets/house/house-img.png">
+            <hr>
+            <div class="house-title">역삼 아이파크</div>
+            <h3 class="house-price">전세 3억 1500</h3>
+            <div class="house-address">서울시 강남구 역삼동</div>
+            <div class="house-info">🍎전세자금대출 가능🍎주차 가능🍎전망과 채광좋음🍎</div>
+        </div>
+        </b-list-group-item>
+        <b-list-group-item @click="houseinfo" style="background-color: #E2EBED;" class="col-3">
+        <div class="card">
+            <img src="../assets/house/house-img.png">
+            <hr>
+            <div class="house-title">역삼 아이파크</div>
+            <h3 class="house-price">전세 3억 1500</h3>
+            <div class="house-address">서울시 강남구 역삼동</div>
+            <div class="house-info">🍎전세자금대출 가능🍎주차 가능🍎전망과 채광좋음🍎</div>
+        </div>
+        </b-list-group-item>
+        <b-list-group-item @click="houseinfo" style="background-color: #E2EBED;" class="col-3">
+        <div class="card" >
+            <img src="../assets/house/house-img.png">
+            <hr>
+            <div class="house-title">역삼 아이파크</div>
+            <h3 class="house-price">전세 3억 1500</h3>
+            <div class="house-address">서울시 강남구 역삼동</div>
+            <div class="house-info">🍎전세자금대출 가능🍎주차 가능🍎전망과 채광좋음🍎</div>
+        </div>
+        </b-list-group-item>
+        <b-list-group-item @click="houseinfo" style="background-color: #E2EBED;" class="col-3">
+        <div class="card">
+            <img src="../assets/house/house-img.png">
+            <hr>
+            <div class="house-title">역삼 아이파크</div>
+            <h3 class="house-price">전세 3억 1500</h3>
+            <div class="house-address">서울시 강남구 역삼동</div>
+            <div class="house-info">🍎전세자금대출 가능🍎주차 가능🍎전망과 채광좋음🍎</div>
+        </div>
+        
+        </b-list-group-item>
+    </b-list-group>
+    </b-card-group>
     </div>
-    <input type="button" class="box" value="검색">
-    </div>	
+
+    </div></div>
 </template>
 
 <script>
 // import http from "@/router/axios-common.js";
-	export default {
+// import HouseListItem from "@/components/house/HouseListItem";
+
+export default {
+    name: "HouseList",
+    components: {
+        // HouseListItem,    
+    },
+
+    data() {
+            
+        },
 		methods: {
-			
+            search() {
+                
+            },
+            houseinfo() {
+                
+            },
 		},
 	};
 </script>
 
 <style scoped>
+.house-title{
+        color: #231656;
+		font-weight: bolder;
+        font-size:22px;
+}
+.house-price{
+        color: #000000;
+		font-weight: bolder;
+        margin: 1.0rem 0 1.5rem;
+}
+.house-address{
+        color: #9E9E9E;
+		font-weight: bolder;
+        margin: 1.0rem 0 1.5rem;
+}
+.house-info{
+        color: #9E9E9E;
+		font-weight: bolder;
+        margin: 1.0rem 0 1.5rem;
+}
 	.weegle {
     width: 400px;
     display: block;
     text-align: center;
     margin: auto;
 }
-
+h1 {
+		color: #231656;
+		font-weight: 900;
+		margin: 2.5rem 0 1.5rem;
+	}
 .search {
     position: relative;
     text-align: center;
@@ -50,6 +140,9 @@ input {
 .fa-keyboard {
     position: absolute;
     right: 60px;
+}
+.search-button{
+    width:8%;
 }
 
 .fa-microphone {

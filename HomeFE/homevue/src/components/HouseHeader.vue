@@ -2,7 +2,7 @@
 	<div>
 		<div>
 			<b-navbar toggleable="lg" type="white">
-    <b-navbar-brand @click="home" >HappyHouse</b-navbar-brand>
+    <b-navbar-brand @click="home" style="margin: 0rem 3.0rem 0rem;">HappyHouse</b-navbar-brand>
 
     <b-collapse id="nav-collapse" is-nav >
     <b-navbar-nav class="collapse navbar-collapse justify-content-end">
