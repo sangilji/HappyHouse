@@ -39,7 +39,7 @@ const routes = [
     path: "/board",
     name: "board",
     component: () => import(/* webpackChunkName: "board" */ "@/views/AppBoard"),
-    redirect: "/board/list",
+    // redirect: "/board/list",
     children: [
       {
         path: "list",

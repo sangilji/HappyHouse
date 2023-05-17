@@ -67,8 +67,9 @@ methods: {
         params: { articleno: article.articleno },
     });
 	},
-	goBoard() {
-		this.$router.push({ name: "boardList" });
+    goBoard() {
+        if (this.$route.path !== "/board/list") this.$router.push({name: "boardlist"});
+		
 	},
 },
 };
