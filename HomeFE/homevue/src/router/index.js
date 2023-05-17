@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import HomeMainView from "../views/HomeMainView.vue";
 import LoginView from "@/views/user/LoginView.vue";
+import JoinView from "@/views/user/JoinView.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -19,6 +20,11 @@ const routes = [
     path: "/login",
     name: "login",
     component: LoginView,
+  },
+  {
+    path: "/join",
+    name: "join",
+    component: JoinView,
   },
   // {
   //   path: "/about",
