@@ -7,7 +7,7 @@
     <b-collapse id="nav-collapse" is-nav >
     <b-navbar-nav class="collapse navbar-collapse justify-content-end">
         <b-nav-item>
-			<h2 class="map-box" id="map" @click="map">지도</h2>
+			<h2 class="map-box"  @click="map">지도</h2>
 		</b-nav-item>
         <b-nav-item>
 			<h2 class="heart-box" id="heart" @click="heart">찜</h2>
