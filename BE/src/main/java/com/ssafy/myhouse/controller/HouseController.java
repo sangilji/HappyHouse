@@ -1,6 +1,5 @@
 package com.ssafy.myhouse.controller;
 
-import com.ssafy.myhouse.security.SecurityMember;
 import com.ssafy.myhouse.service.houseService.HouseService;
 import com.ssafy.myhouse.service.houseService.ReviewService;
 import com.ssafy.myhouse.vo.houseVo.Address;
@@ -12,7 +11,6 @@ import org.springframework.context.annotation.Description;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
