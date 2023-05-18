@@ -19,10 +19,14 @@
 			<h2 class="mypage-box" id="mypage" @click="mypage">마이페이지</h2>
 		</b-nav-item>
         <b-nav-item>
+			<router-link to="join">
 			<img class="signup" alt="signUp" src="../assets/signup-button.png" @click="signup"/>
+		</router-link>
 		</b-nav-item>
 		<b-nav-item >
-			<img class="login" alt="login" src="../assets/login-button.png" @click="login"/>
+			<router-link to="login">
+			<img class="login" alt="login" src="../assets/login-button.png" />
+		</router-link>
 		</b-nav-item>
     </b-navbar-nav>    
     </b-collapse>
@@ -31,39 +35,43 @@
 
 		<div>
 		</div>
-		<div class="banner" @click="home">
+		<div class="banner">
+			<router-link to="home">
 			<img center src="../assets/header/Banner.png" class="img-fluid" alt="Responsive image">
 		<!-- <img  alt="House logo" src="../assets/header/Banner.png" /> -->
-		</div>
+			</router-link>	
+	</div>
 	</div>
 	
 	
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex";
 // import http from "@/router/axios-common.js";
+const memberStore = "memberStore";
 	export default {
 		methods: {
 			home() {		
-				if (this.$route.path !== '/home') this.$router.push("/home");
+				if (this.$route.path !== "/home") this.$router.push({name:"home"});
 			},
 			map() {
-				this.$router.push("/map");
+				if(this.$route.path!=="/map") this.$router.push({name:"map"});
 			},
 			heart() {
-				this.$router.push("/heart");
+				if(this.$route.path!=="/heart") this.$router.push({name:"heart"});
 			},
 			board() {
-				this.$router.push("/board");	
+				if(this.$route.path!=="/board/list") this.$router.push({name:"boardlist"});	
 			},
 			mypage() {
-				this.$router.push("/mypage");
+				if(this.$route.path!=="/mypage") this.$router.push({name:"mypage"});
 			},
 			signup() {
-				this.$router.push("/signup");
+				if(this.$route.path!=="/join") this.$router.push({name:"join"});
 			},
 			login() {
-				this.$router.push("/login");
+				if(this.$route.path!=="/login") this.$router.push({name:"login"});
 			}
 		},
 	};

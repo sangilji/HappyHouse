@@ -3,6 +3,9 @@ import VueRouter from "vue-router";
 import HomeMainView from "../views/HomeMainView.vue";
 import LoginView from "@/views/user/LoginView.vue";
 import JoinView from "@/views/user/JoinView.vue";
+import BoardView from "@/views/board/AppBoard.vue";
+import BoardWriteView from "@/views/board/BoardWriteView.vue";
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -26,52 +29,37 @@ const routes = [
     name: "join",
     component: JoinView,
   },
-  // {
-  //   path: "/about",
-  //   name: "about",
-  //   // route level code-splitting
-  //   // this generates a separate chunk (about.[hash].js) for this route
-  //   // which is lazy-loaded when the route is visited.
-  //   component: () =>
-  //     import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
-  // },
   {
-    path: "/board",
-    name: "board",
-    component: () => import(/* webpackChunkName: "board" */ "@/views/AppBoard"),
-    // redirect: "/board/list",
-    children: [
-      {
-        path: "list",
-        name: "boardlist",
-        component: () => import(/* webpackChunkName: "board" */ "@/components/board/BoardMain"),
-      },
-      {
-        path: "write",
-        name: "boardwrite",
-        // beforeEnter: onlyAuthUser,
-        component: () => import(/* webpackChunkName: "board" */ "@/components/board/BoardWrite"),
-      },
-      {
-        path: "view/:articleno",
-        name: "boardview",
-        // beforeEnter: onlyAuthUser,
-        component: () => import(/* webpackChunkName: "board" */ "@/components/board/BoardView"),
-      },
-      // {
-      //   path: "modify",
-      //   name: "boardmodify",
-      //   beforeEnter: onlyAuthUser,
-      //   component: () => import(/* webpackChunkName: "board" */ "@/components/board/BoardModify"),
-      // },
-      // {
-      //   path: "delete/:articleno",
-      //   name: "boarddelete",
-      //   beforeEnter: onlyAuthUser,
-      //   component: () => import(/* webpackChunkName: "board" */ "@/components/board/BoardDelete"),
-      // },
-    ],
+    path: "/list",
+    name: "boardlist",
+    component: BoardView,
   },
+  {
+    path: "/write",
+    name: "boardwrite",
+    // beforeEnter: onlyAuthUser,
+    component:BoardWriteView,
+  },
+  {
+    path: "/view/:articleno",
+    name: "boardview",
+    // beforeEnter: onlyAuthUser,
+    component: () => import(/* webpackChunkName: "board" */ "@/components/board/BoardView"),
+  },
+  // {
+  //   path: "modify",
+  //   name: "boardmodify",
+  //   beforeEnter: onlyAuthUser,
+  //   component: () => import(/* webpackChunkName: "board" */ "@/components/board/BoardModify"),
+  // },
+  // {
+  //   path: "delete/:articleno",
+  //   name: "boarddelete",
+  //   beforeEnter: onlyAuthUser,
+  //   component: () => import(/* webpackChunkName: "board" */ "@/components/board/BoardDelete"),
+  // },
+
+  
 ];
 
 const router = new VueRouter({

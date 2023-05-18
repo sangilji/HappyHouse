@@ -1,19 +1,20 @@
 <template>
   <div>
     <house-header></house-header>
-    <b-container class="bv-example-row mt-3 text-center">
-    
-    <router-view></router-view>
-    </b-container></div>
+    <board-main></board-main>  
+  </div>
   <!-- <house-footer></house-footer> -->
 </template>
 <script>
 import HouseHeader from '@/components/HouseHeader.vue';
+import BoardMain from "@/components/board/BoardMain.vue";
+
 // import HouseFooter from "@/components/layout/HouseFooter.vue";
 export default {
   name: "AppBoard",
   components: {
     HouseHeader,
+    BoardMain,
     // HouseFooter,
   }
 };

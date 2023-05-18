@@ -14,7 +14,9 @@
 <div class="row row-cols-1" style="text-align:center; margin: 2.0rem 5.0rem 6.5rem; ">
     <div class="col">
     <b-card-group>
-    <b-list-group horizontal class="row">
+    <b-list-group horizontal class="row" style="position: relative;
+    left: 50%;
+    transform: translateX(-50%);">
         <b-list-group-item @click="houseinfo" style="background-color: #E2EBED;" class="col-3">
         <div class="card">
             <img src="../assets/house/house-img.png">
@@ -74,7 +76,9 @@ export default {
     },
 
     data() {
-            
+        return {
+                
+            }
         },
 		methods: {
             search() {

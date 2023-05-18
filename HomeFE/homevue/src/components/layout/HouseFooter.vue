@@ -1,7 +1,8 @@
+
 <template>
   <div class="block-header py-3 border-top">
     <div class="container">
-      <div class="row">
+      <div>
         <div class="col">
           <div id='wrap'>
             <footer>
@@ -30,6 +31,7 @@
   </div>
 </template>
 
+
 <style scoped>
   .bi {
     font-size: 1.7rem;
@@ -40,10 +42,14 @@
   .container {
     font-size: 0.9rem;
     color: #808080;
+    
   }
   footer {
     width: 100%;
     height: 90px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
   }
   footer a {
     display: inline-block;
