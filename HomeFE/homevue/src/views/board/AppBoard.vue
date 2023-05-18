@@ -1,13 +1,15 @@
 <template>
   <div>
     <house-header></house-header>
-    <board-main></board-main>  
+    <board-main></board-main>
+    <house-footer></house-footer>
   </div>
   <!-- <house-footer></house-footer> -->
 </template>
 <script>
 import HouseHeader from '@/components/HouseHeader.vue';
 import BoardMain from "@/components/board/BoardMain.vue";
+import HouseFooter from "@/components/layout/HouseFooter.vue";
 
 // import HouseFooter from "@/components/layout/HouseFooter.vue";
 export default {
@@ -15,6 +17,7 @@ export default {
   components: {
     HouseHeader,
     BoardMain,
+    HouseFooter,
     // HouseFooter,
   }
 };

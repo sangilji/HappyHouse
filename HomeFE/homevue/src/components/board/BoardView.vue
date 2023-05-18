@@ -17,7 +17,7 @@
     <b-row class="mb-1">
       <b-col>
         <b-card
-          :header-html="`<h3>${article.articleno}.
+          :header-html="`<h3>${article.announcementid}.
           ${article.subject} [${article.hit}]</h3><div><h6>${article.userid}</div><div>${article.regtime}</h6></div>`"
           class="mb-2"
           border-variant="dark"
@@ -54,7 +54,7 @@ export default {
     },
   },
   created() {
-    let param = this.$route.params.articleno;
+    let param = this.$route.params.announcementid;
     getArticle(
       param,
       ({ data }) => {
@@ -69,7 +69,7 @@ export default {
     moveModifyArticle() {
       this.$router.replace({
         name: "boardmodify",
-        params: { articleno: this.article.articleno },
+        params: { announcementid: this.article.announcementid },
       });
       //   this.$router.push({ path: `/board/modify/${this.article.articleno}` });
     },
@@ -77,7 +77,7 @@ export default {
       if (confirm("정말로 삭제?")) {
         this.$router.replace({
           name: "boarddelete",
-          params: { articleno: this.article.articleno },
+          params: { announcementid: this.article.announcementid },
         });
       }
     },

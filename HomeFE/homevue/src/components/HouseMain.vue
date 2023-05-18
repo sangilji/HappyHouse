@@ -147,6 +147,7 @@ input {
 }
 .search-button{
     width:8%;
+    margin:0 1.0rem 0;
 }
 
 .fa-microphone {

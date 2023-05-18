@@ -3,9 +3,15 @@
 		<div>
 <b-card class="board-box">
     <div class="text-dark">
-    <h2>공지사항 </h2>
-	<b-button style="background-color: #e2e2e2; color:black" @click="goBoard()">더보기</b-button>
-	<b-button style="background-color: #e2e2e2; color:black; margin:10px;" @click="moveWrite()">글쓰기</b-button>
+    <h1>공지사항 </h1>
+    <div style="float:right;">
+	<router-link v-if="currentPath !== '/boardlist'" to="boardlist">
+			<img class="button" alt="goBoard" src="@/assets/board/add-read.png" @click="goBoard"/>
+		</router-link>
+    <router-link to="boardwrite">
+			<img class="button" alt="moveWrite" src="@/assets/board/write.png" @click="moveWrite"/>
+		</router-link>
+    </div>
 	<hr>
 	<b-table striped hover :items="articles" :fields="fields" @row-clicked="viewArticle">
 		<colgroup>
@@ -13,9 +19,9 @@
         <col style="width: 20%" />
         <col style="width: 40%" />
         </colgroup>
-        <template #cell(subject)="data">
-            <router-link :to="{ name: 'boardview', params: { subject: data.item.subject } }">
-            {{ data.item.subject }}
+        <template #cell(title)="data">
+            <router-link :to="{ name: 'boardview', params: { title: data.item.title } }">
+            {{ data.item.title }}
             </router-link>
         </template>
         </b-table>
@@ -31,16 +37,18 @@ import { listArticle } from "@/api/board";
 export default {
 	name: "BoardList",
 	data() {
-    return {
-    articles: [],
-    fields: [
-        { key: "articleno", label: "글번호", tdClass: "tdClass" },
-        { key: "subject", label: "제목", tdClass: "tdSubject" },
+        return {
+        currentPath:'',
+        articles: [],
+        fields: [
+        { key: "announcementid", label: "글번호", tdClass: "tdClass" },
+        { key: "title", label: "제목", tdClass: "tdSubject" },
         { key: "userid", label: "작성자", tdClass: "tdClass" },
     ],
     };
 },
-created() {
+    created() {
+        this.currentPath = this.$route.path;
     let param = {
     pg: 1,
     spp: 20,
@@ -64,11 +72,11 @@ methods: {
     viewArticle(article) {
     this.$router.push({
         name: "boardview",
-        params: { articleno: article.articleno },
+        params: { announcementid: article.announcementid },
     });
 	},
     goBoard() {
-        if (this.$route.path !== "/board/list") this.$router.push({name: "boardlist"});
+        if (this.$route.path !== "/boardlist") this.$router.push({name: "boardlist"});
 		
 	},
 },
@@ -80,7 +88,7 @@ methods: {
 		background-color: #FBFBFB;
 		text-align:center; margin: 2.0rem 5.0rem 6.5rem;
 	}
-	h2{
+	h1{
 		color: #4E4E4E;
 		font-weight: 900;
 		margin: 1.0rem 0 1.0rem;
@@ -94,4 +102,8 @@ methods: {
 		background-color:#e2e2e2;
 		font-weight: 600;
 	}
+    .button{
+        width:150px;
+        margin:2.0rem 1.0rem 2.0rem;
+    }
 </style>
