@@ -9,7 +9,6 @@
         <b-nav-item>
 			<h2 class="map-box"  @click="map">지도</h2>
 			<router-link to="map">
-			<h2 class="map-box" >지도</h2>
 		</router-link>
 		</b-nav-item>
         <b-nav-item>
@@ -27,7 +26,20 @@
 			<h2 class="mypage-box" id="mypage">마이페이지</h2>
 		</router-link>
 		</b-nav-item>
+	
+		<!-- after login -->
+		<div class="d-flex justify-content-center" v-if="userInfo">
         <b-nav-item>
+				<h2>{{ userInfo.name }} 님</h2>
+		</b-nav-item>
+		<b-nav-item @click="onClickLogout">
+			<img class="logout" alt="logout" src="../assets/logout.png"/>
+		</b-nav-item>
+		</div>
+		
+		<!-- before login -->
+		<div class="d-flex justify-content-center" v-else>
+		<b-nav-item>
 			<router-link to="join">
 			<img class="signup" alt="signUp" src="../assets/signup-button.png" @click="signup"/>
 		</router-link>
@@ -37,6 +49,7 @@
 			<img class="login" alt="login" src="../assets/login-button.png" />
 		</router-link>
 		</b-nav-item>
+</div>
     </b-navbar-nav>    
     </b-collapse>
 </b-navbar>
@@ -56,11 +69,35 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions,mapGetters } from "vuex";
 // import http from "@/router/axios-common.js";
 const memberStore = "memberStore";
-	export default {
-		methods: {
+export default {
+	name: "HouseHeader",
+	date() {
+		return {};
+	},
+	computed: {
+	...mapState(memberStore, ["isLogin", "userInfo"]),
+    ...mapGetters(["checkUserInfo"]),
+	},
+	methods: {
+		...mapActions(memberStore, ["userLogout"]),
+    // ...mapMutations(memberStore, ["SET_IS_LOGIN", "SET_USER_INFO"]),
+    onClickLogout() {
+      // this.SET_IS_LOGIN(false);
+      // this.SET_USER_INFO(null);
+      // sessionStorage.removeItem("access-token");
+      // if (this.$route.path != "/") this.$router.push({ name: "main" });
+    console.log(this.userInfo.userid);
+      //vuex actions에서 userLogout 실행(Backend에 저장 된 리프레시 토큰 없애기
+      //+ satate에 isLogin, userInfo 정보 변경)
+      // this.$store.dispatch("userLogout", this.userInfo.userid);
+    this.userLogout(this.userInfo.userid);
+      sessionStorage.removeItem("access-token"); //저장된 토큰 없애기
+      sessionStorage.removeItem("refresh-token"); //저장된 토큰 없애기
+    if (this.$route.path != "/") this.$router.push({ name: "home" });
+    },
 			home() {		
 				if (this.$route.path !== "/home") this.$router.push({name:"home"});
 			},
@@ -81,7 +118,8 @@ const memberStore = "memberStore";
 			},
 			login() {
 				if(this.$route.path!=="/login") this.$router.push({name:"login"});
-			}
+			},
+	
 		},
 	};
 </script>
@@ -107,6 +145,13 @@ const memberStore = "memberStore";
 	width:130px;
 }
 .login{
+	width:120px;
+}
+.logout{
+	width:120px;
+	margin:2.4rem 0;
+}
+.myname{
 	width:120px;
 }
 </style>
