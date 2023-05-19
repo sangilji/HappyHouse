@@ -6,7 +6,7 @@ import JoinView from "@/views/user/JoinView.vue";
 import BoardView from "@/views/board/AppBoard.vue";
 import BoardWriteView from "@/views/board/BoardWriteView.vue";
 import mapView from "@/views/map/MapView.vue";
-
+import MyPageView from '@/views/user/MyPageView.vue';
 Vue.use(VueRouter);
 
 const routes = [
