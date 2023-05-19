@@ -1,8 +1,8 @@
 <template>
   <b-tr>
-    <b-td>{{ articleno }}</b-td>
+    <b-td>{{ announcementid }}</b-td>
     <b-th class="text-left">
-      <router-link :to="{ name: 'boardview', params: { articleno: articleno } }">{{ subject }}</router-link>
+      <router-link :to="{ name: 'boardview', params: { announcementid: announcementid } }">{{ title }}</router-link>
     </b-th>
     <b-td>{{ hit }}</b-td>
     <b-td>{{ userid }}</b-td>
@@ -16,9 +16,9 @@ import moment from "moment";
 export default {
   name: "BoardListItem",
   props: {
-    articleno: Number,
+    announcementid: Number,
     userid: String,
-    subject: String,
+    title: String,
     hit: Number,
     regtime: String,
   },

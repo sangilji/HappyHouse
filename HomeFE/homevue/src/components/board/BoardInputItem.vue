@@ -15,8 +15,8 @@
 
         <b-form-group id="subject-group" label="제목:" label-for="subject" description="제목을 입력하세요.">
           <b-form-input
-            id="subject"
-            v-model="article.subject"
+            id="title"
+            v-model="article.title"
             type="text"
             required
             placeholder="제목 입력..."
@@ -49,9 +49,9 @@ export default {
   data() {
     return {
       article: {
-        articleno: 0,
+        announcementid: 0,
         userid: "",
-        subject: "",
+        title: "",
         content: "",
       },
       isUserid: false,
@@ -62,7 +62,7 @@ export default {
   },
   created() {
     if (this.type === "modify") {
-      let param = this.$route.params.articleno;
+      let param = this.$route.params.announcementid;
       getArticle(
         param,
         ({ data }) => {
@@ -86,7 +86,7 @@ export default {
       let err = true;
       let msg = "";
       !this.article.userid && ((msg = "작성자 입력해주세요"), (err = false), this.$refs.userid.focus());
-      err && !this.article.subject && ((msg = "제목 입력해주세요"), (err = false), this.$refs.subject.focus());
+      err && !this.article.title && ((msg = "제목 입력해주세요"), (err = false), this.$refs.title.focus());
       err && !this.article.content && ((msg = "내용 입력해주세요"), (err = false), this.$refs.content.focus());
 
       if (!err) alert(msg);
@@ -94,15 +94,15 @@ export default {
     },
     onReset(event) {
       event.preventDefault();
-      this.article.articleno = 0;
-      this.article.subject = "";
+      this.article.announcementid = 0;
+      this.article.title = "";
       this.article.content = "";
       this.moveList();
     },
     registArticle() {
       let param = {
         userid: this.article.userid,
-        subject: this.article.subject,
+        title: this.article.title,
         content: this.article.content,
       };
       writeArticle(
@@ -124,7 +124,7 @@ export default {
       let param = {
         articleno: this.article.articleno,
         userid: this.article.userid,
-        subject: this.article.subject,
+        title: this.article.title,
         content: this.article.content,
       };
       modifyArticle(

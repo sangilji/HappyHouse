@@ -37,17 +37,18 @@ const routes = [
   },
   {
     path: "/list",
+    path: "/boardlist",
     name: "boardlist",
     component: BoardView,
   },
   {
-    path: "/write",
+    path: "/boardwrite",
     name: "boardwrite",
     // beforeEnter: onlyAuthUser,
     component:BoardWriteView,
   },
   {
-    path: "/view/:articleno",
+    path: "/boardview/:announcementid",
     name: "boardview",
     // beforeEnter: onlyAuthUser,
     component: () => import(/* webpackChunkName: "board" */ "@/components/board/BoardView"),

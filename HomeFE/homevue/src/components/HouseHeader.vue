@@ -7,16 +7,24 @@
     <b-collapse id="nav-collapse" is-nav >
     <b-navbar-nav class="collapse navbar-collapse justify-content-end">
         <b-nav-item>
-			<h2 class="map-box"  @click="map">지도</h2>
+			<router-link to="map">
+			<h2 class="map-box" >지도</h2>
+		</router-link>
 		</b-nav-item>
         <b-nav-item>
-			<h2 class="heart-box" id="heart" @click="heart">찜</h2>
+			<router-link to="heart">
+			<h2 class="heart-box" id="heart">찜</h2>
+		</router-link>
 		</b-nav-item>
         <b-nav-item>
-			<h2 class="board-box" id="board" @click="board">공지사항</h2>
+			<router-link to="boardlist">
+			<h2 class="board-box" id="board">공지사항</h2>
+		</router-link>
 		</b-nav-item>
         <b-nav-item>
-			<h2 class="mypage-box" id="mypage" @click="mypage">마이페이지</h2>
+			<router-link to="mypage">
+			<h2 class="mypage-box" id="mypage">마이페이지</h2>
+		</router-link>
 		</b-nav-item>
         <b-nav-item>
 			<router-link to="join">
