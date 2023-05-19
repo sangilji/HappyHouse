@@ -1,9 +1,8 @@
 <template>
   <b-container class="bv-example-row mt-3">
     <b-row>
-      <b-col></b-col>
-      <b-col cols="11">
-        <b-card class="text-center mt-3" id="login-box">
+      <b-col>
+        <b-card class="text-center" id="login-box">
           <b-form class="text-left">
             <div class="font1">간편하게 로그인하고</div>
             <div class="font2">다양한 서비스를 이용하세요!</div>
@@ -38,7 +37,6 @@
           </b-form>
         </b-card>
       </b-col>
-      <b-col></b-col>
     </b-row>
   </b-container>
 </template>
@@ -89,7 +87,7 @@ background: #E2EBED;
 border-radius: 50px;
 margin: 4.0rem 0rem;
 padding:80px;
-width:1000px;
+width:100%;
 }
 .font1{
   font-size:50px;
