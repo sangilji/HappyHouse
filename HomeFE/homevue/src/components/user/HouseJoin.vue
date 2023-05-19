@@ -10,28 +10,28 @@
             <div class="font2">다양한 서비스를 이용하세요!</div>
 
 
-            <b-alert show variant="danger" v-if="isLoginError">아이디 또는 비밀번호를 확인하세요.</b-alert>
-            <b-form-group label="아이디" label-for="userid" class="small-gray-font">
+            <!-- <b-alert show variant="danger" v-if="isLoginError">아이디 또는 비밀번호를 확인하세요.</b-alert> -->
+            <b-form-group label="아이디" label-for="userId" class="small-gray-font">
               <b-form-input
-                id="userid"
-                v-model="user.userid"
+                id="userId"
+                v-model="user.userId"
                 required
                 @keyup.enter="confirm"
               ></b-form-input>
             </b-form-group>
-            <b-form-group label="비밀번호" label-for="userpwd" class="small-gray-font">
+            <b-form-group label="비밀번호" label-for="password" class="small-gray-font">
               <b-form-input
                 type="password"
-                id="userpwd"
-                v-model="user.userpwd"
+                id="password"
+                v-model="user.password"
                 required
                 @keyup.enter="confirm"
               ></b-form-input>
             </b-form-group>
-            <b-form-group label="이름" label-for="username" class="small-gray-font">
+            <b-form-group label="이름" label-for="name" class="small-gray-font">
               <b-form-input
-                id="username"
-                v-model="user.userpwd"
+                id="name"
+                v-model="user.name"
                 required
               ></b-form-input>
             </b-form-group>
@@ -58,10 +58,10 @@
               ></b-form-input>
             </b-form-group>
             <div class="d-flex justify-content-center" style="padding:20px;">
-            <label class="small-gray-font" style="font-weight: bolder; margin-right:80px;"><input type="radio" name="authority" value="public">일반회원</label>
-            <label class="small-gray-font" style="font-weight: bolder;"><input type="radio" name="authority" value="landlord" >임대인</label>
+            <label class="small-gray-font" style="font-weight: bolder; margin-right:80px;"><input type="radio" v-model="user.role" name="authority" value="ROLE_USER">일반회원</label>
+            <label class="small-gray-font" style="font-weight: bolder;"><input type="radio" name="authority" v-model="user.role" value="ROLE_LANLORD" >임대인</label>
             </div>
-			<img class="login" alt="signUp" src="../../assets/login/signup.png" @click="confirm"/>
+			<img class="join" alt="signUp" src="../../assets/login/signup.png" @click="confirm"/>
             <!-- <b-button type="button" variant="primary" class="m-1" @click="confirm">로그인</b-button> -->
             <!-- <b-button type="button" variant="success" class="m-1" @click="movePage">회원가입</b-button> -->
           </b-form>
@@ -78,14 +78,14 @@ import { mapState, mapActions } from "vuex";
 
 const memberStore = "memberStore";
 export default {
-  name: "HouseLogin",
+  name: "HouseJoin",
   data() {
     return {
       // isLoginError: false,
       user: {
-        userid: null,
-        userpwd: null,
-        username: null,
+        userId: null,
+        password: null,
+        name: null,
         email: null,
         address: null,
         number: null,
@@ -94,16 +94,15 @@ export default {
     };
   },
   computed: {
-    ...mapState(memberStore, ["isLogin", "isLoginError", "userInfo"]),
+    ...mapState(memberStore, ["isJoin", "isJoinError"]),
   },
   methods: {
-    ...mapActions(memberStore, ["userConfirm", "getUserInfo"]),
+    ...mapActions(memberStore, ["joinConfirm"]),
     async confirm() {
-      await this.userConfirm(this.user);
-      let token = sessionStorage.getItem("access-token");
+      await this.joinConfirm(this.user);
       // console.log("1. confirm() token >> " + token);
-      if (this.isLogin) {
-        await this.getUserInfo(token);
+      if (this.isJoin) {
+        alert("회원가입이 완료되었습니다.");
         // console.log("4. confirm() userInfo :: ", this.userInfo);
         this.$router.push({ name: "main" });
       }
@@ -136,7 +135,7 @@ width:1000px;
   font-weight: bolder;
   color: #231656;
 }
-.login{
+.join{
   width:190px;
   margin: 2.0rem 19.3rem 0rem;
 }

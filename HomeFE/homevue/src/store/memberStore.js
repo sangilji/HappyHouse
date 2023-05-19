@@ -1,12 +1,14 @@
 import jwtDecode from "jwt-decode";
 import router from "@/router";
-import { login, findById, tokenRegeneration, logout } from "@/api/member";
+import { join, login, findById, tokenRegeneration, logout } from "@/api/member";
 
 const memberStore = {
   namespaced: true,
   state: {
     isLogin: false,
+    isJoin : false,
     isLoginError: false,
+    isJoinError: false,
     userInfo: null,
     isValidToken: false,
   },
@@ -22,8 +24,14 @@ const memberStore = {
     SET_IS_LOGIN: (state, isLogin) => {
       state.isLogin = isLogin;
     },
+    SET_IS_JOIN: (state, isJoin) => {
+      state.isJoin = isJoin;
+    },
     SET_IS_LOGIN_ERROR: (state, isLoginError) => {
       state.isLoginError = isLoginError;
+    },
+    SET_IS_JOIN_ERROR: (state, isJoinError) => {
+      state.isJoinError = isJoinError;
     },
     SET_IS_VALID_TOKEN: (state, isValidToken) => {
       state.isValidToken = isValidToken;
@@ -34,6 +42,24 @@ const memberStore = {
     },
   },
   actions: {
+    async joinConfirm({ commit }, user) {
+      await join(
+        user,
+        ({ data }) => {
+          if (data.message === "success") {
+            console.log(data);
+            commit("SET_IS_JOIN", true);
+            commit("SET_IS_JOIN_ERROR", true);
+          } else {
+            commit("SET_IS_JOIN", false);
+            commit("SET_IS_JOIN_ERROR", true);
+          }
+        }
+        , (error) => {
+          console.log(error);
+        }
+      );
+    },
     async userConfirm({ commit }, user) {
       await login(
         user,
@@ -64,9 +90,10 @@ const memberStore = {
     },
     async getUserInfo({ commit, dispatch }, token) {
       let decodeToken = jwtDecode(token);
-      // console.log("2. getUserInfo() decodeToken :: ", decodeToken);
+      console.log("2. getUserInfo() decodeToken :: ", decodeToken);
       await findById(
-        decodeToken.userid,
+
+        decodeToken.user.id,
         ({ data }) => {
           if (data.message === "success") {
             commit("SET_USER_INFO", data.userInfo);

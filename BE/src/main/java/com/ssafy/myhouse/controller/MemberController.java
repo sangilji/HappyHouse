@@ -56,8 +56,8 @@ public class MemberController {
         try {
             Member loginUser = memberService.login(memberDto);
             if (loginUser != null) {
-                String accessToken = jwtService.createAccessToken("userid", loginUser.getUserId());// key, data
-                String refreshToken = jwtService.createRefreshToken("userid", loginUser.getUserId());// key, data
+                String accessToken = jwtService.createAccessToken("user", loginUser);// key, data
+                String refreshToken = jwtService.createRefreshToken("user", loginUser);// key, data
                 memberService.saveRefreshToken(memberDto.getUserid(), refreshToken);
                 logger.debug("로그인 accessToken 정보 : {}", accessToken);
                 logger.debug("로그인 refreshToken 정보 : {}", refreshToken);
