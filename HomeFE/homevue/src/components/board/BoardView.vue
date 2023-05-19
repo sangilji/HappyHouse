@@ -18,7 +18,7 @@
       <b-col>
         <b-card
           :header-html="`<h3>${article.announcementid}.
-          ${article.subject} [${article.hit}]</h3><div><h6>${article.userid}</div><div>${article.regtime}</h6></div>`"
+          ${article.title} [${article.hit}]</h3><div><h6>${article.userid}</div><div>${article.regtime}</h6></div>`"
           class="mb-2"
           border-variant="dark"
           no-body
