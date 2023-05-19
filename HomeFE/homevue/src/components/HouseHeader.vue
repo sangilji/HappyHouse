@@ -2,32 +2,21 @@
 	<div>
 		<div>
 			<b-navbar toggleable="lg" type="white">
-				<router-link to="home">	
-    <b-navbar-brand style="margin: 0rem 3.0rem 0rem; font-weight: bolder;">
-		<img src="@/assets/header/logo.png" style="width:150px;">
-	</b-navbar-brand>
-</router-link>
+    <b-navbar-brand @click="home" style="margin: 0rem 3.0rem 0rem;">HappyHouse</b-navbar-brand>
+
     <b-collapse id="nav-collapse" is-nav >
     <b-navbar-nav class="collapse navbar-collapse justify-content-end">
         <b-nav-item>
-			<router-link to="map">
-			<h2 class="map-box" id="map">지도</h2>
-		</router-link>
+			<h2 class="map-box"  @click="map">지도</h2>
 		</b-nav-item>
         <b-nav-item>
-			<router-link to="heart">
-			<h2 class="heart-box" id="heart">찜</h2>
-		</router-link>
+			<h2 class="heart-box" id="heart" @click="heart">찜</h2>
 		</b-nav-item>
         <b-nav-item>
-			<router-link to="boardlist">
-			<h2 class="board-box" id="board">공지사항</h2>
-		</router-link>
+			<h2 class="board-box" id="board" @click="board">공지사항</h2>
 		</b-nav-item>
         <b-nav-item>
-			<router-link to="mypage">
-			<h2 class="mypage-box" id="mypage">마이페이지</h2>
-		</router-link>
+			<h2 class="mypage-box" id="mypage" @click="mypage">마이페이지</h2>
 		</b-nav-item>
         <b-nav-item>
 			<router-link to="join">

@@ -5,6 +5,7 @@ import LoginView from "@/views/user/LoginView.vue";
 import JoinView from "@/views/user/JoinView.vue";
 import BoardView from "@/views/board/AppBoard.vue";
 import BoardWriteView from "@/views/board/BoardWriteView.vue";
+import mapView from "@/views/map/MapView.vue";
 
 Vue.use(VueRouter);
 
@@ -30,7 +31,12 @@ const routes = [
     component: JoinView,
   },
   {
-    path: "/boardlist",
+    path: "/map",
+    name: "map",
+    component: mapView,
+  },
+  {
+    path: "/list",
     name: "boardlist",
     component: BoardView,
   },
