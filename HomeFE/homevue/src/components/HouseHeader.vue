@@ -26,7 +26,7 @@
 		</router-link>
 		</b-nav-item>
 	
-		<!-- after login -->
+		<!-- ater login -->
 		<div class="d-flex justify-content-center" v-if="userInfo">
         <b-nav-item>
 				<h2>{{ userInfo.name }} 님</h2>
@@ -95,7 +95,7 @@ export default {
     this.userLogout(this.userInfo.userid);
       sessionStorage.removeItem("access-token"); //저장된 토큰 없애기
       sessionStorage.removeItem("refresh-token"); //저장된 토큰 없애기
-    if (this.$route.path != "/") this.$router.push({ name: "home" });
+    if (this.$route.path != "/") this.$router.push({ name: "main" });
     },
 			home() {		
 				if (this.$route.path !== "/home") this.$router.push({name:"home"});
