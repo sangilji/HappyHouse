@@ -37,6 +37,10 @@ const routes = [
   },
   {
     path: "/list",
+<<<<<<< HEAD
+=======
+    path: "/boardlist",
+>>>>>>> 44914525a4f76b0c86e63f5a0a33a6ea8cfbffbf
     name: "boardlist",
     component: BoardView,
   },
