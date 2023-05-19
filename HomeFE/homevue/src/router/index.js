@@ -36,7 +36,6 @@ const routes = [
     component: mapView,
   },
   {
-    path: "/list",
     path: "/boardlist",
     name: "boardlist",
     component: BoardView,

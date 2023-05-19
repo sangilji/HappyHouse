@@ -7,6 +7,7 @@
     <b-collapse id="nav-collapse" is-nav >
     <b-navbar-nav class="collapse navbar-collapse justify-content-end">
         <b-nav-item>
+			<h2 class="map-box"  @click="map">지도</h2>
 			<router-link to="map">
 			<h2 class="map-box" >지도</h2>
 		</router-link>
