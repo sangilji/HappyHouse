@@ -13,6 +13,7 @@
 		</router-link>
     </div>
 	<hr>
+    
 	<b-table striped hover :items="articles" :fields="fields" @row-clicked="viewArticle">
 		<colgroup>
         <col style="width: 10%" />
@@ -20,7 +21,7 @@
         <col style="width: 40%" />
         </colgroup>
         <template #cell(title)="data">
-            <router-link :to="{ name: 'boardview', params: { title: data.item.title } }">
+            <router-link :to="{ name: 'boardview', params: { announcementid: data.item.announcementid } }">
             {{ data.item.title }}
             </router-link>
         </template>
@@ -57,8 +58,12 @@ export default {
     };
     listArticle(
     param,
-    ({ data }) => {
-        this.articles = data;
+        ({ data }) => {
+            if (this.$route.path !== "/home") {
+                this.articles = data;
+            } else {
+                this.articles = data.slice(0, 5);
+            }
     },
     (error) => {
         console.log(error);

@@ -1,4 +1,5 @@
 <template>
+
   <b-tr>
     <b-td>{{ announcementid }}</b-td>
     <b-th class="text-left">
@@ -11,6 +12,7 @@
 
 <script>
 import moment from "moment";
+
 
 export default {
   name: "BoardListItem",
