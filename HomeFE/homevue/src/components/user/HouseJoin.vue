@@ -1,7 +1,6 @@
 <template>
   <b-container class="bv-example-row mt-3">
     <b-row>
-      <b-col></b-col>
       <b-col cols="11">
         <b-card class="text-center mt-3" id="login-box">
           <b-form class="text-left">
