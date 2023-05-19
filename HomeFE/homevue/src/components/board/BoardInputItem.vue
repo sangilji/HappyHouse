@@ -2,18 +2,17 @@
   <b-row class="mb-1">
     <b-col style="text-align: left">
       <b-form @submit="onSubmit" @reset="onReset">
-        <b-form-group id="userid-group" label="작성자:" label-for="userid" description="작성자를 입력하세요.">
+        <b-form-group id="userid-group" label="작성자" label-for="memberid" description="작성자를 입력하세요.">
           <b-form-input
-            id="userid"
-            :disabled="isUserid"
-            v-model="article.userid"
-            type="text"
+            id="memberid"
+            :disabled="true"
+            v-model="userInfo.id"
             required
-            placeholder="작성자 입력..."
-          ></b-form-input>
+            :placeholder="userInfo.id.toString()"
+            :value="userInfo.id"></b-form-input>
         </b-form-group>
 
-        <b-form-group id="subject-group" label="제목:" label-for="subject" description="제목을 입력하세요.">
+        <b-form-group id="subject-group" label="제목" label-for="subject" description="제목을 입력하세요.">
           <b-form-input
             id="title"
             v-model="article.title"
@@ -23,7 +22,7 @@
           ></b-form-input>
         </b-form-group>
 
-        <b-form-group id="content-group" label="내용:" label-for="content">
+        <b-form-group id="content-group" label="내용" label-for="content">
           <b-form-textarea
             id="content"
             v-model="article.content"
@@ -43,6 +42,8 @@
 
 <script>
 import { writeArticle, modifyArticle, getArticle } from "@/api/board";
+import { mapState, mapActions,mapGetters } from "vuex";
+const memberStore = "memberStore";
 
 export default {
   name: "BoardInputItem",
@@ -50,12 +51,16 @@ export default {
     return {
       article: {
         announcementid: 0,
-        userid: "",
+        memberid: "",
         title: "",
         content: "",
       },
       isUserid: false,
     };
+  },
+  computed: {
+	...mapState(memberStore, ["isLogin", "userInfo"]),
+    ...mapGetters(["checkUserInfo"]),
   },
   props: {
     type: { type: String },
@@ -85,8 +90,7 @@ export default {
 
       let err = true;
       let msg = "";
-      !this.article.userid && ((msg = "작성자 입력해주세요"), (err = false), this.$refs.userid.focus());
-      err && !this.article.title && ((msg = "제목 입력해주세요"), (err = false), this.$refs.title.focus());
+      !this.article.title && ((msg = "제목 입력해주세요"), (err = false), this.$refs.title.focus());
       err && !this.article.content && ((msg = "내용 입력해주세요"), (err = false), this.$refs.content.focus());
 
       if (!err) alert(msg);
@@ -101,7 +105,7 @@ export default {
     },
     registArticle() {
       let param = {
-        userid: this.article.userid,
+        memberid: this.userInfo.id,
         title: this.article.title,
         content: this.article.content,
       };
@@ -122,8 +126,8 @@ export default {
     },
     modifyArticle() {
       let param = {
-        articleno: this.article.articleno,
-        userid: this.article.userid,
+        announcementid: this.article.announcementid,
+        memberid: this.userInfo.id,
         title: this.article.title,
         content: this.article.content,
       };

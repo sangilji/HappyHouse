@@ -1,6 +1,7 @@
 <template>
     <div>
       <house-header></house-header>
+      
       <board-write></board-write>
       <house-footer></house-footer>
     </div>

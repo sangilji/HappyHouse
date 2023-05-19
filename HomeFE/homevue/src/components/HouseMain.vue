@@ -9,8 +9,8 @@
     <i class="fas fa-microphone"></i>
     <img src="../assets/main/search-button.png" alt="searchButton" class="search-button" @click="search">
 </div>
-    
 <br>
+
 <div class="row row-cols-1" style="text-align:center; margin: 2.0rem 5.0rem 6.5rem; ">
     <div class="col">
     <b-card-group>
@@ -62,7 +62,9 @@
     </b-card-group>
     </div>
 
-    </div></div>
+    </div>
+</div>
+
 </template>
 
 <script>

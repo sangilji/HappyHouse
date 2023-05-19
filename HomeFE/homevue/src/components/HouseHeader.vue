@@ -2,26 +2,30 @@
 	<div>
 		<div>
 			<b-navbar toggleable="lg" type="white">
-    <b-navbar-brand @click="home" style="margin: 0rem 3.0rem 0rem;">HappyHouse</b-navbar-brand>
-
+			<router-link :to="{name:'home'}">	
+    <b-navbar-brand style="margin: 0rem 3.0rem 0rem; font-weight: bolder;">
+		<img src="@/assets/header/logo.png" style="width:150px;">
+	</b-navbar-brand>
+</router-link>
     <b-collapse id="nav-collapse" is-nav >
     <b-navbar-nav class="collapse navbar-collapse justify-content-end">
         <b-nav-item>
-			<router-link to="map">
+			<router-link :to="{name:'map'}">
+				<h2 class="heart-box" id="map">지도</h2>
 		</router-link>
 		</b-nav-item>
         <b-nav-item>
-			<router-link to="heart">
+			<router-link :to="{name:'heart'}">
 			<h2 class="heart-box" id="heart">찜</h2>
 		</router-link>
 		</b-nav-item>
         <b-nav-item>
-			<router-link to="boardlist">
+			<router-link :to="{name:'boardlist'}">
 			<h2 class="board-box" id="board">공지사항</h2>
 		</router-link>
 		</b-nav-item>
         <b-nav-item>
-			<router-link to="mypage">
+			<router-link :to="{name:'myhome'}">
 			<h2 class="mypage-box" id="mypage">마이페이지</h2>
 		</router-link>
 		</b-nav-item>
@@ -39,12 +43,12 @@
 		<!-- before login -->
 		<div class="d-flex justify-content-center" v-else>
 		<b-nav-item>
-			<router-link to="join">
+			<router-link :to="{name:'join'}">
 			<img class="signup" alt="signUp" src="../assets/signup-button.png" @click="signup"/>
 		</router-link>
 		</b-nav-item>
 		<b-nav-item >
-			<router-link to="login">
+			<router-link :to="{name:'login'}">
 			<img class="login" alt="login" src="../assets/login-button.png" />
 		</router-link>
 		</b-nav-item>
@@ -57,7 +61,7 @@
 		<div>
 		</div>
 		<div class="banner">
-			<router-link to="home">
+			<router-link :to="{name:'home'}">
 			<img center src="../assets/header/Banner.png" class="img-fluid" alt="Responsive image">
 		<!-- <img  alt="House logo" src="../assets/header/Banner.png" /> -->
 			</router-link>	
@@ -95,7 +99,7 @@ export default {
     this.userLogout(this.userInfo.userid);
       sessionStorage.removeItem("access-token"); //저장된 토큰 없애기
       sessionStorage.removeItem("refresh-token"); //저장된 토큰 없애기
-    if (this.$route.path != "/") this.$router.push({ name: "home" });
+    if (this.$route.path !== "/home") this.$router.push({ name: "home" });
     },
 			home() {		
 				if (this.$route.path !== "/home") this.$router.push({name:"home"});

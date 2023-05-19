@@ -1,30 +1,30 @@
 <template>
   <b-container class="bv-example-row mt-3">
-    <b-row>
-      <b-col>
-        <b-alert show><h3>글보기</h3></b-alert>
-      </b-col>
-    </b-row>
+    
     <b-row class="mb-1">
       <b-col class="text-left">
-        <b-button variant="outline-primary" @click="moveList">목록</b-button>
+        <img src="@/assets/board/boardlist.png" alt="boardlist" class="board-button" @click="moveList">
       </b-col>
-      <b-col class="text-right" v-if="userInfo.memberid === article.memberid">
-        <b-button variant="outline-info" size="sm" @click="moveModifyArticle" class="mr-2">글수정</b-button>
-        <b-button variant="outline-danger" size="sm" @click="deleteArticle">글삭제</b-button>
+      <b-col class="text-right" v-if="userInfo.id == article.memberid">
+        <img src="@/assets/board/boardmodify.png" alt="boardlist" class="board-button" @click="moveModifyArticle" style="margin:0 1.5rem;">
+        <img src="@/assets/board/boarddelete.png" alt="boardlist" class="board-button" @click="deleteArticle">
       </b-col>
     </b-row>
     <b-row class="mb-1">
       <b-col>
         <b-card
-          :header-html="`<h3>${article.announcementid}.
-          ${article.title} [${article.hit}]</h3><div><h6>${article.memberid}</div><div>${article.regtime}</h6></div>`"
+          :header-html="`<h1>${article.announcementid}.
+          ${article.title} </h1>
+          <div><h5>작성자: ${article.memberid}</h5></div>
+          <div><h5>작성시간: ${article.regtime}</h5></div>
+          <div><h5>조회수: ${article.hit}</h5>`
+          "
           class="mb-2"
           border-variant="dark"
           no-body
         >
           <b-card-body class="text-left">
-            <div v-html="message"></div>
+            <div v-html="message" style="font-size:25px; font-weight: 500;"></div>
           </b-card-body>
         </b-card>
       </b-col>
@@ -93,4 +93,14 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+h1 {
+		color: #231656;
+		font-weight: 900;
+		margin: 1.0rem 0 1.5rem;
+	}
+  h5 {
+		color: #383838;
+		font-weight: 800;
+	}
+</style>
