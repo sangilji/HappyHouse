@@ -43,8 +43,7 @@
 
     <update id="updateMember" parameterType="Member">
         update member
-        set password = #{password},
-            name = #{name},
+        set name = #{name},
             email = #{email},
             address = #{address},
             number = #{number}
