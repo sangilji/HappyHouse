@@ -74,7 +74,10 @@
               <b-button variant="primary" @click="modify()" class="mr-1 butt"
                 >정보수정</b-button
               >
-              <b-button variant="danger" @click="deleteMember()" class="butt mr-1"
+              <b-button
+                variant="danger"
+                @click="deleteMember()"
+                class="butt mr-1"
                 >회원탈퇴</b-button
               >
             </b-row>
@@ -115,7 +118,7 @@ export default {
     ...mapState(memberStore, ["userInfo"]),
   },
   methods: {
-    ...mapActions(memberStore, ["modifyUser","getUserInfo"]),
+    ...mapActions(memberStore, ["modifyUser", "getUserInfo"]),
     modify() {
       this.isModify = false;
     },
@@ -127,12 +130,14 @@ export default {
     },
     async confirm() {
       await this.modifyUser(this.user);
-        await this.getUserInfo(sessionStorage.getItem("access-token"));
-        this.user = { ...this.userInfo };
-        alert("회원 정보 수정을 완료했습니다.");
-        this.cancel();
+      await this.getUserInfo(sessionStorage.getItem("access-token"));
+      this.user = { ...this.userInfo };
+      alert("회원 정보 수정을 완료했습니다.");
+      this.cancel();
+    },
+    async deleteMember() {
       
-    }
+    },
   },
 };
 </script>
