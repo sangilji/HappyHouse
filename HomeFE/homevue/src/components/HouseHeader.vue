@@ -14,8 +14,13 @@
 				<h2 class="heart-box" id="map">지도</h2>
 		</router-link>
 		</b-nav-item>
-        <b-nav-item>
-			<router-link :to="{name:'heart'}">
+        <b-nav-item v-if="userInfo">
+			<router-link :to="{name:'interests', params:{id:userInfo.id}}">
+			<h2 class="heart-box" id="heart">찜</h2>
+		</router-link>
+		</b-nav-item>
+		<b-nav-item v-else>
+			<router-link :to="{name:'interests'}">
 			<h2 class="heart-box" id="heart">찜</h2>
 		</router-link>
 		</b-nav-item>
@@ -107,9 +112,9 @@ export default {
 			map() {
 				if(this.$route.path!=="/map") this.$router.push({name:"map"});
 			},
-			heart() {
-				if(this.$route.path!=="/heart") this.$router.push({name:"heart"});
-			},
+			// heart() {
+			// 	if(this.$route.path!=="/heart") this.$router.push({name:"heart"});
+			// },
 			board() {
 				if(this.$route.path!=="/board/list") this.$router.push({name:"boardlist"});	
 			},
@@ -138,6 +143,7 @@ export default {
 		color: #231656;
 		font-weight: 900;
 		margin: 2.5rem 0 1.5rem;
+		
 	}
 	.left-box {
 	position: absolute;

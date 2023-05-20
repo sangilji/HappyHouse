@@ -61,29 +61,15 @@ public class InterestsController {
     }
 
     @Description("찜 목록 보기")
-    @GetMapping("/home/{id}/interests")
+    @GetMapping("/interests/{id}")
     public ResponseEntity<?> findInterests(@PathVariable int id,HttpServletRequest request ) throws Exception{
-        Map<String, Object> resultMap = new HashMap<>();
+//        Map<String, Object> resultMap = new HashMap<>();
         HttpStatus status = HttpStatus.OK;
-        if (jwtService.checkToken(request.getHeader("access-token"))) {
-            log.info("사용 가능한 토큰!!!");
-            try {
-                List<HouseDto> houses = interestsService.findInterestsByMemberId(id);
-                resultMap.put("message",SUCCESS);
-                resultMap.put("data",houses);
-
-            } catch (Exception e) {
-                log.error("정보조회 실패 : {}", e);
-                resultMap.put("message", e.getMessage());
-                status = HttpStatus.INTERNAL_SERVER_ERROR;
-            }
-        } else {
-            log.error("사용 불가능 토큰!!!");
-            resultMap.put("message", FAIL);
-            status = HttpStatus.UNAUTHORIZED;
-        }
-
-        return new ResponseEntity<>(resultMap, status);
+        List<HouseDto> houses = interestsService.findInterestsByMemberId(id);
+//        resultMap.put("message",SUCCESS);
+//        resultMap.put("data",houses);
+//        System.out.println(houses.);
+        return new ResponseEntity<List<HouseDto>>(interestsService.findInterestsByMemberId(id),status);
     }
 
 //    @Description("부동산 찜 상자에서 빼기")

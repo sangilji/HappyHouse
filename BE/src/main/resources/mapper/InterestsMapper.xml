@@ -21,11 +21,13 @@
         insert into user_houseinfo values(#{id},#{aptCode},true);
     </insert>
 
-    <select id="findInterestsByMemberId" parameterType="int" resultType="HouseDto">
-        SELECT member_id                                             as id,
+    <select id="findInterestsByMemberId" parameterType="map" resultType="HouseDto">
+        SELECT member_id                                             as memberid,
                houseinfo_aptcode                                     as aptcode,
                apartmentname,
-               concat(d.sidoName, ' ', d.gugunName, ' ', d.dongName) as address
+               concat(d.sidoName, ' ', d.gugunName, ' ', d.dongName) as address,
+               housecomment,
+               flag
         FROM user_houseinfo uh
                  inner join houseinfo h
                             on uh.houseinfo_aptcode = h.aptcode

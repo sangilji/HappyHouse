@@ -1,24 +1,18 @@
 <template>
   <div>
-    <h1>내가 찜한 매물</h1>
-  <b-row
-    class="m-2"
-    @click="selectHouse"
-    @mouseover="colorChange(true)"
-    @mouseout="colorChange(false)"
-    :class="{ 'mouse-over-bgcolor': isColor }"
-  >
-    <b-col cols="2" class="text-center align-self-center">
-      <div class="house-box">
+    <div class="col-6">
+    <div class="text-center align-self-center">
+      <div class="house-box" @click="goHouse">
       <img src="@/assets/house/house-img.png" alt="home" class="img-box">
-      <h2>강남 아이파크원</h2>
+      <h2>{{apartmentName}}</h2>
+      <h3>{{ address }}</h3>
+      <h4>🍎{{ housecomment }}🍎</h4>
+      <div v-if="flag==true" style="width:50px;">
+      <img src="@/assets/interests/full-heart.png" class="heart">
+      </div>
     </div>
-    <!-- </b-col>
-    <b-col cols="10" class="align-self-center">  --> 
-
-    </b-col>
-  </b-row>
-</div>
+  </div>
+</div></div>
 </template>
 
 <script>
@@ -35,13 +29,19 @@ export default {
   },
   props: {
     house: Object,
+    memberid: String,
+    aptCode: String,
+    apartmentName: String,
+    address: String,
+    housecomment:String,
+    flag:Boolean,
   },
   methods: {
     // ...mapActions(houseStore, ["detailHouse"]),
-    selectHouse() {
+    goHouse() {
       // console.log("listRow : ", this.house);
       // this.$store.dispatch("getHouse", this.house);
-      this.detailHouse(this.house);
+      // this.detailHouse(this.house);
     },
     colorChange(flag) {
       this.isColor = flag;
@@ -51,6 +51,9 @@ export default {
 </script>
 
 <style scoped>
+*{
+  font-family: 'NanumGothic';
+}
 .apt {
   width: 50px;
 }
@@ -60,7 +63,7 @@ export default {
 .house-box{
   width:450px;
   height: 600px;
-  margin:0 1.5rem 0;
+  margin:1.2rem 1.5rem 1.2rem;
   background-color:#E2EBED;
 }
 .img-box{
@@ -78,4 +81,17 @@ h1 {
 		font-weight: 900;
 		margin: 2.5rem 0 1.5rem;
 	}
+  h4{
+    margin:7%;
+    color:#9E9E9E;
+  }
+  h3{
+    color:#9E9E9E;
+  }
+  .heart{
+    /* margin:1.0rem 1.0rem 0; */
+    width:43px;
+    bottom:20px;
+    position: absolute;
+  }
 </style>

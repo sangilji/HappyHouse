@@ -4,6 +4,7 @@ import createPersistedState from "vuex-persistedstate";
 import boardStore from "@/store/boardStore";
 import memberStore from "./memberStore";
 import itemStore from "./item/itemStore";
+import interestsStore from "./boardStore";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -14,6 +15,7 @@ export default new Vuex.Store({
   modules: {memberStore,
     boardStore,
     itemStore,
+    interestsStore,
   },
   plugins: [
     createPersistedState({

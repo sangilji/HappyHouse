@@ -16,4 +16,5 @@ public class House {
     private String jibun;
     private String lng; //위도
     private String lat; //경도
+    private String housecomment;
 }

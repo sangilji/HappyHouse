@@ -8,79 +8,57 @@
     <i class="fas fa-keyboard"></i>
     <i class="fas fa-microphone"></i>
     <img src="../assets/main/search-button.png" alt="searchButton" class="search-button" @click="search">
-</div>
+    
+    <h1>추천 매물</h1>
+    <div class="d-flex justify-content-center">
+          <div class="row">
+    <house-list-item v-for="house in houseList" :key="house.aptCode" v-bind="house"></house-list-item>
+
+</div></div></div>
 <br>
 
-<div class="row row-cols-1" style="text-align:center; margin: 2.0rem 5.0rem 6.5rem; ">
-    <div class="col">
-    <b-card-group>
-    <b-list-group horizontal class="row" style="position: relative;
-    left: 50%;
-    transform: translateX(-50%);">
-        <b-list-group-item @click="houseinfo" style="background-color: #E2EBED;" class="col-3">
-        <div class="card">
-            <img src="../assets/house/house-img.png">
-            <hr>
-            <div class="house-title">역삼 아이파크</div>
-            <h3 class="house-price">전세 3억 1500</h3>
-            <div class="house-address">서울시 강남구 역삼동</div>
-            <div class="house-info">🍎전세자금대출 가능🍎주차 가능🍎전망과 채광좋음🍎</div>
-        </div>
-        </b-list-group-item>
-        <b-list-group-item @click="houseinfo" style="background-color: #E2EBED;" class="col-3">
-        <div class="card">
-            <img src="../assets/house/house-img.png">
-            <hr>
-            <div class="house-title">역삼 아이파크</div>
-            <h3 class="house-price">전세 3억 1500</h3>
-            <div class="house-address">서울시 강남구 역삼동</div>
-            <div class="house-info">🍎전세자금대출 가능🍎주차 가능🍎전망과 채광좋음🍎</div>
-        </div>
-        </b-list-group-item>
-        <b-list-group-item @click="houseinfo" style="background-color: #E2EBED;" class="col-3">
-        <div class="card" >
-            <img src="../assets/house/house-img.png">
-            <hr>
-            <div class="house-title">역삼 아이파크</div>
-            <h3 class="house-price">전세 3억 1500</h3>
-            <div class="house-address">서울시 강남구 역삼동</div>
-            <div class="house-info">🍎전세자금대출 가능🍎주차 가능🍎전망과 채광좋음🍎</div>
-        </div>
-        </b-list-group-item>
-        <b-list-group-item @click="houseinfo" style="background-color: #E2EBED;" class="col-3">
-        <div class="card">
-            <img src="../assets/house/house-img.png">
-            <hr>
-            <div class="house-title">역삼 아이파크</div>
-            <h3 class="house-price">전세 3억 1500</h3>
-            <div class="house-address">서울시 강남구 역삼동</div>
-            <div class="house-info">🍎전세자금대출 가능🍎주차 가능🍎전망과 채광좋음🍎</div>
-        </div>
-        
-        </b-list-group-item>
-    </b-list-group>
-    </b-card-group>
-    </div>
-
-    </div>
 </div>
 
 </template>
 
 <script>
+import { mapState } from "vuex";
 // import http from "@/router/axios-common.js";
-// import HouseListItem from "@/components/house/HouseListItem";
+import HouseListItem from "@/components/house/HouseListItem";
+import { getHouseList } from "@/api/house";
 
 export default {
     name: "HouseList",
     components: {
-        // HouseListItem,    
+        HouseListItem,
     },
 
     data() {
         return {
-                
-            }
+            houseList:[],
+        fields:[
+        { key: "apartmentName", label: "아파트이름", tdClass: "tdClass" },
+        { key: "address", label: "아파트주소", tdClass: "tdAddress" },
+        { key: "aptCode", label: "아파트코드", tdClass: "tdClass" },
+        { key: "housecomment", label: "아파트설명", tdClass: "tdClass" }
+        ]
+            };
+        },
+        created(){
+            // let param=this.$route.params.id;
+    getHouseList(
+      
+      ({data})=>{
+          for(let i=0;i<5;i++){
+            let randomIdx=Math.floor(Math.random()*data.length);
+            this.houseList.push(data[randomIdx]);
+        }
+          console.log(this.houseList);
+      },
+      (error)=>{
+        console.log(error);
+      }
+    );
         },
 		methods: {
             search() {
