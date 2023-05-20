@@ -76,7 +76,7 @@
               >
               <b-button
                 variant="danger"
-                @click="deleteMember()"
+                @click="deleteButton()"
                 class="butt mr-1"
                 >회원탈퇴</b-button
               >
@@ -118,7 +118,7 @@ export default {
     ...mapState(memberStore, ["userInfo"]),
   },
   methods: {
-    ...mapActions(memberStore, ["modifyUser", "getUserInfo"]),
+    ...mapActions(memberStore, ["modifyUser", "getUserInfo", "deleteMember"]),
     modify() {
       this.isModify = false;
     },
@@ -135,8 +135,15 @@ export default {
       alert("회원 정보 수정을 완료했습니다.");
       this.cancel();
     },
-    async deleteMember() {
-      
+    async deleteButton() {
+      if (window.confirm("아이디를 삭제하시겠습니까?")) {
+        await this.deleteMember(this.userInfo.userId);
+        
+        sessionStorage.removeItem("access-token"); //저장된 토큰 없애기
+        sessionStorage.removeItem("refresh-token"); //저장된 토큰 없애기
+        if (this.$route.path !== "/") this.$router.push({ name: "main" });
+
+      }
     },
   },
 };

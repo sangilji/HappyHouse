@@ -29,4 +29,9 @@ async function logout(userid, success, fail) {
   await api.get(`/user/logout/${userid}`).then(success).catch(fail);
 }
 
-export { modify, join, login, findById, tokenRegeneration, logout };
+async function deleteUser(userid, success, fail) {
+  api.defaults.headers["refresh-token"] = sessionStorage.getItem("refresh-token"); //axios header에 refresh-token 셋팅
+  await api.delete(`/user/mypage/${userid}`).then(success).catch(fail);
+}
+
+export { deleteUser, modify, join, login, findById, tokenRegeneration, logout };
