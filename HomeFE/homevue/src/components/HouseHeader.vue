@@ -2,7 +2,7 @@
 	<div>
 		<div>
 			<b-navbar toggleable="lg" type="white">
-			<router-link :to="{name:'home'}">	
+			<router-link :to="{name:'home'}">
     <b-navbar-brand style="margin: 0rem 3.0rem 0rem; font-weight: bolder;">
 		<img src="@/assets/header/logo.png" style="width:150px;">
 	</b-navbar-brand>
@@ -11,7 +11,7 @@
     <b-navbar-nav class="collapse navbar-collapse justify-content-end">
         <b-nav-item>
 			<router-link :to="{name:'map'}">
-				<h2 class="heart-box" id="map">지도</h2>
+				<h2 class="heart-box">지도</h2>
 		</router-link>
 		</b-nav-item>
         <b-nav-item>
@@ -99,7 +99,7 @@ export default {
     this.userLogout(this.userInfo.userid);
       sessionStorage.removeItem("access-token"); //저장된 토큰 없애기
       sessionStorage.removeItem("refresh-token"); //저장된 토큰 없애기
-    if (this.$route.path !== "/home") this.$router.push({ name: "home" });
+    if (this.$route.path !== "/") this.$router.push({ name: "main" });
     },
 			home() {		
 				if (this.$route.path !== "/home") this.$router.push({name:"home"});

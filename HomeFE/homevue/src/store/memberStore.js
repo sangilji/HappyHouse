@@ -1,6 +1,6 @@
 import jwtDecode from "jwt-decode";
 import router from "@/router";
-import { join, login, findById, tokenRegeneration, logout } from "@/api/member";
+import { modify,join, login, findById, tokenRegeneration, logout } from "@/api/member";
 
 const memberStore = {
   namespaced: true,
@@ -88,6 +88,24 @@ const memberStore = {
         }
       );
     },
+    async modifyUser({ commit, dispatch }, user) {
+      await modify(
+        user,
+        ({ data }) => {
+          if (data.message === "success") {
+            console.log("수정완료");
+          } else {
+            console.log(data.message);
+          }
+        },
+        async (error) => {
+          console.log("getUserInfo() error code [토큰 만료되어 사용 불가능.] ::: ", error.response.status);
+          commit("SET_IS_VALID_TOKEN", false);
+          await dispatch("tokenRegeneration");
+        }
+
+      )
+    },
     async getUserInfo({ commit, dispatch }, token) {
       let decodeToken = jwtDecode(token);
       console.log("2. getUserInfo() decodeToken :: ", decodeToken);
@@ -97,7 +115,7 @@ const memberStore = {
         ({ data }) => {
           if (data.message === "success") {
             commit("SET_USER_INFO", data.userInfo);
-            // console.log("3. getUserInfo data >> ", data);
+            console.log("3. getUserInfo data >> ", data);
           } else {
             console.log("유저 정보 없음!!!!");
           }

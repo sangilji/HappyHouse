@@ -171,7 +171,7 @@ public class MemberController {
         logger.debug("token : {}, memberDto : {}", token, member);
         if (jwtService.checkToken(token)) {
             if (token.equals(memberService.getRefreshToken(member.getUserId()))) {
-                String accessToken = jwtService.createAccessToken("userid", member.getUserId());
+                String accessToken = jwtService.createAccessToken("user", member);
                 logger.debug("token : {}", accessToken);
                 logger.debug("정상적으로 액세스토큰 재발급!!!");
                 resultMap.put("access-token", accessToken);

@@ -10,6 +10,11 @@ async function join(user, success, fail) {
   await api.post(`/user`, JSON.stringify(user)).then(success).catch(fail);
 }
 
+async function modify(user, success, fail) {
+  api.defaults.headers["access-token"] = sessionStorage.getItem("access-token");
+  await api.put(`/user/mypage`, JSON.stringify(user)).then(success).catch(fail);
+}
+
 async function findById(id, success, fail) {
   api.defaults.headers["access-token"] = sessionStorage.getItem("access-token");
   await api.get(`/user/mypage/${id}`).then(success).catch(fail);
@@ -24,4 +29,4 @@ async function logout(userid, success, fail) {
   await api.get(`/user/logout/${userid}`).then(success).catch(fail);
 }
 
-export { join, login, findById, tokenRegeneration, logout };
+export { modify, join, login, findById, tokenRegeneration, logout };
