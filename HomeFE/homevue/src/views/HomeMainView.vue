@@ -1,10 +1,20 @@
 <template>
-  <div  class="about">
+  <div >
     <house-header></house-header>
     <house-main></house-main>
-    <board-main></board-main>
+    <div class="container-fluid">
+  <div class="d-flex flex-wrap justify-content-center">
+    <div class="col-md-6"> <!-- 첫 번째 컴포넌트 -->
+      <board-main></board-main>
+    </div>
+    <div class="col-md-6"> <!-- 두 번째 컴포넌트 -->
+      <news-item></news-item>
+    </div>
+  </div>
+</div>
     <house-footer></house-footer>
   </div>
+  
 </template>
 
 <script>
@@ -13,6 +23,8 @@ import HouseHeader from '@/components/HouseHeader.vue';
 import HouseMain from "../components/HouseMain.vue";
 import BoardMain from "../components/board/BoardMain.vue";
 import HouseFooter from "../components/layout/HouseFooter.vue";
+import NewsItem from "@/components/News.vue";
+
 export default {
   name: 'HouseMainView',
   components: {
@@ -20,6 +32,8 @@ export default {
     HouseMain,
     BoardMain,
     HouseFooter,
+    NewsItem,
+
   }
 }
 </script>

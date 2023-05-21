@@ -13,7 +13,7 @@
     <div class="d-flex justify-content-center">
           <div class="row">
     <house-list-item v-for="house in houseList" :key="house.aptCode" v-bind="house"></house-list-item>
-
+            
 </div></div></div>
 <br>
 
@@ -23,10 +23,8 @@
 
 <script>
 import { mapState } from "vuex";
-// import http from "@/router/axios-common.js";
 import HouseListItem from "@/components/house/HouseListItem";
 import { getHouseList } from "@/api/house";
-
 export default {
     name: "HouseList",
     components: {
@@ -36,6 +34,7 @@ export default {
     data() {
         return {
             houseList:[],
+            temp:[],
         fields:[
         { key: "apartmentName", label: "아파트이름", tdClass: "tdClass" },
         { key: "address", label: "아파트주소", tdClass: "tdAddress" },
@@ -59,6 +58,7 @@ export default {
         console.log(error);
       }
     );
+        
         },
 		methods: {
             search() {
