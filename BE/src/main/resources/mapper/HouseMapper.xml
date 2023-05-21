@@ -24,8 +24,8 @@
 
 
     <select id="searchByDong" resultType="HouseDto" parameterType="string">
-        select round(avg(replace(hd.dealAmount,',','')),-3) as dealAmount, round(avg(hd.area),2) as area, max(hd.floor) as floor, hd.aptCode, tmp.lat, tmp.lng, tmp.apartmentName, tmp.address
-        from housedeal hd inner join (SELECT hi.aptCode, hi.apartmentName, concat(sidoName,' ',gugunName,' ',dong,' ',roadName,' ',jibun) address, lng, lat
+        select round(avg(replace(hd.dealAmount,',','')),-3) as dealAmount, round(avg(hd.area),2) as area, max(hd.floor) as floor, hd.aptCode, tmp.lat, tmp.lng, tmp.apartmentName, tmp.address,tmp.jibun,tmp.buildYear
+        from housedeal hd inner join (SELECT hi.aptCode, hi.apartmentName, concat(sidoName,' ',gugunName,' ',dong,' ',roadName,' ',jibun) address, lng, lat,jibun,buildyear
                                       FROM houseinfo hi
                                                INNER JOIN dongcode dc ON hi.dongCode = dc.dongCode
                                       WHERE dc.dongName like concat('%',#{dong},'%'))
@@ -43,6 +43,7 @@
         select *
         from housedeal
         where aptCode=#{aptCode}
+        order by dealYear desc;
     </select>
 
 </mapper>
