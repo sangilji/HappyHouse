@@ -20,7 +20,7 @@
 		</router-link>
 		</b-nav-item>
 		<b-nav-item v-else>
-			<router-link :to="{name:'interests'}">
+			<router-link :to="{name:'interests', params:{id:null}}">
 			<h2 class="heart-box" id="heart">찜</h2>
 		</router-link>
 		</b-nav-item>

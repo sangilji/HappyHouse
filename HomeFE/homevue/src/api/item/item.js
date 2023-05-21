@@ -10,4 +10,16 @@ function gugunList(params, success, fail) {
   api.get(`/map/gugun`, { params: params }).then(success).catch(fail);
 }
 
-export { sidoList, gugunList };
+function dongList(params, success, fail) {
+  api.get(`/map/dong`, { params: params }).then(success).catch(fail);
+}
+
+async function getHouseList(params, success, fail) {
+  await api.get(`/home/search`,{params}).then(success).catch(fail);
+}
+
+async function houseDeal(aptCode, success, fail) {
+  await api.get(`/home/housedeal/${aptCode}`).then(success).catch(fail);
+}
+
+export { sidoList, gugunList, dongList, getHouseList, houseDeal };

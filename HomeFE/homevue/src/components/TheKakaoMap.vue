@@ -1,10 +1,12 @@
 <template>
   <div>
-    <div id="map"></div>
+    <div id="map" style="width: 100%; height: 82vh"></div>
   </div>
 </template>
 
 <script>
+import { mapMutations, mapState } from "vuex";
+const dealInfoStore = "dealInfoStore";
 export default {
   name: "KakaoMap",
   components: {},
@@ -15,18 +17,15 @@ export default {
       markers: [],
     };
   },
-  props: {
-    chargers: [],
-  },
-  watch: {
-    chargers() {
-      console.log("충전소", this.chargers);
-      this.positions = [];
-      this.chargers.forEach((charger) => {
-        let obj = {};
-        obj.title = charger.statNm;
-        obj.latlng = new kakao.maps.LatLng(charger.lat, charger.lng);
 
+  watch: {
+    houseList() {
+      console.log("houseList change");
+      this.positions = [];
+      this.houseList.forEach((house) => {
+        let obj = {};
+        obj.title = house.apartmentName;
+        obj.latlng = new kakao.maps.LatLng(house.lat, house.lng);
         this.positions.push(obj);
       });
       this.loadMaker();
@@ -41,7 +40,11 @@ export default {
       this.loadScript();
     }
   },
+  computed: {
+    ...mapState(dealInfoStore, ["houseList"]),
+  },
   methods: {
+    ...mapMutations(dealInfoStore,["SET_CURRENT_INDEX"]),
     // api 불러오기
     loadScript() {
       const script = document.createElement("script");
@@ -58,7 +61,7 @@ export default {
     loadMap() {
       const container = document.getElementById("map");
       const options = {
-        center: new window.kakao.maps.LatLng(33.450701, 126.570667),
+        center: new kakao.maps.LatLng(37.5012647456244, 127.03958123605),
         level: 3,
       };
 
@@ -89,15 +92,27 @@ export default {
         this.markers.push(marker);
       });
       console.log("마커수 ::: " + this.markers.length);
-
+      if (this.positions != 0) {
+        this.addInfoWindow();
+      }
       // 4. 지도를 이동시켜주기
       // 배열.reduce( (누적값, 현재값, 인덱스, 요소)=>{ return 결과값}, 초기값);
-      const bounds = this.positions.reduce(
-        (bounds, position) => bounds.extend(position.latlng),
-        new kakao.maps.LatLngBounds()
-      );
+      if (this.positions.length == 0) {
+        var moveLatLon = new kakao.maps.LatLng(
+          37.5012647456244,
+          127.03958123605
+        );
 
-      this.map.setBounds(bounds);
+        // 지도 중심을 이동 시킵니다
+        this.map.setCenter(moveLatLon);
+      } else {
+        const bounds = this.positions.reduce(
+          (bounds, position) => bounds.extend(position.latlng),
+          new kakao.maps.LatLngBounds()
+        );
+
+        this.map.setBounds(bounds);
+      }
     },
     deleteMarker() {
       console.log("마커 싹 지우자!!!", this.markers.length);
@@ -107,6 +122,33 @@ export default {
           item.setMap(null);
         });
       }
+    },
+    changeCurrentIndex(index){
+      console.log(index);
+      this.SET_CURRENT_INDEX(index);
+    },
+    addInfoWindow() {
+      console.log("addiw");
+      this.markers.forEach((marker, index) => {
+        let item = this.houseList[index];
+        let infoContents = `<div style="width:150px;text-align:center;padding:6px 0;">${item.apartmentName}</div>`;
+
+        let infoWindow = new kakao.maps.InfoWindow({
+            content: infoContents
+        });
+        kakao.maps.event.addListener(marker, 'click', function() {
+        $this.changeCurrentIndex(index);
+      });
+        let $this = this;
+        kakao.maps.event.addListener(marker, 'mouseover', function() {
+          infoWindow.open($this.map, marker);
+            // $this.curInfoWindow = infoWindow;
+          }
+        );
+        kakao.maps.event.addListener(marker, 'mouseout', function() {
+          infoWindow.close();
+        });
+      });
     },
   },
 };

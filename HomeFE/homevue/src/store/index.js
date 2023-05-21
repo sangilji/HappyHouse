@@ -5,6 +5,7 @@ import boardStore from "@/store/boardStore";
 import memberStore from "./memberStore";
 import itemStore from "./item/itemStore";
 import interestsStore from "./boardStore";
+import dealInfoStore from "./dealInfoStore"
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -16,6 +17,7 @@ export default new Vuex.Store({
     boardStore,
     itemStore,
     interestsStore,
+    dealInfoStore,
   },
   plugins: [
     createPersistedState({
