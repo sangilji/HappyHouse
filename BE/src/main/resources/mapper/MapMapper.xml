@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.myhouse.mapper.MapMapper">
+
+    <select id="getSido" resultType="sidoGugunCodeDto">
+        select left(sidoCode,2) sidoCode, sidoName
+        from sidocode
+        order by sidoCode
+    </select>
+
+    <select id="getGugun" parameterType="string" resultType="sidoGugunCodeDto">
+        SELECT distinct(substring(dongcode,3,3)) gugunCode, gugunName from dongcode where dongcode like concat(#{sidoCode},"%") and dongName
+            is not null;
+    </select>
+
+    <select id="getDong" parameterType="string" resultType="sidoGugunCodeDto">
+        SELECT distinct(substring(dongcode,6)) dongCode, dongName from dongcode where dongcode like concat(#{sidoCode},#{gugunCode},"%") and dongName
+            is not null;
+    </select>
+
+</mapper>

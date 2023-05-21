@@ -2,19 +2,14 @@ package com.ssafy.myhouse.controller;
 
 import com.ssafy.myhouse.service.houseService.HouseService;
 import com.ssafy.myhouse.service.houseService.ReviewService;
-import com.ssafy.myhouse.vo.houseVo.Address;
 import com.ssafy.myhouse.vo.houseVo.House;
 import com.ssafy.myhouse.vo.houseVo.HouseDto;
-import com.ssafy.myhouse.vo.houseVo.Review;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Description;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,14 +31,15 @@ public class HouseController {
 
     @Description("주소로 정보 조회")
     @GetMapping("/home/search")
-    public ResponseEntity<?> searchByAddress(@ModelAttribute Address address) throws Exception{
-        List<HouseDto> houses = houseService.searchByAddress(address);
+    public ResponseEntity<?> searchByDongCode(@RequestParam String dongCode) throws Exception{
+        List<HouseDto> houses = houseService.searchByDongCode(dongCode);
+        System.out.println(houses.size());
         return new ResponseEntity<>(houses, HttpStatus.OK);
     }
 
     @Description("동으로 정보 조회")
     @GetMapping("/home/search/{dong}")
-    public ResponseEntity<?> searchByAddress(@PathVariable String dong) throws Exception{
+    public ResponseEntity<?> searchByDong(@PathVariable String dong) throws Exception{
         List<HouseDto> houses = houseService.searchByDong(dong);
         return new ResponseEntity<>(houses, HttpStatus.OK);
     }
@@ -55,6 +51,12 @@ public class HouseController {
         map.put("houseInfo", houseService.selectOne(no));
         map.put("review", reviewService.selectAllReview(aptCode));
         return ResponseEntity.ok().body(map);
+    }
+
+    @Description("거래가 조회")
+    @GetMapping("/home/housedeal/{aptCode}")
+    public ResponseEntity<?> getHouseDeal(@PathVariable String aptCode) throws Exception{
+        return new ResponseEntity<>(houseService.searchHouseDeal(aptCode),HttpStatus.OK);
     }
 
 

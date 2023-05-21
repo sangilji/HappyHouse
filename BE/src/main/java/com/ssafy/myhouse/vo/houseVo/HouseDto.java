@@ -8,11 +8,13 @@ public class HouseDto {
     private int dealAmount;
     private double area;
     private int floor;
+    private String buildYear;
     private String aptCode;
     private double lat;
     private double lng;
     private String apartmentName;
     private String address;
     private String housecomment;
+    private String jibun;
     private boolean flag;
 }
