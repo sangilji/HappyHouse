@@ -156,62 +156,98 @@
         </div>
       </div>
       <div v-if="listVisible" id="showList" class="card p-0 bg-secondary">
-        <div class="bg-white mb-2">
-          <div
-            class="text-center text-white py-2"
-            style="background-color: #b0c4de"
-          >
-            <h6>전체보기</h6>
+        <div v-if="detail">
+          <div class="bg-white mb-2">
+            <div
+              class="text-center text-white py-2"
+              style="background-color: #b0c4de"
+              @click="allButton()"
+            >
+              <h6>전체보기</h6>
+            </div>
           </div>
-        </div>
-        <!-- 아파트 정보 요약 -->
-        <div class="bg-white mb-2">
-          <div
-            class="p-3 border-bottom d-flex justify-content-between align-items-center"
-          >
-            <h4 class="m-0">{{ houseList[currentIndex].apartmentName }}</h4>
-            <!-- <HeartBtn v-if="isAuth&&level==2" class="px-1" :enabled="houseList[curIndex].bookmark" @changeHeartBtn="onBookmarkHouse" /> -->
-          </div>
-          <!-- contents -->
-          <div class="px-3">
-            <div class="border-bottom d-flex py-2">
-              <div class="text-secondary w-25">주소</div>
-              <div>
-                {{ houseList[currentIndex].dongName }}
-                {{ houseList[currentIndex].jibun }}
+          <!-- 아파트 정보 요약 -->
+          <div class="bg-white mb-2">
+            <div
+              class="p-3 border-bottom d-flex justify-content-between align-items-center"
+            >
+              <h4 class="m-0">{{ houseList[currentIndex].apartmentName }}</h4>
+              <!-- <HeartBtn v-if="isAuth&&level==2" class="px-1" :enabled="houseList[curIndex].bookmark" @changeHeartBtn="onBookmarkHouse" /> -->
+            </div>
+            <!-- contents -->
+            <div class="px-3">
+              <div class="border-bottom d-flex py-2">
+                <div class="text-secondary w-25">주소</div>
+                <div>
+                  {{ houseList[currentIndex].dongName }}
+                  {{ houseList[currentIndex].jibun }}
+                </div>
+              </div>
+              <div class="d-flex py-2">
+                <div class="text-secondary w-25">건축년도</div>
+                <div>{{ houseList[currentIndex].buildYear }}</div>
               </div>
             </div>
-            <div class="d-flex py-2">
-              <div class="text-secondary w-25">건축년도</div>
-              <div>{{ houseList[currentIndex].buildYear }}</div>
+          </div>
+          <!-- 실거래가 -->
+          <div class="bg-white mb-2">
+            <div class="border-bottom"><h5 class="p-3 m-0">실거래가</h5></div>
+            <div>
+              <table class="w-100">
+                <thead class="bg-secondary text-white">
+                  <tr>
+                    <td class="ps-3 py-1">거래일</td>
+                    <td>거래가격</td>
+                    <td>면적</td>
+                    <td>층수</td>
+                  </tr>
+                </thead>
+                <tbody class="px-2">
+                  <tr
+                    v-for="(item, index) in houseDealInfo"
+                    :key="index"
+                    class="border-bottom"
+                  >
+                    <td class="ps-3 py-2">{{ item.dealYear }}</td>
+                    <td>{{ item.dealAmount }}</td>
+                    <td>{{ item.area }}</td>
+                    <td>{{ item.floor }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- 매물정보 -->
+        </div>
+        <div v-else>
+          <div class="bg-white mb-2">
+            <div class="border-bottom"><h5 class="p-3 m-0">아파트 정보</h5></div>
+            <div>
+              <table class="w-100">
+                <thead class="bg-secondary text-white">
+                  <tr>
+                    <td class="ps-3 py-1">아파트</td>
+                    <td>건축년도</td>
+                    <td>주소</td>
+                  </tr>
+                </thead>
+                <tbody class="px-2">
+                  <tr
+                    v-for="(item, index) in houseList"
+                    :key="index"
+                    class="border-bottom"
+                    @click="detailButton(index)"
+                  >
+                    <td class="ps-3 py-2">{{ item.apartmentName }}</td>
+                    <td>{{ item.buildYear }}</td>
+                    <td>{{ item.dongName }} {{ item.jibun }}</td>
+                    
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
-         <!-- 실거래가 -->
-         <div class="bg-white mb-2">
-          <div class="border-bottom"><h5 class="p-3 m-0">실거래가</h5></div>
-          <div>
-            <table class="w-100">
-              <thead class="bg-secondary text-white">
-                <tr>
-                  <td class="ps-3 py-1">거래일</td>
-                  <td>거래가격</td>
-                  <td>면적</td>
-                  <td>층수</td>
-                </tr>
-              </thead>
-              <tbody class="px-2">
-                <tr v-for="(item, index) in houseDealInfo" :key="index" class="border-bottom">
-                  <td class="ps-3 py-2">{{item.dealYear}}</td>
-                  <td>{{item.dealAmount}}</td>
-                  <td>{{item.area}}</td>
-                  <td>{{item.floor}}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-         <!-- 매물정보 -->
       </div>
     </div>
   </div>
@@ -236,7 +272,9 @@ export default {
       selectDongName: null,
       eventFrom: "",
       listVisible: false,
-      dealInfo:[],
+      dealInfo: [],
+      inputKeyword: "",
+      detail: false,
     };
   },
   created() {
@@ -248,10 +286,20 @@ export default {
   },
   watch: {
     currentIndex() {
-      if (!this.listVisible) {
-        this.listVisible = true;
+      if (!this.detail) {
+        this.detail = true;
       }
       this.getHouseDeal();
+    },
+    searchType(val) {
+      console.log("val=" + val);
+      if (val === "D") {
+        this.CLEAR_SIDO_LIST();
+        this.CLEAR_GUGUN_LIST();
+        this.CLEAR_DONG_LIST();
+      } else if (val === "K") {
+        console.log("watch K");
+      }
     },
   },
 
@@ -263,13 +311,21 @@ export default {
       "getDong",
       "getHouseListByDong",
       "getHouseListByKeyword",
-      "getDealInfo"
+      "getDealInfo",
     ]),
     ...mapMutations(dealInfoStore, [
       "CLEAR_SIDO_LIST",
       "CLEAR_GUGUN_LIST",
       "CLEAR_DONG_LIST",
+      "SET_CURRENT_INDEX"
     ]),
+    allButton(){
+      this.detail = false;
+    },
+    detailButton(index){
+      this.detail = true;
+      this.SET_CURRENT_INDEX(index);
+    },
     onClickLogout() {
       console.log(this.userInfo.userid);
       this.userLogout(this.userInfo.userid);
@@ -277,9 +333,8 @@ export default {
       sessionStorage.removeItem("refresh-token"); //저장된 토큰 없애기
       if (this.$route.path !== "/") this.$router.push({ name: "main" });
     },
-    async getHouseDeal(){
+    async getHouseDeal() {
       await this.getDealInfo();
-      console.log(this.houseDealInfo);
     },
     changeSido() {
       this.CLEAR_GUGUN_LIST();
@@ -291,7 +346,6 @@ export default {
       }
     },
     onGuMenuChange() {
-      
       this.CLEAR_DONG_LIST();
       if (this.selectGuName !== null) {
         this.selectDongName = null;
@@ -309,7 +363,17 @@ export default {
         );
       }
       console.log(this.houseList.length);
+      if (this.houseList.length!=0 &&!this.listVisible) {
+        this.listVisible = true;
+      }
       this.$swal(`${this.houseList.length}건 검색 완료`, { icon: "success" });
+    },
+    async onKeywordSearch() {
+      if (this.inputKeyword == "") {
+        this.$swal("키워드를 입력하세요.", { icon: "error" });
+      } else {
+        await this.getHouseListByKeyword(this.inputKeyword);
+      }
     },
     initSearchByDongBox() {
       this.getGugun(11);

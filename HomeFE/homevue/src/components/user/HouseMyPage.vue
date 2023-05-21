@@ -136,14 +136,24 @@ export default {
       this.cancel();
     },
     async deleteButton() {
-      if (window.confirm("아이디를 삭제하시겠습니까?")) {
-        await this.deleteMember(this.userInfo.userId);
-        
-        sessionStorage.removeItem("access-token"); //저장된 토큰 없애기
-        sessionStorage.removeItem("refresh-token"); //저장된 토큰 없애기
-        if (this.$route.path !== "/") this.$router.push({ name: "main" });
+      this.$swal("아이디를 삭제하시겠습니까?", {
+        icon: "warning",
+        buttons: {
+          confirm: "삭제",
+          cancel: "취소",
+        },
+      }).then((result) => {
+        if (result != null) {
+          this.deleteMember(this.userInfo.userId);
 
-      }
+          sessionStorage.removeItem("access-token"); //저장된 토큰 없애기
+          sessionStorage.removeItem("refresh-token"); //저장된 토큰 없애기
+          if (this.$route.path !== "/") this.$router.push({ name: "main" });
+
+          this.$swal("삭제되었습니다.", { icon: "success" });
+        }
+      });
+     
     },
   },
 };

@@ -18,8 +18,12 @@ async function getHouseList(params, success, fail) {
   await api.get(`/home/search`,{params}).then(success).catch(fail);
 }
 
+async function getHouseList2(dong, success, fail) {
+  await api.get(`/home/search/${dong}`,).then(success).catch(fail);
+}
+
 async function houseDeal(aptCode, success, fail) {
   await api.get(`/home/housedeal/${aptCode}`).then(success).catch(fail);
 }
 
-export { sidoList, gugunList, dongList, getHouseList, houseDeal };
+export { sidoList, gugunList, dongList, getHouseList,getHouseList2, houseDeal };
