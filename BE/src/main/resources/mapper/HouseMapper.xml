@@ -4,8 +4,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ssafy.myhouse.mapper.HouseMapper">
     <select id="selectAll" resultType="HouseDto">
-        select round(avg(replace(hd.dealAmount,',','')),-3) as dealAmount, round(avg(hd.area),2) as area, max(hd.floor) as floor, hd.aptCode, tmp.lat, tmp.lng, tmp.apartmentName, tmp.address
-        from housedeal hd inner join (SELECT hi.aptCode, hi.apartmentName, concat(sidoName,' ',gugunName,' ',dong,' ',roadName,' ',jibun) address, lng, lat
+        select round(avg(replace(hd.dealAmount,',','')),-3) as dealAmount, round(avg(hd.area),2) as area, max(hd.floor) as floor, hd.aptCode, tmp.lat, tmp.lng, tmp.apartmentName, tmp.address,tmp.housecomment
+        from housedeal hd inner join (SELECT hi.aptCode, hi.apartmentName, concat(sidoName,' ',gugunName,' ',dong,' ',roadName,' ',jibun) address, lng, lat, hi.housecomment
                                       FROM houseinfo hi
                                                INNER JOIN dongcode dc ON hi.dongCode = dc.dongCode)
             tmp on hd.aptCode = tmp.aptCode

@@ -84,20 +84,20 @@ const routes = [
     component: BoardViewview,
   },
   {
-    path: "boardupdate",
+    path: "/boardupdate",
     name: "boardmodify",
     beforeEnter: onlyAuthUser,
     component: () => import(/* webpackChunkName: "board" */ "@/components/board/BoardModify"),
   },
   {
-    path: "boarddelete/:announcementid",
+    path: "/boarddelete/:announcementid",
     name: "boarddelete",
     beforeEnter: onlyAuthUser,
     component: () => import(/* webpackChunkName: "board" */ "@/components/board/BoardDelete"),
   },
   {
-    path: "/heart",
-    name: "heart",
+    path: "/interests/:id",
+    name: "interests",
     beforeEnter: onlyAuthUser,
     component: () => import(/* webpackChunkName: "board" */ "@/components/Heart"),
   }

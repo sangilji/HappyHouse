@@ -33,6 +33,7 @@ public class InterestsServiceImpl implements InterestsService {
 
     @Override
     public List<HouseDto> findInterestsByMemberId(int id) throws Exception {
+        System.out.println(mapper.findInterestsByMemberId(id).size());
         return mapper.findInterestsByMemberId(id);
     }
 }

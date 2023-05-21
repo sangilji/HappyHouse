@@ -5,12 +5,12 @@
 <mapper namespace="com.ssafy.myhouse.mapper.BoardMapper">
 
     <insert id="writeArticle" parameterType="Board">
-        insert into announcement ( title, member_id, hit, regtime)
-        values (#{title}, #{memberid}, 0, now())
+        insert into announcement ( title, member_id, content, hit, regtime)
+        values (#{title},#{content}, #{memberid}, 0, now())
     </insert>
 
     <select id="listArticle" parameterType="map" resultType="Board">
-        select announcementid, member_id, title, content, hit,
+        select announcementid, member_id memberid, title, content, hit,
         case when date_format(regtime, '%Y%m%d') = date_format(now(), '%Y%m%d')
         then date_format(regtime, '%H:%i:%s')
         else date_format(regtime, '%y.%m.%d')
@@ -42,7 +42,7 @@
     </select>
 
     <select id="getArticle" parameterType="int" resultType="Board">
-        select announcementid, member_id, title, content, hit, regtime
+        select announcementid, member_id memberid, title, content, hit, regtime
         from announcement
         where announcementid = #{announcementid}
     </select>

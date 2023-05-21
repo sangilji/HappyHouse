@@ -8,9 +8,11 @@ public class HouseDto {
     private int dealAmount;
     private double area;
     private int floor;
-    private Long aptCode;
+    private String aptCode;
     private double lat;
     private double lng;
     private String apartmentName;
     private String address;
+    private String housecomment;
+    private boolean flag;
 }
