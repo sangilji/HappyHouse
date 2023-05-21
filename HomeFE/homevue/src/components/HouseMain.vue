@@ -49,7 +49,7 @@ export default {
     getHouseList(
       
       ({data})=>{
-          for(let i=0;i<5;i++){
+          for(let i=0;i<=5;i++){
             let randomIdx=Math.floor(Math.random()*data.length);
             this.houseList.push(data[randomIdx]);
         }
