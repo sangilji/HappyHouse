@@ -1,8 +1,9 @@
-import { reviewList } from "@/api/review";
+import { reviewList,addReview } from "@/api/review";
 const dealInfoStore = {
   namespaced: true,
   state: {
-    reviewList:[]
+    reviewList:[],
+    
   }
   , actions: {
     async getReview({ commit }, aptCode) {
@@ -19,6 +20,17 @@ const dealInfoStore = {
           console.log(error);
         }
       );
+    },
+    async newReview(store,review){
+      await addReview(
+        review,
+        ({data})=>{
+          console.log(data);
+        },
+        (error)=>{
+          console.log(error);
+        }
+      )
     }
   }
   , mutations: {

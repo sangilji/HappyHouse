@@ -37,6 +37,7 @@
                   <h2 class="mypage-box" id="mypage">마이페이지</h2>
                 </router-link>
               </b-nav-item>
+
               <!-- after login -->
               <div class="d-flex justify-content-center" v-if="userInfo">
                 <b-nav-item>
@@ -174,7 +175,7 @@
                 <div class="houseImg" style="width: auto; height: 120px"></div>
               </b-col>
               <b-col style="margin: auto">
-                <h4 class="m-0">
+                <h4 class="m-0" v-if="currentIndex>=0">
                   {{ houseList[currentIndex].apartmentName }}
                 </h4>
               </b-col>
@@ -185,7 +186,7 @@
             <div class="px-3">
               <div class="border-bottom d-flex py-2">
                 <div class="text-secondary w-25">주소</div>
-                <div>
+                <div v-if="currentIndex>=0">
                   {{ houseList[currentIndex].address }}
                   {{ houseList[currentIndex].dongName }}
                   {{ houseList[currentIndex].jibun }}
@@ -193,7 +194,9 @@
               </div>
               <div class="d-flex py-2">
                 <div class="text-secondary w-25">건축년도</div>
-                <div>{{ houseList[currentIndex].buildYear }}년</div>
+                <div v-if="currentIndex>=0">
+                  {{ houseList[currentIndex].buildYear }}년
+                </div>
               </div>
             </div>
           </div>
@@ -228,26 +231,53 @@
           <!-- 거주민 리뷰 -->
           <div class="bg-white mb-2">
             <div class="d-flex justify-content-between align-items-center">
-              <h5 class="p-3 m-0">리뷰</h5>
-              <i v-if="userInfo" class="bi bi-plus-circle px-3 cursor-pointer"></i>
+              <h5 class="p-3 m-0">거주자 리뷰</h5>
+              <i
+                v-if="userInfo"
+                @click="showReviewInsertModal"
+                class="bi bi-plus-circle px-3 cursor-pointer"
+              ></i>
             </div>
             <div v-if="reviewList.length == 0" class="p-3 border-top">
               <div>등록된 리뷰가 없습니다.</div>
             </div>
             <b-list-group v-else>
               <b-list-group-item
-                
                 class="flex-column align-items-start"
                 v-for="(review, index) in reviewList"
                 :key="index"
               >
                 <div class="d-flex w-100 justify-content-between">
-                  <h6 class="mb-1">ssafy(김싸피)</h6>
-                  <StarRating v-model="review.stars" increment="0.5" :read-only="true" :show-rating="false" :rounded-corners="true" :star-size="20" :star-points="[23,2, 14,17, 0,19, 10,34, 7,50, 23,43, 38,50, 36,34, 46,19, 31,17]"></StarRating>
+                  <div >
+                    <strong class="mb-1"
+                      >{{ review.memberId }}({{ review.name }})&nbsp;&nbsp;
+                    </strong>
+                    {{ review.createdDate }} 
+                  </div>
+
+                  <StarRating
+                    v-model="review.stars"
+                    :increment="increment"
+                    :read-only="true"
+                    :show-rating="false"
+                    :rounded-corners="true"
+                    :star-size="20"
+                    :star-points="[
+                      23, 2, 14, 17, 0, 19, 10, 34, 7, 50, 23, 43, 38, 50, 36,
+                      34, 46, 19, 31, 17,
+                    ]"
+                  ></StarRating>
                 </div>
-                <p class="mb-1" style="text-align: justify;">{{review.content}}</p>
-                <small style="float:right;">싫어요{{ review.ulikes }}</small>
-                <small style="float:right">좋아요{{ review.likes }}</small>
+                <div class="d-flex py-2">
+                  <div class="text-secondary w-70" style="margin-bottom: 10px;">
+                    타입: {{ review.residenceType }}  |  계약년도: {{ review.residenceYear }}  |  층: {{ review.residenceFloor }}
+                  </div>
+                </div>
+                <p class="mb-1" style="text-align: justify">
+                  {{ review.content }}
+                </p>
+                <small style="float: right">싫어요 {{ review.ulikes}} </small>
+                <small style="float: right">좋아요 {{ review.likes }} </small>
               </b-list-group-item>
             </b-list-group>
           </div>
@@ -270,13 +300,16 @@
                   <tr
                     v-for="(item, index) in houseList"
                     :key="index"
-                    class="border-bottom"
+                    class="border-bottom list-group-item-action"
                     @click="detailButton(index)"
                   >
                     <td class="ps-3 py-2">
                       <div class="houseImg"></div>
                     </td>
                     <td>
+                      <div>
+                        <HeartBtn></HeartBtn>
+                      </div>
                       <div>
                         {{ item.apartmentName }}
                       </div>
@@ -292,13 +325,21 @@
         </div>
       </div>
     </div>
+    <review-insert-modal
+      v-if="detail"
+      v-on:parent-modal-close="reviewInsertModalClose"
+      :memberId="userInfo.id"
+    />
   </div>
 </template>
 
 <script>
 import TheKakaoMap from "@/components/TheKakaoMap.vue";
 import { mapState, mapActions, mapGetters, mapMutations } from "vuex";
-import StarRating from 'vue-star-rating'
+import StarRating from "vue-star-rating";
+import ReviewInsertModal from "@/components/ReviewInsertModal.vue";
+import { Modal } from "bootstrap";
+import HeartBtn from "@/components/icon/HeartBtn.vue"
 
 const memberStore = "memberStore";
 const dealInfoStore = "dealInfoStore";
@@ -308,7 +349,9 @@ export default {
   name: "AptMapview",
   components: {
     TheKakaoMap,
-    StarRating
+    StarRating,
+    ReviewInsertModal,
+    HeartBtn
   },
   data() {
     return {
@@ -321,6 +364,8 @@ export default {
       dealInfo: [],
       inputKeyword: "",
       detail: false,
+      increment: 0.5,
+      reviewInsertModal: null,
     };
   },
   created() {
@@ -383,10 +428,17 @@ export default {
       this.detail = true;
       this.SET_CURRENT_INDEX(index);
     },
+    showReviewInsertModal() {
+      this.reviewInsertModal.show();
+    },
+    reviewInsertModalClose(aptCode) {
+      this.getReview(aptCode);
+      this.reviewInsertModal.hide();
+    },
     async onClickLogout() {
       await this.userLogout(this.userInfo.userid);
       console.log(this);
-      console.log(88,this.isLogin);
+      console.log(88, this.isLogin);
       sessionStorage.removeItem("access-token"); //저장된 토큰 없애기
       sessionStorage.removeItem("refresh-token"); //저장된 토큰 없애기
       if (this.$route.path !== "/") this.$router.push({ name: "main" });
@@ -468,6 +520,13 @@ export default {
     ...mapState(reviewStore, ["reviewList"]),
     ...mapGetters(["checkUserInfo"]),
   },
+  updated() {
+    if (this.detail) {
+      this.reviewInsertModal = new Modal(
+        document.getElementById("reviewInsertModal")
+      );
+    }
+  },
 };
 </script>
 
@@ -545,5 +604,12 @@ h2 {
 }
 .myname {
   width: 120px;
+}
+
+.bi-plus-circle {
+  font-size: 1.5rem;
+}
+.bi-plus-circle:hover {
+  color: dodgerblue;
 }
 </style>
