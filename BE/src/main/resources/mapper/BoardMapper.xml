@@ -6,7 +6,7 @@
 
     <insert id="writeArticle" parameterType="Board">
         insert into announcement ( title, member_id, content, hit, regtime)
-        values (#{title},#{content}, #{memberid}, 0, now())
+        values (#{title}, #{memberid},#{content}, 0, now())
     </insert>
 
     <select id="listArticle" parameterType="map" resultType="Board">

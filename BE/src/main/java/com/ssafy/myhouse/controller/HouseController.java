@@ -59,6 +59,12 @@ public class HouseController {
         return new ResponseEntity<>(houseService.searchHouseDeal(aptCode),HttpStatus.OK);
     }
 
+    @Description("거래가 조회")
+    @GetMapping("/home/review/{aptCode}")
+    public ResponseEntity<?> getReview(@PathVariable String aptCode) throws Exception{
+        return new ResponseEntity<>(reviewService.selectAllReview(aptCode),HttpStatus.OK);
+    }
+
 
 
 }

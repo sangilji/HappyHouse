@@ -5,7 +5,7 @@
 <mapper namespace="com.ssafy.myhouse.mapper.ReviewMapper">
 
     <select id="selectAllReview" resultType="Review">
-        select *
+        select review_id reviewId, member_id memberId,aptCode, content, date_format(created_date,'%Y-%m-%d') createdDate, likes,residenceFloor,residenceType,residenceYear,stars,ulikes
         from review
         where aptCode=#{aptCode}
     </select>
