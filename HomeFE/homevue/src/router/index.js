@@ -7,7 +7,7 @@ import BoardView from "@/views/board/AppBoard.vue";
 import BoardWriteView from "@/views/board/BoardWriteView.vue";
 import BoardViewview from "@/views/board/BoardViewview.vue";
 import mapView from "@/views/map/MapView.vue";
-import MyPageView from '@/views/user/MyPageView.vue';
+import MyPageView from "@/views/user/MyPageView.vue";
 
 import store from "@/store";
 
@@ -33,7 +33,6 @@ const onlyAuthUser = async (to, from, next) => {
   }
 };
 
-
 const routes = [
   {
     path: "/home",
@@ -41,7 +40,7 @@ const routes = [
     component: HomeMainView,
   },
   {
-    path:"/",
+    path: "/",
     name: "main",
     component: HomeMainView,
   },
@@ -58,7 +57,7 @@ const routes = [
   {
     path: "/mypage",
     name: "mypage",
-    beforeEnter : onlyAuthUser,
+    beforeEnter: onlyAuthUser,
     component: MyPageView,
   },
   {
@@ -75,7 +74,7 @@ const routes = [
     path: "/boardwrite",
     name: "boardwrite",
     beforeEnter: onlyAuthUser,
-    component:BoardWriteView,
+    component: BoardWriteView,
   },
   {
     path: "/boardview/:announcementid",
@@ -100,9 +99,12 @@ const routes = [
     name: "interests",
     beforeEnter: onlyAuthUser,
     component: () => import(/* webpackChunkName: "board" */ "@/components/Heart"),
-  }
-
-  
+  },
+  {
+    path: "/createHouse",
+    name: "createHouse",
+    component: () => import(/* webpackChunkName: "board" */ "@/components/house/CreateHouse"),
+  },
 ];
 
 const router = new VueRouter({

@@ -17,4 +17,7 @@ public interface HouseService {
     List<HouseDto> searchByDong(String dong) throws Exception;
 
     List<HouseDeal> searchHouseDeal(String aptCode) throws Exception;
+    Boolean createHouse(HouseDto houseDto) throws Exception;
+    HouseDto getHouseDetail(String searchWord); // 매물 검색 (아파트 이름)
+
 }

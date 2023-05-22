@@ -21,4 +21,7 @@ public interface HouseMapper {
 
 
     List<HouseDeal> searchHouseDeal(String aptCode) throws SQLException;
+    Boolean createHouse(HouseDto houseDto) throws Exception;
+    HouseDto getHouseDetail(String searchWord);
+
 }
