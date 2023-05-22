@@ -37,7 +37,6 @@
                   <h2 class="mypage-box" id="mypage">마이페이지</h2>
                 </router-link>
               </b-nav-item>
-
               <!-- after login -->
               <div class="d-flex justify-content-center" v-if="userInfo">
                 <b-nav-item>
@@ -171,7 +170,15 @@
             <div
               class="p-3 border-bottom d-flex justify-content-between align-items-center"
             >
-              <h4 class="m-0">{{ houseList[currentIndex].apartmentName }}</h4>
+              <b-col style="margin: auto">
+                <div class="houseImg" style="width: auto; height: 120px"></div>
+              </b-col>
+              <b-col style="margin: auto">
+                <h4 class="m-0">
+                  {{ houseList[currentIndex].apartmentName }}
+                </h4>
+              </b-col>
+
               <!-- <HeartBtn v-if="isAuth&&level==2" class="px-1" :enabled="houseList[curIndex].bookmark" @changeHeartBtn="onBookmarkHouse" /> -->
             </div>
             <!-- contents -->
@@ -179,13 +186,14 @@
               <div class="border-bottom d-flex py-2">
                 <div class="text-secondary w-25">주소</div>
                 <div>
+                  {{ houseList[currentIndex].address }}
                   {{ houseList[currentIndex].dongName }}
                   {{ houseList[currentIndex].jibun }}
                 </div>
               </div>
               <div class="d-flex py-2">
                 <div class="text-secondary w-25">건축년도</div>
-                <div>{{ houseList[currentIndex].buildYear }}</div>
+                <div>{{ houseList[currentIndex].buildYear }}년</div>
               </div>
             </div>
           </div>
@@ -217,18 +225,45 @@
               </table>
             </div>
           </div>
+          <!-- 거주민 리뷰 -->
+          <div class="bg-white mb-2">
+            <div class="d-flex justify-content-between align-items-center">
+              <h5 class="p-3 m-0">리뷰</h5>
+              <i v-if="userInfo" class="bi bi-plus-circle px-3 cursor-pointer"></i>
+            </div>
+            <div v-if="reviewList.length == 0" class="p-3 border-top">
+              <div>등록된 리뷰가 없습니다.</div>
+            </div>
+            <b-list-group v-else>
+              <b-list-group-item
+                
+                class="flex-column align-items-start"
+                v-for="(review, index) in reviewList"
+                :key="index"
+              >
+                <div class="d-flex w-100 justify-content-between">
+                  <h6 class="mb-1">ssafy(김싸피)</h6>
+                  <StarRating v-model="review.stars" increment="0.5" :read-only="true" :show-rating="false" :rounded-corners="true" :star-size="20" :star-points="[23,2, 14,17, 0,19, 10,34, 7,50, 23,43, 38,50, 36,34, 46,19, 31,17]"></StarRating>
+                </div>
+                <p class="mb-1" style="text-align: justify;">{{review.content}}</p>
+                <small style="float:right;">싫어요{{ review.ulikes }}</small>
+                <small style="float:right">좋아요{{ review.likes }}</small>
+              </b-list-group-item>
+            </b-list-group>
+          </div>
           <!-- 매물정보 -->
         </div>
         <div v-else>
           <div class="bg-white mb-2">
-            <div class="border-bottom"><h5 class="p-3 m-0">아파트 정보</h5></div>
+            <div class="border-bottom">
+              <h5 class="p-3 m-0">아파트 정보</h5>
+            </div>
             <div>
               <table class="w-100">
                 <thead class="bg-secondary text-white">
                   <tr>
                     <td class="ps-3 py-1">아파트</td>
-                    <td>건축년도</td>
-                    <td>주소</td>
+                    <td>정보</td>
                   </tr>
                 </thead>
                 <tbody class="px-2">
@@ -238,10 +273,17 @@
                     class="border-bottom"
                     @click="detailButton(index)"
                   >
-                    <td class="ps-3 py-2">{{ item.apartmentName }}</td>
-                    <td>{{ item.buildYear }}</td>
-                    <td>{{ item.dongName }} {{ item.jibun }}</td>
-                    
+                    <td class="ps-3 py-2">
+                      <div class="houseImg"></div>
+                    </td>
+                    <td>
+                      <div>
+                        {{ item.apartmentName }}
+                      </div>
+                      <div>
+                        {{ item.address }}
+                      </div>
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -256,13 +298,17 @@
 <script>
 import TheKakaoMap from "@/components/TheKakaoMap.vue";
 import { mapState, mapActions, mapGetters, mapMutations } from "vuex";
+import StarRating from 'vue-star-rating'
+
 const memberStore = "memberStore";
 const dealInfoStore = "dealInfoStore";
+const reviewStore = "reviewStore";
 
 export default {
   name: "AptMapview",
   components: {
     TheKakaoMap,
+    StarRating
   },
   data() {
     return {
@@ -286,17 +332,24 @@ export default {
   },
   watch: {
     currentIndex() {
+      if (this.currentIndex == null) {
+        return;
+      }
       if (!this.detail) {
         this.detail = true;
       }
       this.getHouseDeal();
+      this.getReview(this.houseList[this.currentIndex].aptCode);
     },
     searchType(val) {
       console.log("val=" + val);
       if (val === "D") {
-        this.CLEAR_SIDO_LIST();
+        console.log("바뀌었는데");
         this.CLEAR_GUGUN_LIST();
         this.CLEAR_DONG_LIST();
+        this.selectSido = null;
+        this.selectGuName = null;
+        this.selectDongName = null;
       } else if (val === "K") {
         console.log("watch K");
       }
@@ -304,6 +357,9 @@ export default {
   },
 
   methods: {
+    toNumber(stars) {
+      return Number(stars);
+    },
     ...mapActions(memberStore, ["userLogout"]),
     ...mapActions(dealInfoStore, [
       "getSido",
@@ -313,22 +369,24 @@ export default {
       "getHouseListByKeyword",
       "getDealInfo",
     ]),
+    ...mapActions(reviewStore, ["getReview"]),
     ...mapMutations(dealInfoStore, [
       "CLEAR_SIDO_LIST",
       "CLEAR_GUGUN_LIST",
       "CLEAR_DONG_LIST",
-      "SET_CURRENT_INDEX"
+      "SET_CURRENT_INDEX",
     ]),
-    allButton(){
+    allButton() {
       this.detail = false;
     },
-    detailButton(index){
+    detailButton(index) {
       this.detail = true;
       this.SET_CURRENT_INDEX(index);
     },
-    onClickLogout() {
-      console.log(this.userInfo.userid);
-      this.userLogout(this.userInfo.userid);
+    async onClickLogout() {
+      await this.userLogout(this.userInfo.userid);
+      console.log(this);
+      console.log(88,this.isLogin);
       sessionStorage.removeItem("access-token"); //저장된 토큰 없애기
       sessionStorage.removeItem("refresh-token"); //저장된 토큰 없애기
       if (this.$route.path !== "/") this.$router.push({ name: "main" });
@@ -363,16 +421,33 @@ export default {
         );
       }
       console.log(this.houseList.length);
-      if (this.houseList.length!=0 &&!this.listVisible) {
+      this.$swal(`${this.houseList.length}건 검색 완료`, { icon: "success" });
+      if (this.houseList.length == 0) {
+        this.listVisible = false;
+        return;
+      } else {
+        this.detail = false;
+      }
+      if (this.houseList.length != 0 && !this.listVisible) {
         this.listVisible = true;
       }
-      this.$swal(`${this.houseList.length}건 검색 완료`, { icon: "success" });
     },
     async onKeywordSearch() {
       if (this.inputKeyword == "") {
         this.$swal("키워드를 입력하세요.", { icon: "error" });
       } else {
         await this.getHouseListByKeyword(this.inputKeyword);
+        this.$swal(`${this.houseList.length}건 검색 완료`, { icon: "success" });
+
+        if (this.houseList.length == 0) {
+          this.listVisible = false;
+          return;
+        } else {
+          this.detail = false;
+        }
+        if (!this.listVisible) {
+          this.listVisible = true;
+        }
       }
     },
     initSearchByDongBox() {
@@ -390,12 +465,21 @@ export default {
       "fromMainKeyword",
       "houseDealInfo",
     ]),
+    ...mapState(reviewStore, ["reviewList"]),
     ...mapGetters(["checkUserInfo"]),
   },
 };
 </script>
 
 <style scoped>
+.houseImg {
+  background-image: url("@/assets/house/house-img.png");
+  background-repeat: none;
+  background-position: center;
+  background-size: cover;
+  width: 200px;
+  height: 200px;
+}
 #wrapper {
   position: relative;
 }

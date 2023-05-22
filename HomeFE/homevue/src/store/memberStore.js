@@ -30,7 +30,10 @@ const memberStore = {
   },
   mutations: {
     SET_IS_LOGIN: (state, isLogin) => {
+      console.log("isLogin="+isLogin);
+      console.log("isLogin="+state.isLogin);
       state.isLogin = isLogin;
+      
     },
     SET_IS_JOIN: (state, isJoin) => {
       state.isJoin = isJoin;
@@ -200,12 +203,14 @@ const memberStore = {
         }
       );
     },
-    async userLogout({ commit }, userid) {
+    async userLogout({ commit,state }, userid) {
       await logout(
         userid,
         ({ data }) => {
           if (data.message === "success") {
             commit("SET_IS_LOGIN", false);
+            console.log("로그인 펄스했어");
+            console.log(877,state.isLogin);
             commit("SET_USER_INFO", null);
             commit("SET_IS_VALID_TOKEN", false);
           } else {
