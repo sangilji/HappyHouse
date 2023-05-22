@@ -46,4 +46,19 @@
         order by dealYear desc;
     </select>
 
+  <insert id="createHouse" parameterType="HouseDto">
+        insert into housedeal(no,dealamount,dealyear,dealmonth,dealday,area,floor,aptcode)
+        values(#{no},#{dealamount},#{dealyear},#{dealmonth},#{dealday},#{area},#{floor},#{aptcode});
+  </insert>
+
+  <select id="getHouseDetail" parameterType="string" resultType="HouseDto">
+    (select no as aptcode, dong as dong_name, aptname as apt_name, buildyear as buildYear, jibun, lat, lng
+     from houseinfo
+     where aptname like concat(#{aptName}, '%'))
+    union all
+    (select no as house_no, dong as dong_name, aptname as apt_name, buildyear as buildYear, jibun, lat, lng
+     from houseinfo
+     where dong like concat(#{dongName}, '%'))
+  </select>
+
 </mapper>

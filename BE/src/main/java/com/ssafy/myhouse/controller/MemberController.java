@@ -104,6 +104,7 @@ public class MemberController {
             try {
 //				로그인 사용자 정보.
                 Member member = memberService.findById(id);
+                System.out.println(member.getRole());
                 resultMap.put("userInfo", member);
                 resultMap.put("message", SUCCESS);
                 status = HttpStatus.ACCEPTED;

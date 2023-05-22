@@ -39,4 +39,17 @@ public class HouseServiceImpl implements HouseService {
     public List<HouseDeal> searchHouseDeal(String aptCode) throws Exception {
         return mapper.searchHouseDeal(aptCode);
     }
+
+    @Override
+    public Boolean createHouse(HouseDto houseDto) throws Exception {
+        if(houseDto.getApartmentName()==null||houseDto.getAptCode()==null){
+            throw new Exception();
+        }
+        return mapper.createHouse(houseDto);
+    }
+
+    @Override
+    public HouseDto getHouseDetail(String searchWord) {
+        return mapper.getHouseDetail(searchWord);
+    }
 }

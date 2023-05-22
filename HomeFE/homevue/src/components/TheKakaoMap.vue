@@ -20,7 +20,7 @@ export default {
 
   watch: {
     houseList() {
-      console.log("houseList change");
+      // console.log("houseList change");
       this.positions = [];
       this.houseList.forEach((house) => {
         let obj = {};
@@ -44,7 +44,7 @@ export default {
     ...mapState(dealInfoStore, ["houseList"]),
   },
   methods: {
-    ...mapMutations(dealInfoStore,["SET_CURRENT_INDEX"]),
+    ...mapMutations(dealInfoStore, ["SET_CURRENT_INDEX"]),
     // api 불러오기
     loadScript() {
       const script = document.createElement("script");
@@ -71,9 +71,9 @@ export default {
     // 지정한 위치에 마커 불러오기
     loadMaker() {
       // 현재 표시되어있는 marker들이 있다면 marker에 등록된 map을 없애준다.
-      console.log("1111");
+      // console.log("1111");
       this.deleteMarker();
-      console.log("2222");
+      // console.log("2222");
       // 마커 이미지를 생성합니다
       //   const imgSrc = require("@/assets/map/markerStar.png");
       // 마커 이미지의 이미지 크기 입니다
@@ -98,10 +98,7 @@ export default {
       // 4. 지도를 이동시켜주기
       // 배열.reduce( (누적값, 현재값, 인덱스, 요소)=>{ return 결과값}, 초기값);
       if (this.positions.length == 0) {
-        var moveLatLon = new kakao.maps.LatLng(
-          37.5012647456244,
-          127.03958123605
-        );
+        var moveLatLon = new kakao.maps.LatLng(37.5012647456244, 127.03958123605);
 
         // 지도 중심을 이동 시킵니다
         this.map.setCenter(moveLatLon);
@@ -123,7 +120,7 @@ export default {
         });
       }
     },
-    changeCurrentIndex(index){
+    changeCurrentIndex(index) {
       console.log(index);
       this.SET_CURRENT_INDEX(index);
     },
@@ -134,18 +131,17 @@ export default {
         let infoContents = `<div style="width:150px;text-align:center;padding:6px 0;">${item.apartmentName}</div>`;
 
         let infoWindow = new kakao.maps.InfoWindow({
-            content: infoContents
+          content: infoContents,
         });
-        kakao.maps.event.addListener(marker, 'click', function() {
-        $this.changeCurrentIndex(index);
-      });
+        kakao.maps.event.addListener(marker, "click", function () {
+          $this.changeCurrentIndex(index);
+        });
         let $this = this;
-        kakao.maps.event.addListener(marker, 'mouseover', function() {
+        kakao.maps.event.addListener(marker, "mouseover", function () {
           infoWindow.open($this.map, marker);
-            // $this.curInfoWindow = infoWindow;
-          }
-        );
-        kakao.maps.event.addListener(marker, 'mouseout', function() {
+          // $this.curInfoWindow = infoWindow;
+        });
+        kakao.maps.event.addListener(marker, "mouseout", function () {
           infoWindow.close();
         });
       });

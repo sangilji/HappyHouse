@@ -59,6 +59,18 @@ public class HouseController {
         return new ResponseEntity<>(houseService.searchHouseDeal(aptCode),HttpStatus.OK);
     }
 
-
+    @Description("집매물 추가")
+    @PostMapping("/createHouse")
+    public ResponseEntity<String> createHouse(@RequestBody HouseDto houseDto) throws Exception{
+        if(houseService.createHouse(houseDto)){
+            return new ResponseEntity<String>("success",HttpStatus.OK);
+        }
+        return new ResponseEntity<String>("fail",HttpStatus.NO_CONTENT);
+    }
+    @GetMapping("/house/detail/keyword/{searchWord}")
+    public ResponseEntity<HouseDto> getHouseSearchDetail(@PathVariable String searchWord) {
+        System.out.println("house detail " + searchWord);
+        return new ResponseEntity<>(houseService.getHouseDetail(searchWord),HttpStatus.OK);
+    }
 
 }
