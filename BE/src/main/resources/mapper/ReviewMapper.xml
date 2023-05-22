@@ -5,14 +5,17 @@
 <mapper namespace="com.ssafy.myhouse.mapper.ReviewMapper">
 
     <select id="selectAllReview" resultType="Review">
-        select review_id reviewId, member_id memberId,aptCode, content, date_format(created_date,'%Y-%m-%d') createdDate, likes,residenceFloor,residenceType,residenceYear,stars,ulikes
-        from review
+        select review_id reviewId, r.member_id memberId,name,aptCode, content, date_format(created_date,'%Y-%m-%d') createdDate, likes,residenceFloor,residenceType,residenceYear,stars,ulikes
+        from review r
+        inner join member m
+        on r.member_id = m.id
         where aptCode=#{aptCode}
+        order by createdDate desc;
     </select>
 
     <insert id="insert" parameterType="Review">
         insert into review
-        values(null,#{id},#{aptCode},#{residenceType},#{residenceYear},#{residenceFloor},#{content},#{stars},#{likes},#{ulikes},sysdate());
+        values(null,#{memberId},#{aptCode},#{residenceType},#{residenceYear},#{residenceFloor},#{content},#{stars},0,0,sysdate());
     </insert>
 
     <delete id="delete" parameterType="Review">

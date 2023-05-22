@@ -24,7 +24,7 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     @Description("댓글 입력")
-    @PostMapping(value = "/home/{aptCode}")
+    @PostMapping(value = "/home/review/{aptCode}")
     public Map<String,String> add(@RequestBody Review review) throws Exception{ // 사용자가 입력한 값을 받아와서 DB에 INSERT
         reviewService.insert(review);
         Map<String,String> map=new HashMap<>();

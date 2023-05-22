@@ -8,6 +8,7 @@ import lombok.Setter;
 public class Review {
     private String reviewId;
     private String memberId;
+    private String name;
     private String createdDate;
     private String content;
     private String residenceType; //남향 북향?
