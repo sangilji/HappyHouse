@@ -43,7 +43,7 @@
             <!-- after login -->
             <div class="d-flex justify-content-center" v-if="userInfo">
               <b-nav-item>
-                <h2>{{ userInfo.name }} 님</h2>
+                <h2 style="margin:2.9rem 0 0">{{ userInfo.name }} 님</h2>
               </b-nav-item>
               <b-nav-item @click="onClickLogout">
                 <img class="logout" alt="logout" src="../assets/logout.png" />
@@ -77,7 +77,6 @@
     <div class="banner">
       <router-link :to="{ name: 'home' }">
         <img center src="../assets/header/Banner.png" class="img-fluid" alt="Responsive image" />
-        <!-- <img  alt="House logo" src="../assets/header/Banner.png" /> -->
       </router-link>
     </div>
   </div>
@@ -85,7 +84,6 @@
 
 <script>
 import { mapState, mapActions, mapGetters } from "vuex";
-// import http from "@/router/axios-common.js";
 const memberStore = "memberStore";
 export default {
   name: "HouseHeader",
@@ -98,16 +96,7 @@ export default {
   },
   methods: {
     ...mapActions(memberStore, ["userLogout"]),
-    // ...mapMutations(memberStore, ["SET_IS_LOGIN", "SET_USER_INFO"]),
     onClickLogout() {
-      // this.SET_IS_LOGIN(false);
-      // this.SET_USER_INFO(null);
-      // sessionStorage.removeItem("access-token");
-      // if (this.$route.path != "/") this.$router.push({ name: "main" });
-      // console.log(this.userInfo.userid);
-      //vuex actions에서 userLogout 실행(Backend에 저장 된 리프레시 토큰 없애기
-      //+ satate에 isLogin, userInfo 정보 변경)
-      // this.$store.dispatch("userLogout", this.userInfo.userid);
       this.userLogout(this.userInfo.userid);
       sessionStorage.removeItem("access-token"); //저장된 토큰 없애기
       sessionStorage.removeItem("refresh-token"); //저장된 토큰 없애기
@@ -119,9 +108,7 @@ export default {
     map() {
       if (this.$route.path !== "/map") this.$router.push({ name: "map" });
     },
-    // heart() {
-    // 	if(this.$route.path!=="/heart") this.$router.push({name:"heart"});
-    // },
+
     board() {
       if (this.$route.path !== "/board/list") this.$router.push({ name: "boardlist" });
     },

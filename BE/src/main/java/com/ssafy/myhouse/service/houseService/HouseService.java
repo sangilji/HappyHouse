@@ -18,6 +18,6 @@ public interface HouseService {
 
     List<HouseDeal> searchHouseDeal(String aptCode) throws Exception;
     Boolean createHouse(HouseDto houseDto) throws Exception;
-    HouseDto getHouseDetail(String searchWord); // 매물 검색 (아파트 이름)
+    Boolean updateHouseComment(HouseDto houseDto) throws Exception;
 
 }

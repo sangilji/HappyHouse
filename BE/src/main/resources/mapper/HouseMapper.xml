@@ -4,12 +4,13 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ssafy.myhouse.mapper.HouseMapper">
     <select id="selectAll" resultType="HouseDto">
-        select round(avg(replace(hd.dealAmount,',','')),-3) as dealAmount, round(avg(hd.area),2) as area, max(hd.floor) as floor, hd.aptCode, tmp.lat, tmp.lng, tmp.apartmentName, tmp.address,tmp.housecomment,tmp.jibun,tmp.buildYear
-        from housedeal hd inner join (SELECT hi.aptCode, hi.apartmentName, concat(sidoName,' ',gugunName,' ',dong,' ',roadName,' ',jibun) address, lng, lat, hi.housecomment, jibun, buildYear
+        select count(*),round(avg(replace(hd.dealAmount,',','')),-3) as dealAmount, round(avg(hd.area),2) as area, max(hd.floor) as floor,
+               hd.aptCode, tmp.lat, tmp.lng, tmp.apartmentName, tmp.address,tmp.jibun,tmp.buildYear
+        from housedeal hd inner join (SELECT hi.aptCode, hi.apartmentName, concat(sidoName,' ',gugunName,' ',dong,' ',roadName,' ',jibun) address, lng, lat, jibun, buildYear
                                       FROM houseinfo hi
-                                               INNER JOIN dongcode dc ON hi.dongCode = dc.dongCode)
+                                               INNER JOIN dongcode dc ON hi.dongCode = dc.dongCode limit 100)
             tmp on hd.aptCode = tmp.aptCode
-        group by hd.aptCode;
+        group by hd.aptCode,hd.housecomment limit 100;
     </select>
     
     <select id="searchByDongCode" resultType="HouseDto" parameterType="string">
@@ -47,18 +48,9 @@
     </select>
 
   <insert id="createHouse" parameterType="HouseDto">
-        insert into housedeal(no,dealamount,dealyear,dealmonth,dealday,area,floor,aptcode)
-        values(#{no},#{dealamount},#{dealyear},#{dealmonth},#{dealday},#{area},#{floor},#{aptcode});
+        insert into housedeal(no,dealAmount,dealYear,area,floor,aptCode)
+        values((select hd.no+1 from (select max(no) no from housedeal) hd),
+               #{dealAmount},#{buildYear},#{area},#{floor},#{aptCode});
+
   </insert>
-
-  <select id="getHouseDetail" parameterType="string" resultType="HouseDto">
-    (select no as aptcode, dong as dong_name, aptname as apt_name, buildyear as buildYear, jibun, lat, lng
-     from houseinfo
-     where aptname like concat(#{aptName}, '%'))
-    union all
-    (select no as house_no, dong as dong_name, aptname as apt_name, buildyear as buildYear, jibun, lat, lng
-     from houseinfo
-     where dong like concat(#{dongName}, '%'))
-  </select>
-
 </mapper>

@@ -42,14 +42,13 @@ public class HouseServiceImpl implements HouseService {
 
     @Override
     public Boolean createHouse(HouseDto houseDto) throws Exception {
-        if(houseDto.getApartmentName()==null||houseDto.getAptCode()==null){
-            throw new Exception();
-        }
         return mapper.createHouse(houseDto);
     }
 
     @Override
-    public HouseDto getHouseDetail(String searchWord) {
-        return mapper.getHouseDetail(searchWord);
+    public Boolean updateHouseComment(HouseDto houseDto) throws Exception {
+        return mapper.updateHouseComment(houseDto);
     }
+
+
 }
