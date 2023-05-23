@@ -7,7 +7,7 @@
           <div class="form-floating">
             <input
               @click="selectHouseNo"
-              v-model="houseName"
+              v-model="apartmentname"
               type="text"
               class="form-control cursor-pointer"
               placeholder="실거래가 *"
@@ -19,61 +19,19 @@
         <div class="col-lg-3 col-md-6"></div>
         <div class="col-lg-3 col-md-6"></div>
         <div class="col-lg-3 col-md-6">
-          <div class="form-floating">
-            <select v-model="type" class="form-select" aria-label="Floating label select example">
-              <option selected>매매</option>
-              <option>전세</option>
-              <option>월세</option>
-            </select>
-            <label>거래 종류 <span class="text-danger">*</span></label>
-          </div>
+          
         </div>
         <div class="col-lg-3 col-md-6">
           <div class="form-floating">
-            <input v-model="dealAmount" type="text" class="form-control" placeholder="실거래가" />
+            <input v-model="dealamount" type="text" class="form-control" placeholder="실거래가" />
             <label>실거래가 <span class="text-danger">*</span></label>
           </div>
         </div>
-        <div class="col-lg-3 col-md-6">
-          <div class="form-floating">
-            <input v-model="floor" type="text" class="form-control" placeholder="해당 층  *" />
-            <label>해당 층 <span class="text-danger">*</span></label>
-          </div>
-        </div>
+        
         <div class="col-lg-3 col-md-6">
           <div class="form-floating">
             <input v-model="area" type="text" class="form-control" placeholder="면적(평) *" />
             <label>면적(평) <span class="text-danger">*</span></label>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-6">
-          <div class="form-floating">
-            <input v-model="direction" type="text" class="form-control" placeholder="방향 *" />
-            <label>방향 <span class="text-danger">*</span></label>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-6">
-          <div class="form-floating">
-            <input v-model="fee" type="text" class="form-control" placeholder="관리비 *" />
-            <label>관리비 <span class="text-danger">*</span></label>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-6">
-          <div class="form-floating">
-            <input v-model="room" type="text" class="form-control" placeholder="방 *" />
-            <label>방 <span class="text-danger">*</span></label>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-6">
-          <div class="form-floating">
-            <input v-model="bathroom" type="text" class="form-control" placeholder="욕실 *" />
-            <label>욕실 <span class="text-danger">*</span></label>
-          </div>
-        </div>
-        <div class="col-12">
-          <div class="form-floating">
-            <input v-model="title" type="text" class="form-control" placeholder="매물 특징 *" />
-            <label>매물 특징 <span class="text-danger">*</span></label>
           </div>
         </div>
         <div class="col-12">
@@ -149,6 +107,7 @@ export default {
   data() {
     return {
       no: "",
+      apartmentname:"",
       dealamount: "",
       dealyear: "",
       dealmonth: "",
