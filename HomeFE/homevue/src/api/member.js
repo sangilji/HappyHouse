@@ -30,7 +30,7 @@ async function logout(userid, success, fail) {
 }
 
 async function deleteUser(userid, success, fail) {
-  api.defaults.headers["refresh-token"] = sessionStorage.getItem("refresh-token"); //axios header에 refresh-token 셋팅
+  api.defaults.headers["access-token"] = sessionStorage.getItem("access-token");
   await api.delete(`/user/mypage/${userid}`).then(success).catch(fail);
 }
 

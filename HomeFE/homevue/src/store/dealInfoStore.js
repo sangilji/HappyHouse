@@ -74,10 +74,11 @@ const dealInfoStore = {
           state.currentInterest.push(false);
         }
       });
+      console.log(state.currentInterest);
     },
     SET_INTEREST(state, params) {
-      console.log(!params.enabled);
-      state.currentInterest[params.index] = !params.enabled;
+      console.log(params.enabled);
+      state.currentInterest[params.index] = params.enabled;
     },
   },
   actions: {

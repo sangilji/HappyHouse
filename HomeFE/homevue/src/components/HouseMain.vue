@@ -1,147 +1,158 @@
 <template>
-<div>
-<h1>어떤 집을 찾고 계세요?</h1>
+  <div>
+    <h1>어떤 집을 찾고 계세요?</h1>
 
     <div class="search">
-    <i class="fas fa-search"></i>
-    <input type="text">
-    <i class="fas fa-keyboard"></i>
-    <i class="fas fa-microphone"></i>
-    <img src="../assets/main/search-button.png" alt="searchButton" class="search-button" @click="search">
-    
-    <h1>추천 매물</h1>
-    <div class="d-flex justify-content-center">
-          <div class="row">
-    <house-list-item v-for="house in houseList" :key="house.aptCode" v-bind="house"></house-list-item>
-            
-</div></div></div>
-<br>
+      <i class="fas fa-search"></i>
+      <input type="text" @keyup.enter="search" v-model="keyword" />
+      <i class="fas fa-keyboard"></i>
+      <i class="fas fa-microphone"></i>
+      <img
+        src="../assets/main/search-button.png"
+        alt="searchButton"
+        class="search-button"
+        @click="search"
+      />
 
-</div>
-
+      <h1>추천 매물</h1>
+      <div class="d-flex justify-content-center">
+        <div class="row">
+          <house-list-item
+            v-for="house in houseList"
+            :key="house.aptCode"
+            v-bind="house"
+          ></house-list-item>
+        </div>
+      </div>
+    </div>
+    <br />
+  </div>
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapMutations, mapState } from "vuex";
 import HouseListItem from "@/components/house/HouseListItem";
 import { getHouseList } from "@/api/house";
 export default {
-    name: "HouseList",
-    components: {
-        HouseListItem,
-    },
+  name: "HouseList",
+  components: {
+    HouseListItem,
+  },
 
-    data() {
-        return {
-            houseList:[],
-            temp:[],
-        fields:[
+  data() {
+    return {
+      keyword :"",
+      houseList: [],
+      temp: [],
+      fields: [
         { key: "apartmentName", label: "아파트이름", tdClass: "tdClass" },
         { key: "address", label: "아파트주소", tdClass: "tdAddress" },
         { key: "aptCode", label: "아파트코드", tdClass: "tdClass" },
-        { key: "housecomment", label: "아파트설명", tdClass: "tdClass" }
-        ]
-            };
-        },
-        created(){
-            // let param=this.$route.params.id;
+        { key: "housecomment", label: "아파트설명", tdClass: "tdClass" },
+      ],
+    };
+  },
+  created() {
+    // let param=this.$route.params.id;
     getHouseList(
-      
-      ({data})=>{
-          for(let i=0;i<=5;i++){
-            let randomIdx=Math.floor(Math.random()*data.length);
-            this.houseList.push(data[randomIdx]);
+      ({ data }) => {
+        for (let i = 0; i <= 5; i++) {
+          let randomIdx = Math.floor(Math.random() * data.length);
+          this.houseList.push(data[randomIdx]);
         }
-          console.log(this.houseList);
+        console.log(this.houseList);
       },
-      (error)=>{
+      (error) => {
         console.log(error);
       }
     );
-        
-        },
-		methods: {
-            search() {
-                
-            },
-            houseinfo() {
-                
-            },
-		},
-	};
+  },
+  methods: {
+    ...mapMutations("dealInfoStore", ["SET_KEYWORD"]),
+    search() {
+      if (this.keyword == "") {
+        this.$swal("키워드를 입력하세요.", { icon: "warning" });
+        return;
+      }
+      this.SET_KEYWORD(this.keyword);
+      this.$router.push('/map').catch((error)=>console.log(error));
+    },
+    houseinfo() {},
+  },
+};
 </script>
 
 <style scoped>
-.house-title{
-        color: #231656;
-		font-weight: bolder;
-        font-size:22px;
+.house-title {
+  color: #231656;
+  font-weight: bolder;
+  font-size: 22px;
 }
-.house-price{
-        color: #000000;
-		font-weight: bolder;
-        margin: 1.0rem 0 1.5rem;
+.house-price {
+  color: #000000;
+  font-weight: bolder;
+  margin: 1rem 0 1.5rem;
 }
-.house-address{
-        color: #9E9E9E;
-		font-weight: bolder;
-        margin: 1.0rem 0 1.5rem;
+.house-address {
+  color: #9e9e9e;
+  font-weight: bolder;
+  margin: 1rem 0 1.5rem;
 }
-.house-info{
-        color: #9E9E9E;
-		font-weight: bolder;
-        margin: 1.0rem 0 1.5rem;
+.house-info {
+  color: #9e9e9e;
+  font-weight: bolder;
+  margin: 1rem 0 1.5rem;
 }
-	.weegle {
-    width: 400px;
-    display: block;
-    text-align: center;
-    margin: auto;
+.weegle {
+  width: 400px;
+  display: block;
+  text-align: center;
+  margin: auto;
 }
 h1 {
-		color: #231656;
-		font-weight: 900;
-		margin: 2.5rem 0 1.5rem;
-	}
+  color: #231656;
+  font-weight: 900;
+  margin: 2.5rem 0 1.5rem;
+}
 .search {
-    position: relative;
-    text-align: center;
-    margin: 0 auto;
+  position: relative;
+  text-align: center;
+  margin: 0 auto;
 }
 input {
-    width: 60%;
-    border-radius: 20px;
-    border: 1px solid #bbb;
-    margin: 10px 0;
-    padding: 10px 12px;
+  width: 60%;
+  border-radius: 20px;
+  border: 1px solid #bbb;
+  margin: 10px 0;
+  padding: 10px 12px;
 }
 .fa-search {
-    position: absolute;
-    left: 15px;
-    top: 22px;
-    margin: 0;
+  position: absolute;
+  left: 15px;
+  top: 22px;
+  margin: 0;
 }
 .fa-keyboard {
-    position: absolute;
-    right: 60px;
+  position: absolute;
+  right: 60px;
 }
-.search-button{
-    width:8%;
-    margin:0 1.0rem 0;
+.search-button {
+  width: 8%;
+  margin: 0 1rem 0;
 }
 
 .fa-microphone {
-    position: relative;
-    right: 50px;
-    margin: 0;
-    color: blue;
+  position: relative;
+  right: 50px;
+  margin: 0;
+  color: blue;
 }
 .box {
-    display: inline;
-    width: auto;
-    border-radius: 0;
-    margin: auto;
-    text-align: center;
-    color: #bbb;
+  display: inline;
+  width: auto;
+  border-radius: 0;
+  margin: auto;
+  text-align: center;
+  color: #bbb;
 }
 </style>

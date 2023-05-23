@@ -32,7 +32,7 @@ const interestStore = {
         params,
         ({ data }) => {
           console.log(data.message);
-          dispatch.getInterests(params.id);
+          dispatch("getInterests",params.id);
         },
         (error) => {
           console.log(error);

@@ -7,7 +7,8 @@ async function interestList(id, success, fail) {
 }
 
 async function add(params, success, fail) {
-  await api.get(`/interests/${params.aptCode}/${params.id}/interestAdd`).then(success).catch(fail);
+  api.defaults.headers["access-token"] = sessionStorage.getItem("access-token");
+  await api.post(`/home/${params.aptCode}/${params.id}/interestAdd`).then(success).catch(fail);
 }
 
 // function writeArticle(article, success, fail) {

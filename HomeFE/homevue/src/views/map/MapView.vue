@@ -316,8 +316,9 @@
                         v-if="isLogin"
                         :enabled="currentInterest[index]"
                         :index="index"
+                        
                         @changeHeartBtn="toggleInterest"
-                        style="padding-top: 0.3rem"
+                        style="padding-top: 1rem; padding-left: 1.2rem;"
                       ></HeartBtn>
                     </b-col>
                   </b-row>
@@ -392,6 +393,13 @@ export default {
     this.CLEAR_DONG_LIST();
     this.getSido();
     console.log(this.sidos);
+    if(this.fromMainKeyword){
+      this.inputKeyword = this.fromMainKeyword;
+      this.CLEAR_KEYWORD();
+      this.searchType = 'K';
+      this.onKeywordSearch();
+
+    }
   },
   watch: {
     currentIndex() {
@@ -434,11 +442,12 @@ export default {
       "getDealInfo",
     ]),
     ...mapActions(reviewStore, ["getReview"]),
-    ...mapActions(interestStore, ["addInterest"]),
+    ...mapActions(interestStore, ["getInterests","addInterest"]),
     ...mapMutations(dealInfoStore, [
       "CLEAR_SIDO_LIST",
       "CLEAR_GUGUN_LIST",
       "CLEAR_DONG_LIST",
+      "CLEAR_KEYWORD",
       "SET_CURRENT_INDEX",
       "SET_CURRENT_INTEREST",
       "SET_INTEREST",
@@ -508,18 +517,26 @@ export default {
         aptCode: this.houseList[index].aptCode,
         id: this.userInfo.id,
       };
-      this.SET_INTEREST({ enabled, index });
       console.log(this.currentInterest);
-      // await addInterest();
+      this.$swal(`찜 등록되었습니다.`, { icon: "success" });
+      await this.addInterest(params);
+
+      await this.SET_INTEREST({ enabled, index });
     },
     async onDongMenuChange() {
       if (this.selectDongName !== null) {
         this.eventFrom = "dong";
         await this.getHouseListByDong(
+          "0"
+        );
+        await this.getHouseListByDong(
           this.selectSido + this.selectGuName + this.selectDongName
         );
+        
         if (this.isLogin) {
-          this.SET_CURRENT_INTEREST(this.interestList);
+          await this.getInterests(this.userInfo.id);
+          await this.SET_CURRENT_INTEREST(this.interestList);
+
         }
       }
       console.log(this.houseList.length);
@@ -539,6 +556,10 @@ export default {
         this.$swal("키워드를 입력하세요.", { icon: "error" });
       } else {
         await this.getHouseListByKeyword(this.inputKeyword);
+
+        if (this.isLogin) {
+          this.SET_CURRENT_INTEREST(this.interestList);
+        }
         this.$swal(`${this.houseList.length}건 검색 완료`, { icon: "success" });
 
         if (this.houseList.length == 0) {
@@ -547,7 +568,7 @@ export default {
         } else {
           this.detail = false;
         }
-        if (!this.listVisible) {
+        if (this.houseList.length != 0 && !this.listVisible) {
           this.listVisible = true;
         }
       }
