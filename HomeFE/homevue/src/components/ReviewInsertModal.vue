@@ -18,7 +18,7 @@
           <div>
             <div class="border-bottom d-flex pb-2">
                 
-              <h5 v-if="currentIndex>=0">{{ houseList[currentIndex].apartmentName }}</h5>
+              <h5 v-if="currentIndex!=null && currentIndex>=0">{{ houseList[currentIndex].apartmentName }}</h5>
             </div>
             <div class="border-bottom d-flex py-2">
               <div class="text-secondary w-25">거주타입</div>

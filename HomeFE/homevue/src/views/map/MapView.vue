@@ -175,7 +175,7 @@
                 <div class="houseImg" style="width: auto; height: 120px"></div>
               </b-col>
               <b-col style="margin: auto">
-                <h4 class="m-0" v-if="currentIndex>=0">
+                <h4 class="m-0" v-if="currentIndex!=null && currentIndex>=0">
                   {{ houseList[currentIndex].apartmentName }}
                 </h4>
               </b-col>
@@ -186,7 +186,7 @@
             <div class="px-3">
               <div class="border-bottom d-flex py-2">
                 <div class="text-secondary w-25">주소</div>
-                <div v-if="currentIndex>=0">
+                <div v-if="currentIndex!=null && currentIndex>=0">
                   {{ houseList[currentIndex].address }}
                   {{ houseList[currentIndex].dongName }}
                   {{ houseList[currentIndex].jibun }}
@@ -194,7 +194,7 @@
               </div>
               <div class="d-flex py-2">
                 <div class="text-secondary w-25">건축년도</div>
-                <div v-if="currentIndex>=0">
+                <div v-if="currentIndex!=null && currentIndex>=0">
                   {{ houseList[currentIndex].buildYear }}년
                 </div>
               </div>
@@ -326,7 +326,7 @@
       </div>
     </div>
     <review-insert-modal
-      v-if="detail"
+      v-if="userInfo&&detail"
       v-on:parent-modal-close="reviewInsertModalClose"
       :memberId="userInfo.id"
     />
@@ -385,6 +385,7 @@ export default {
       }
       this.getHouseDeal();
       this.getReview(this.houseList[this.currentIndex].aptCode);
+      console.log(this.houseList[this.currentIndex].aptCode);
     },
     searchType(val) {
       console.log("val=" + val);
@@ -432,6 +433,7 @@ export default {
       this.reviewInsertModal.show();
     },
     reviewInsertModalClose(aptCode) {
+      
       this.getReview(aptCode);
       this.reviewInsertModal.hide();
     },
@@ -518,10 +520,9 @@ export default {
       "houseDealInfo",
     ]),
     ...mapState(reviewStore, ["reviewList"]),
-    ...mapGetters(["checkUserInfo"]),
   },
   updated() {
-    if (this.detail) {
+    if (this.detail && this.isLogin) {
       this.reviewInsertModal = new Modal(
         document.getElementById("reviewInsertModal")
       );

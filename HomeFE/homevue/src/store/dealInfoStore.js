@@ -106,11 +106,7 @@ const dealInfoStore = {
         params,
         ({ data }) => {
           commit("SET_HOUSE_LIST", data);
-          if(data.length>0){
-            commit("SET_CURRENT_INDEX", 0);
-          } else {
-            commit("SET_CURRENT_INDEX", null);
-          }
+          commit("SET_CURRENT_INDEX", null);
         },
         (error) => {
           console.log(error);
