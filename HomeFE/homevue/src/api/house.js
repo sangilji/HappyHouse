@@ -6,9 +6,9 @@ function getHouseList(success, fail) {
 api.get(`/home`).then(success).catch(fail);
 }
 
-// function writeArticle(article, success, fail) {
-// api.post(`/boardwrite`, JSON.stringify(article)).then(success).catch(fail);
-// }
+function writeHouseDeal(house, success, fail) {
+api.post(`/createHouse`, JSON.stringify(house)).then(success).catch(fail);
+}
 
 // function getArticle(announcementid, success, fail) {
 // api.get(`/boardview/${announcementid}`).then(success).catch(fail);
@@ -22,4 +22,4 @@ api.get(`/home`).then(success).catch(fail);
 // api.delete(`/boarddelete/${announcementid}`).then(success).catch(fail);
 // }
 
-export { getHouseList, };
+export { getHouseList,writeHouseDeal };

@@ -8,7 +8,7 @@
 	<router-link v-if="currentPath !== '/boardlist'" :to="{name:'boardlist'}">
 			<img class="button" alt="goBoard" src="@/assets/board/add-read.png"/>
 		</router-link>
-    <router-link :to="{name:'boardwrite'}">
+    <router-link :to="{name:'boardwrite'}" v-if="userInfo.role=='admin'">
 			<img class="button" alt="moveWrite" src="@/assets/board/write.png"/>
 		</router-link>
     </div>
@@ -33,8 +33,9 @@
 </template>
 
 <script>
-// import http from "@/router/axios-common.js";
+import { mapState, mapActions, mapGetters } from "vuex";
 import { listArticle } from "@/api/board";
+const memberStore = "memberStore";
 export default {
 	name: "BoardList",
 	data() {
@@ -47,7 +48,11 @@ export default {
         { key: "memberid", label: "작성자", tdClass: "tdMemberId" },
     ],
     };
-},
+    },
+    computed: {
+    ...mapState(memberStore, ["isLogin", "userInfo"]),
+    ...mapGetters(["checkUserInfo"]),
+  },
     created() {
         this.currentPath = this.$route.path;
     let param = {

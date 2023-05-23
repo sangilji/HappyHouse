@@ -70,24 +70,17 @@
               </b-form-group>
             </b-container>
             <hr class="my-4" />
-            <b-row v-if="isModify">
-              <b-button variant="primary" @click="modify()" class="mr-1 butt"
-                >정보수정</b-button
-              >
-              <b-button
-                variant="danger"
-                @click="deleteButton()"
-                class="butt mr-1"
-                >회원탈퇴</b-button
-              >
+            <b-row v-if="isModify" class="d-flex justify-content-center">
+              <img src="@/assets/login/before-modify-btn.png" style="margin:0 1.0rem 0" @click="modify()">
+              
+              <img src="@/assets/login/delete-user-btn.png" @click="deleteButton()">
+
             </b-row>
-            <b-row v-else>
-              <b-button variant="primary" @click="cancel()" class="mr-1 butt"
-                >되돌리기</b-button
-              >
-              <b-button variant="danger" @click="confirm()" class="butt mr-1"
-                >수정하기</b-button
-              >
+            <b-row v-else class="d-flex justify-content-center">
+              <div >
+              <img src="@/assets/login/reset-btn.png" style="margin:0 1.0rem 0" @click="cancel()">
+              <img src="@/assets/login/modify-btn.png" @click="confirm()">
+            </div>
             </b-row>
           </b-form>
         </b-jumbotron>

@@ -6,7 +6,7 @@
         <div class="col">
           <div id='wrap'>
             <footer>
-              <nav>
+              <nav style="margin:1.0rem 1.0rem;">
                 <a>이용약관</a> |
                 <a>개인정보처리방침</a> |
                 <a>사이트맵</a>
