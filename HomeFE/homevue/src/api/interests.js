@@ -2,8 +2,12 @@ import { apiInstance } from "./index.js";
 
 const api = apiInstance();
 
-function getInterests(id, success, fail) {
-api.get(`/interests/${id}`).then(success).catch(fail);
+async function interestList(id, success, fail) {
+  await api.get(`/interests/${id}`).then(success).catch(fail);
+}
+
+async function add(params, success, fail) {
+  await api.get(`/interests/${params.aptCode}/${params.id}/interestAdd`).then(success).catch(fail);
 }
 
 // function writeArticle(article, success, fail) {
@@ -22,4 +26,4 @@ api.get(`/interests/${id}`).then(success).catch(fail);
 // api.delete(`/boarddelete/${announcementid}`).then(success).catch(fail);
 // }
 
-export { getInterests, };
+export { interestList, add };

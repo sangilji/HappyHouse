@@ -4,7 +4,7 @@
         <h1>내가 찜한 매물</h1>
         <div class="d-flex justify-content-center">
           <div class="row">
-        <house-list-item v-for="interest in interests" :key="interest.aptCode" v-bind="interest"></house-list-item>
+        <house-list-item v-for="interest in interestList" :key="interest.aptCode" v-bind="interest"></house-list-item>
       
         </div></div>
         <house-footer></house-footer>
@@ -17,14 +17,13 @@ import { mapState } from "vuex";
 import HouseHeader from '@/components/HouseHeader.vue';
 import HouseFooter from "@/components/layout/HouseFooter.vue";
 import HouseListItem from "@/components/house/HouseListItem";
-import { getInterests } from "@/api/interests";
 
 const memberStore = "memberStore";
+const interestStore = "interestStore";
 export default {
     name: "HeartView",
     data(){
       return{
-        interests:[],
         fields:[
         { key: "apartmentName", label: "아파트이름", tdClass: "tdClass" },
         { key: "address", label: "아파트주소", tdClass: "tdAddress" },
@@ -35,22 +34,11 @@ export default {
     },
     computed:{
       ...mapState(memberStore, ["userInfo"]),
+      ...mapState(interestStore,["interestList"]),
     // message() {
     //   if (this.article.content) return this.article.content.split("\n").join("<br>");
     //   return "";
     // },
-  },
-  created(){
-    let param=this.$route.params.id;
-    getInterests(
-      param,
-      ({data})=>{
-        this.interests=data;
-      },
-      (error)=>{
-        console.log(error);
-      }
-    );
   },
     components: {
     HouseHeader,

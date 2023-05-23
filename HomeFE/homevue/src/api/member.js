@@ -20,9 +20,9 @@ async function findById(id, success, fail) {
   await api.get(`/user/mypage/${id}`).then(success).catch(fail);
 }
 
-async function tokenRegeneration(user, success, fail) {
+async function tokenRegeneration(member, success, fail) {
   api.defaults.headers["refresh-token"] = sessionStorage.getItem("refresh-token"); //axios header에 refresh-token 셋팅
-  await api.post(`/user/refresh`, user).then(success).catch(fail);
+  await api.post(`/user/refresh`, member).then(success).catch(fail);
 }
 
 async function logout(userid, success, fail) {

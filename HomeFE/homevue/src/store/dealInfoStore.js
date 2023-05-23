@@ -17,6 +17,7 @@ const dealInfoStore = {
     fromMainKeyword: "",
     currentIndex: null,
     houseDealInfo: [],
+    currentInterest:[],
   },
   mutations: {
     CLEAR_SIDO_LIST(state) {
@@ -57,6 +58,26 @@ const dealInfoStore = {
     },
     SET_HOUSE_DEAL_INFO(state, houseDeal) {
       state.houseDealInfo = houseDeal;
+    },
+    SET_CURRENT_INTEREST(state, interestList) {
+      state.currentInterest = [];
+      state.houseList.forEach((house) => {
+        let tmp = false;
+        interestList.forEach((interest) => {
+          if (house.aptCode == interest.aptCode) {
+            state.currentInterest.push(true);
+            tmp = true;
+            return;
+          }
+        });
+        if (!tmp) {
+          state.currentInterest.push(false);
+        }
+      });
+    },
+    SET_INTEREST(state, params) {
+      console.log(!params.enabled);
+      state.currentInterest[params.index] = !params.enabled;
     },
   },
   actions: {

@@ -84,9 +84,10 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapGetters } from "vuex";
+import { mapState, mapActions, mapGetters, mapMutations } from "vuex";
 // import http from "@/router/axios-common.js";
 const memberStore = "memberStore";
+const interestStore = "interestStore";
 export default {
   name: "HouseHeader",
   date() {
@@ -98,6 +99,7 @@ export default {
   },
   methods: {
     ...mapActions(memberStore, ["userLogout"]),
+    ...mapMutations(interestStore,["SET_INTEREST_LIST"]),
     // ...mapMutations(memberStore, ["SET_IS_LOGIN", "SET_USER_INFO"]),
     onClickLogout() {
       // this.SET_IS_LOGIN(false);
@@ -109,6 +111,7 @@ export default {
       //+ satate에 isLogin, userInfo 정보 변경)
       // this.$store.dispatch("userLogout", this.userInfo.userid);
       this.userLogout(this.userInfo.userid);
+      this.SET_INTEREST_LIST(null);
       sessionStorage.removeItem("access-token"); //저장된 토큰 없애기
       sessionStorage.removeItem("refresh-token"); //저장된 토큰 없애기
       if (this.$route.path !== "/") this.$router.push({ name: "main" });

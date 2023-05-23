@@ -3,7 +3,7 @@
       <HeartIcon
         class="toggle-favorite__icon"
         :class="iconClasses"
-        @animationend="onIconAnimationEnds"
+        @animationend.native="onIconAnimationEnds"
 
       />
       <transition name="favorite-particles-transition">
@@ -40,7 +40,7 @@
         if (!this.heart) {
           this.animating = true;
         }
-  
+        console.log("heart",this.heart);
         this.heart = !this.heart;
         this.$emit('changeHeartBtn', {
           enabled: this.heart,
@@ -98,7 +98,7 @@
     background-size: 2500% auto;
     background-position: left center;
     background-repeat: no-repeat;
-  
+    background-color:hsl(1, 89%, 61%);
     animation-duration: $particles-animation-duration;
     animation-timing-function: steps(24);
     animation-name: favorite-particles-animation;

@@ -43,8 +43,8 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
-
 const memberStore = "memberStore";
+const interestStore = "interestStore";
 export default {
   name: "HouseLogin",
   data() {
@@ -62,6 +62,7 @@ export default {
   },
   methods: {
     ...mapActions(memberStore, ["userConfirm", "getUserInfo"]),
+    ...mapActions(interestStore, ["getInterests"]),
     async confirm() {
       await this.userConfirm(this.user);
       let token = sessionStorage.getItem("access-token");
@@ -69,6 +70,7 @@ export default {
       if (this.isLogin) {
         await this.getUserInfo(token);
         // console.log("4. confirm() userInfo :: ", this.userInfo);
+        await this.getInterests(this.userInfo.id);
         this.$router.push({ name: "home" });
       }
     },

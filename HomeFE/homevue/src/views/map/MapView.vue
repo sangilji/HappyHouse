@@ -175,7 +175,10 @@
                 <div class="houseImg" style="width: auto; height: 120px"></div>
               </b-col>
               <b-col style="margin: auto">
-                <h4 class="m-0" v-if="currentIndex!=null && currentIndex>=0">
+                <h4
+                  class="m-0"
+                  v-if="currentIndex != null && currentIndex >= 0"
+                >
                   {{ houseList[currentIndex].apartmentName }}
                 </h4>
               </b-col>
@@ -186,7 +189,7 @@
             <div class="px-3">
               <div class="border-bottom d-flex py-2">
                 <div class="text-secondary w-25">주소</div>
-                <div v-if="currentIndex!=null && currentIndex>=0">
+                <div v-if="currentIndex != null && currentIndex >= 0">
                   {{ houseList[currentIndex].address }}
                   {{ houseList[currentIndex].dongName }}
                   {{ houseList[currentIndex].jibun }}
@@ -194,7 +197,7 @@
               </div>
               <div class="d-flex py-2">
                 <div class="text-secondary w-25">건축년도</div>
-                <div v-if="currentIndex!=null && currentIndex>=0">
+                <div v-if="currentIndex != null && currentIndex >= 0">
                   {{ houseList[currentIndex].buildYear }}년
                 </div>
               </div>
@@ -248,11 +251,11 @@
                 :key="index"
               >
                 <div class="d-flex w-100 justify-content-between">
-                  <div >
+                  <div>
                     <strong class="mb-1"
                       >{{ review.memberId }}({{ review.name }})&nbsp;&nbsp;
                     </strong>
-                    {{ review.createdDate }} 
+                    {{ review.createdDate }}
                   </div>
 
                   <StarRating
@@ -269,14 +272,15 @@
                   ></StarRating>
                 </div>
                 <div class="d-flex py-2">
-                  <div class="text-secondary w-70" style="margin-bottom: 10px;">
-                    타입: {{ review.residenceType }}  |  계약년도: {{ review.residenceYear }}  |  층: {{ review.residenceFloor }}
+                  <div class="text-secondary w-70" style="margin-bottom: 10px">
+                    타입: {{ review.residenceType }} | 계약년도:
+                    {{ review.residenceYear }} | 층: {{ review.residenceFloor }}
                   </div>
                 </div>
                 <p class="mb-1" style="text-align: justify">
                   {{ review.content }}
                 </p>
-                <small style="float: right">싫어요 {{ review.ulikes}} </small>
+                <small style="float: right">싫어요 {{ review.ulikes }} </small>
                 <small style="float: right">좋아요 {{ review.likes }} </small>
               </b-list-group-item>
             </b-list-group>
@@ -289,44 +293,56 @@
               <h5 class="p-3 m-0">아파트 정보</h5>
             </div>
             <div>
-              <table class="w-100">
-                <thead class="bg-secondary text-white">
-                  <tr>
-                    <td class="ps-3 py-1">아파트</td>
-                    <td>정보</td>
-                  </tr>
-                </thead>
-                <tbody class="px-2">
-                  <tr
-                    v-for="(item, index) in houseList"
-                    :key="index"
-                    class="border-bottom list-group-item-action"
+              <b-row class="text-center bg-secondary text-white" st>
+                <b-col cols="4">아파트</b-col>
+                <b-col>정보</b-col>
+              </b-row>
+              <b-row
+                v-for="(item, index) in houseList"
+                :key="index"
+                class="border-bottom list-group-item-action"
+                style="margin-left: 0px"
+              >
+                <b-col
+                  cols="4"
+                  class="houseImg"
+                  @click="detailButton(index)"
+                ></b-col>
+                <b-col cols="8">
+                  <b-row rows="2" align-v="start">
+                    <b-col cols="9" @click="detailButton(index)"></b-col>
+                    <b-col>
+                      <HeartBtn
+                        v-if="isLogin"
+                        :enabled="currentInterest[index]"
+                        :index="index"
+                        @changeHeartBtn="toggleInterest"
+                        style="padding-top: 0.3rem"
+                      ></HeartBtn>
+                    </b-col>
+                  </b-row>
+                  <b-row
                     @click="detailButton(index)"
+                    sm="6"
+                    md="5"
+                    lg="6"
+                    class="text-center"
+                    align-v="center"
+                    style="height: 80%"
                   >
-                    <td class="ps-3 py-2">
-                      <div class="houseImg"></div>
-                    </td>
-                    <td>
-                      <div>
-                        <HeartBtn></HeartBtn>
-                      </div>
-                      <div>
-                        {{ item.apartmentName }}
-                      </div>
-                      <div>
-                        {{ item.address }}
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+                    <b-col
+                      >{{ item.apartmentName }}<br />{{ item.address }}</b-col
+                    >
+                  </b-row>
+                </b-col>
+              </b-row>
             </div>
           </div>
         </div>
       </div>
     </div>
     <review-insert-modal
-      v-if="userInfo&&detail"
+      v-if="userInfo && detail"
       v-on:parent-modal-close="reviewInsertModalClose"
       :memberId="userInfo.id"
     />
@@ -339,11 +355,12 @@ import { mapState, mapActions, mapGetters, mapMutations } from "vuex";
 import StarRating from "vue-star-rating";
 import ReviewInsertModal from "@/components/ReviewInsertModal.vue";
 import { Modal } from "bootstrap";
-import HeartBtn from "@/components/icon/HeartBtn.vue"
+import HeartBtn from "@/components/icon/HeartBtn.vue";
 
 const memberStore = "memberStore";
 const dealInfoStore = "dealInfoStore";
 const reviewStore = "reviewStore";
+const interestStore = "interestStore";
 
 export default {
   name: "AptMapview",
@@ -351,7 +368,7 @@ export default {
     TheKakaoMap,
     StarRating,
     ReviewInsertModal,
-    HeartBtn
+    HeartBtn,
   },
   data() {
     return {
@@ -366,6 +383,7 @@ export default {
       detail: false,
       increment: 0.5,
       reviewInsertModal: null,
+      t: false,
     };
   },
   created() {
@@ -416,12 +434,29 @@ export default {
       "getDealInfo",
     ]),
     ...mapActions(reviewStore, ["getReview"]),
+    ...mapActions(interestStore, ["addInterest"]),
     ...mapMutations(dealInfoStore, [
       "CLEAR_SIDO_LIST",
       "CLEAR_GUGUN_LIST",
       "CLEAR_DONG_LIST",
       "SET_CURRENT_INDEX",
+      "SET_CURRENT_INTEREST",
+      "SET_INTEREST",
     ]),
+    ...mapMutations(interestStore, ["SET_INTEREST_LIST",]),
+    findInterest(index) {
+      console.log("findInter");
+      console.log(index);
+      console.log(this.houseList[index].aptCode);
+      console.log(this.interestList);
+      this.interestList.forEach((interest) => {
+        console.log(this.houseList[index].aptCode == interest.aptCode);
+        if (this.houseList[index].aptCode == interest.aptCode) {
+          return true;
+        }
+      });
+      return false;
+    },
     allButton() {
       this.detail = false;
     },
@@ -433,7 +468,6 @@ export default {
       this.reviewInsertModal.show();
     },
     reviewInsertModalClose(aptCode) {
-      
       this.getReview(aptCode);
       this.reviewInsertModal.hide();
     },
@@ -441,6 +475,7 @@ export default {
       await this.userLogout(this.userInfo.userid);
       console.log(this);
       console.log(88, this.isLogin);
+      this.SET_INTEREST_LIST(null);
       sessionStorage.removeItem("access-token"); //저장된 토큰 없애기
       sessionStorage.removeItem("refresh-token"); //저장된 토큰 없애기
       if (this.$route.path !== "/") this.$router.push({ name: "main" });
@@ -467,12 +502,25 @@ export default {
         });
       }
     },
+    async toggleInterest({ enabled, index }) {
+      console.log(enabled, index);
+      const params = {
+        aptCode: this.houseList[index].aptCode,
+        id: this.userInfo.id,
+      };
+      this.SET_INTEREST({ enabled, index });
+      console.log(this.currentInterest);
+      // await addInterest();
+    },
     async onDongMenuChange() {
       if (this.selectDongName !== null) {
         this.eventFrom = "dong";
         await this.getHouseListByDong(
           this.selectSido + this.selectGuName + this.selectDongName
         );
+        if (this.isLogin) {
+          this.SET_CURRENT_INTEREST(this.interestList);
+        }
       }
       console.log(this.houseList.length);
       this.$swal(`${this.houseList.length}건 검색 완료`, { icon: "success" });
@@ -518,8 +566,10 @@ export default {
       "houseList",
       "fromMainKeyword",
       "houseDealInfo",
+      "currentInterest",
     ]),
     ...mapState(reviewStore, ["reviewList"]),
+    ...mapState(interestStore, ["interestList"]),
   },
   updated() {
     if (this.detail && this.isLogin) {
@@ -532,13 +582,16 @@ export default {
 </script>
 
 <style scoped>
+.td {
+  height: 1px;
+}
 .houseImg {
   background-image: url("@/assets/house/house-img.png");
   background-repeat: none;
   background-position: center;
   background-size: cover;
-  width: 200px;
-  height: 200px;
+  width: 180px;
+  height: 170px;
 }
 #wrapper {
   position: relative;
