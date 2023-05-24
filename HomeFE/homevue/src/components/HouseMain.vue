@@ -18,9 +18,12 @@
       <div class="d-flex justify-content-center">
         <div class="row">
           <house-list-item
-            v-for="house in houseList"
-            :key="house.aptCode"
+            v-for="(house, index) in houseList"
+            :key="index"
             v-bind="house"
+            :index="index"
+            :houseList="houseList"
+            :isInterest="false"
           ></house-list-item>
         </div>
       </div>
@@ -41,7 +44,7 @@ export default {
 
   data() {
     return {
-      keyword :"",
+      keyword: "",
       houseList: [],
       temp: [],
       fields: [
@@ -53,20 +56,29 @@ export default {
     };
   },
   created() {
-    // let param=this.$route.params.id;
+    const tmp = [];
     getHouseList(
       ({ data }) => {
         for (let i = 0; i <= 5; i++) {
           let randomIdx = Math.floor(Math.random() * data.length);
-          this.houseList.push(data[randomIdx]);
+          tmp.push(data[randomIdx]);
         }
-        console.log(this.houseList);
+        tmp.forEach((house) => {
+          this.interestList.forEach((interest) => {
+            if (house.aptCode == interest.aptCode) {
+              house.flag = true;
+              return;
+            }
+          });
+        });
+        this.houseList = tmp;
       },
       (error) => {
         console.log(error);
       }
     );
   },
+  async mounted() {},
   methods: {
     ...mapMutations("dealInfoStore", ["SET_KEYWORD"]),
     search() {
@@ -75,9 +87,12 @@ export default {
         return;
       }
       this.SET_KEYWORD(this.keyword);
-      this.$router.push('/map').catch((error)=>console.log(error));
+      this.$router.push("/map").catch((error) => console.log(error));
     },
     houseinfo() {},
+  },
+  computed: {
+    ...mapState("interestStore", ["interestList"]),
   },
 };
 </script>

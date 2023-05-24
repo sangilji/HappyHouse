@@ -1,10 +1,10 @@
 <template>
-  <span class="like-btn" @click="toggle">
-    <span v-if="heart"
+  <div class="like-btn" @click="toggle">
+    <div v-if="heart"
       ><b-icon icon="heart-fill" font-scale="2" style="color: #d63384"></b-icon
-    ></span>
-    <span v-else><b-icon icon="heart " font-scale="2" style="color: #d63384"></b-icon></span>
-  </span>
+    ></div>
+    <div v-else><b-icon icon="heart " font-scale="2" style="color: #d63384"></b-icon></div>
+  </div>
 </template>
 
 <script>
@@ -16,6 +16,13 @@ export default {
     return {
       heart: this.enabled,
     };
+  },
+  watch: {
+    enabled() {
+      if (this.enabled != this.heart) {
+        this.heart = this.enabled;
+      }
+    }
   },
   created(){ console.log("created"); },
   methods: {

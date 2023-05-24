@@ -4,7 +4,9 @@
         <h1>내가 찜한 매물</h1>
         <div class="d-flex justify-content-center">
           <div class="row">
-        <house-list-item v-for="interest in interestList" :key="interest.aptCode" v-bind="interest"></house-list-item>
+        <house-list-item v-for="(interest,index) in interestList" :key="index" v-bind="interest" :index="index" :houseList="interestList" :isInterest=true>
+          
+        </house-list-item>
       
         </div></div>
         <house-footer></house-footer>

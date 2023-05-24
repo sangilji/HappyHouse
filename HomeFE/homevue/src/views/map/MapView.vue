@@ -318,7 +318,7 @@
                         :index="index"
                         
                         @changeHeartBtn="toggleInterest"
-                        style="padding-top: 1rem; padding-left: 1.2rem;"
+                        style="padding-top: 0.7rem; padding-left: 1rem;"
                       ></HeartBtn>
                     </b-col>
                   </b-row>
@@ -518,7 +518,9 @@ export default {
         id: this.userInfo.id,
       };
       console.log(this.currentInterest);
-      this.$swal(`찜 등록되었습니다.`, { icon: "success" });
+      if (enabled) {
+        this.$swal(`찜 등록되었습니다.`, { icon: "success" });
+      }
       await this.addInterest(params);
 
       await this.SET_INTEREST({ enabled, index });
