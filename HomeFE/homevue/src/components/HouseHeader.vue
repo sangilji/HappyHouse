@@ -30,6 +30,11 @@
               </router-link>
             </b-nav-item>
             <b-nav-item>
+              <router-link :to="{ name: 'freeboardlist' }">
+                <h2 class="mypage-box" id="freeboardlist">자유게시판</h2>
+              </router-link>
+            </b-nav-item>
+            <b-nav-item>
               <router-link :to="{ name: 'mypage' }">
                 <h2 class="mypage-box" id="mypage">마이페이지</h2>
               </router-link>

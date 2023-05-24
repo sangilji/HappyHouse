@@ -59,14 +59,70 @@
         where announcementid = #{announcementid}
     </update>
 
-<!--    <delete id="deleteMemo" parameterType="int">-->
-<!--        delete from memo-->
-<!--        where announcementid = #{announcementid}-->
-<!--    </delete>-->
-
     <delete id="deleteArticle" parameterType="int">
         delete from announcement
         where announcementid = #{announcementid}
     </delete>
 
+    <!-- free board mapper -->
+
+    <insert id="freeWriteArticle" parameterType="Board">
+        insert into freeboard ( title, member_id, content, hit, regtime)
+        values (#{title}, #{memberid},#{content}, 0, now())
+    </insert>
+
+    <select id="freeListArticle" parameterType="map" resultType="Board">
+        select boardid, member_id memberid, title, content, hit,
+        case when date_format(regtime, '%Y%m%d') = date_format(now(), '%Y%m%d')
+        then date_format(regtime, '%H:%i:%s')
+        else date_format(regtime, '%y.%m.%d')
+        end regtime
+        from freeboard
+        <if test="word != null and word != ''">
+            <if test="key == 'title'">
+                where title like concat('%', #{word}, '%')
+            </if>
+            <if test="key != 'title'">
+                where ${key} = #{word}
+            </if>
+        </if>
+        order by boardid desc
+        limit #{start}, #{spp}
+    </select>
+
+    <select id="freeGetTotalCount" parameterType="map" resultType="int">
+        select count(boardid)
+        from freeboard
+        <if test="word != null and word != ''">
+            <if test="key == 'title'">
+                where title like concat('%', #{word}, '%')
+            </if>
+            <if test="key != 'title'">
+                where ${key} = #{word}
+            </if>
+        </if>
+    </select>
+
+    <select id="freeGetArticle" parameterType="int" resultType="Board">
+        select boardid, member_id memberid, title, content, hit, regtime
+        from freeboard
+        where boardid = #{boardid}
+    </select>
+
+    <update id="freeUpdateHit" parameterType="int">
+        update announcement
+        set hit = hit + 1
+        where announcementid = #{announcementid}
+    </update>
+
+    <update id="freeModifyArticle" parameterType="Board">
+        update freeboard
+        set title = #{title}, content = #{content}
+        where boardid = #{boardid}
+    </update>
+
+    <delete id="freeDeleteArticle" parameterType="int">
+        delete from freeboard
+        where boardid = #{boardid}
+    </delete>
 </mapper>

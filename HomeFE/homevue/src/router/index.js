@@ -105,6 +105,36 @@ const routes = [
     name: "createHouse",
     component: () => import(/* webpackChunkName: "board" */ "@/components/house/CreateHouse"),
   },
+  {
+    path: "/freeboardlist",
+    name: "freeboardlist",
+    component: () => import("@/components/board/freeboard/FreeBoardMain"),
+  },
+  {
+    path: "/freeboardwrite",
+    name: "freeboardwrite",
+    beforeEnter: onlyAuthUser,
+    component: () => import("@/components/board/freeboard/FreeBoardWrite"),
+  },
+  {
+    path: "/freeboardview/:boardid",
+    name: "freeboardview",
+    // beforeEnter: onlyAuthUser,
+    component: () => import("@/components/board/freeboard/FreeBoardView"),
+  },
+  {
+    path: "/freeboardupdate",
+    name: "freeboardmodify",
+    beforeEnter: onlyAuthUser,
+    component: () => import("@/components/board/freeboard/FreeBoardModify"),
+  },
+  {
+    path: "/freeboarddelete/:announcementid",
+    name: "freeboarddelete",
+    beforeEnter: onlyAuthUser,
+    component: () => import("@/components/board/freeboard/FreeBoardDelete"),
+  },
+  
 ];
 
 const router = new VueRouter({
