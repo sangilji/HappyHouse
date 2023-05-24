@@ -15,6 +15,7 @@ public class Board {
     private String content;
     private int hit;
     private String regtime;
+    private int boardid;
 }
 
 

@@ -13,6 +13,15 @@ public interface BoardMapper {
     public Board getArticle(int articleno) throws SQLException;
     public void updateHit(int articleno) throws SQLException;
     public int modifyArticle(Board boardDto) throws SQLException;
-//    public void deleteMemo(int articleno) throws SQLException;
     public int deleteArticle(int articleno) throws SQLException;
+    List<Board> listFreeRead(BoardParameterDto boardParameterDto);
+        // free board mapper
+public int freeWriteArticle(Board boardDto) throws SQLException;
+    public List<Board> freeListArticle(BoardParameterDto boardParameterDto) throws SQLException;
+    public int freeGetTotalCount(BoardParameterDto boardParameterDto) throws SQLException;
+    public Board freeGetArticle(int articleno) throws SQLException;
+    public void freeUpdateHit(int articleno) throws SQLException;
+    public int freeModifyArticle(Board boardDto) throws SQLException;
+    public int freeDeleteArticle(int articleno) throws SQLException;
+    List<Board> freeListFreeRead(BoardParameterDto boardParameterDto);
 }
