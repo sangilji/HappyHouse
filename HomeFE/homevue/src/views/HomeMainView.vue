@@ -1,6 +1,7 @@
 <template>
   <div>
     <house-header></house-header>
+    <house-banner></house-banner>
     <house-main></house-main>
     <div class="container-fluid">
       <div class="d-flex flex-wrap justify-content-center">
@@ -25,7 +26,7 @@ import HouseMain from "../components/HouseMain.vue";
 import BoardMain from "../components/board/BoardMain.vue";
 import HouseFooter from "../components/layout/HouseFooter.vue";
 import NewsItem from "@/components/News.vue";
-
+import HouseBanner from "@/components/layout/HouseBanner.vue";
 export default {
   name: "HouseMainView",
   components: {
@@ -34,6 +35,7 @@ export default {
     BoardMain,
     HouseFooter,
     NewsItem,
+    HouseBanner,
   },
 };
 </script>

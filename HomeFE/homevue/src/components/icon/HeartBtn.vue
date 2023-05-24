@@ -24,7 +24,7 @@ export default {
       }
     }
   },
-  created(){ console.log("created"); },
+  created(){},
   methods: {
     async toggle() {
       // Only animate on favoriting.

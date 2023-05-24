@@ -3,24 +3,46 @@
     <div class="col-6">
       <div class="text-center align-self-center">
         <div class="house-box" @click="goHouse">
-          <img src="@/assets/house/house-img.png" alt="home" class="img-box" />
-          <h2>{{ apartmentName }}</h2>
-          <h3>{{ address }}</h3>
-          <h4>🍎{{ housecomment }}🍎</h4>
-          <div v-if="userInfo">
-            <heart-btn
-              v-if="isInterest"
-              :enabled="interestList[index]"
-              :index="index"
-              @changeHeartBtn="deleteHeart"
-            ></heart-btn>
-            <heart-btn
-              v-else
-              :enabled="houseList[index].flag"
-              :index="index"
-              @changeHeartBtn="deleteHeart"
-            ></heart-btn>
-          </div>
+          <b-row class="text-center align-self-center">
+            <b-col>
+              <img
+                src="@/assets/house/house-img.png"
+                alt="home"
+                class="img-box"
+              />
+              <h2>{{ apartmentName }}</h2>
+              <h3>{{ address }}</h3>
+              <h4>🍎{{ housecomment }}🍎</h4>
+            </b-col>
+          </b-row>
+          <b-row class="text-center align-self-center">
+            <b-col>
+              <div v-if="userInfo">
+                <heart-btn
+                  v-if="isInterest"
+                  :enabled="interestList[index]"
+                  :index="index"
+                  @changeHeartBtn="deleteHeart"
+                ></heart-btn>
+                <heart-btn
+                  v-else
+                  :enabled="houseList[index].flag"
+                  :index="index"
+                  @changeHeartBtn="deleteHeart"
+                ></heart-btn>
+              </div>
+            </b-col>
+          </b-row>
+          <b-row
+            sm="5"
+            md="5"
+            lg="5"
+            class="text-center"
+            align-v="center"
+            style="height: 6%"
+          >
+            <b-col> </b-col>
+          </b-row>
         </div>
       </div>
     </div>
@@ -44,13 +66,12 @@ export default {
     HeartBtn,
   },
   created() {
-    console.log(this.houseList);
-    console.log(this.interestList);
   },
   props: {
     houseList: Array,
     memberid: String,
     aptCode: String,
+    dongCode : String,
     apartmentName: String,
     address: String,
     housecomment: String,
@@ -61,10 +82,8 @@ export default {
   methods: {
     // ...mapActions(houseStore, ["detailHouse"]),
     ...mapActions(interestStore, ["addInterest", "getInterests"]),
-    goHouse() {
-      // console.log("listRow : ", this.house);
-      // this.$store.dispatch("getHouse", this.house);
-      // this.detailHouse(this.house);
+    async goHouse() {
+      await this.$emit('moveHouseDetail',{aptCode : this.aptCode, dongCode : this.dongCode})
     },
     async deleteHeart({ enabled, index }) {
       const params = {

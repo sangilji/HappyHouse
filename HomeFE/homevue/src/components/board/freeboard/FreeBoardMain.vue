@@ -1,7 +1,7 @@
 <template>
 	<div>
         <house-header></house-header>
-
+        <house-banner></house-banner>
 		<div>
 <b-card class="board-box">
     <div class="text-dark">
@@ -41,7 +41,7 @@ import { mapState, mapActions, mapGetters } from "vuex";
 import { freeListArticle } from "@/api/freeboard";
 import HouseFooter from "@/components/layout/HouseFooter.vue";
 import HouseHeader from '@/components/HouseHeader.vue';
-
+import HouseBanner from "@/components/layout/HouseBanner.vue";
 const memberStore = "memberStore";
 export default {
     name: "FreeBoardList",
@@ -59,6 +59,7 @@ export default {
     components: {
         HouseHeader,
         HouseFooter,  
+        HouseBanner,
     },
     computed: {
     ...mapState(memberStore, ["isLogin", "userInfo"]),

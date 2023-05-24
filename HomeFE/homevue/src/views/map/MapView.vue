@@ -1,84 +1,6 @@
 <template>
   <div>
-    <div>
-      <div>
-        <b-navbar toggleable="lg" type="white">
-          <router-link :to="{ name: 'home' }">
-            <b-navbar-brand style="margin: 0rem 3rem 0rem; font-weight: bolder">
-              <img src="@/assets/header/logo.png" style="width: 150px" />
-            </b-navbar-brand>
-          </router-link>
-          <b-collapse id="nav-collapse" is-nav>
-            <b-navbar-nav class="collapse navbar-collapse justify-content-end">
-              <b-nav-item>
-                <router-link :to="{ name: 'map' }">
-                  <h2 class="heart-box">지도</h2>
-                </router-link>
-              </b-nav-item>
-              <b-nav-item v-if="userInfo">
-                <router-link
-                  :to="{ name: 'interests', params: { id: userInfo.id } }"
-                >
-                  <h2 class="heart-box" id="heart">찜</h2>
-                </router-link>
-              </b-nav-item>
-              <b-nav-item v-else>
-                <router-link :to="{ name: 'interests', params: { id: null } }">
-                  <h2 class="heart-box" id="heart">찜</h2>
-                </router-link>
-              </b-nav-item>
-              <b-nav-item>
-                <router-link :to="{ name: 'boardlist' }">
-                  <h2 class="board-box" id="board">공지사항</h2>
-                </router-link>
-              </b-nav-item>
-              <b-nav-item>
-                <router-link :to="{ name: 'mypage' }">
-                  <h2 class="mypage-box" id="mypage">마이페이지</h2>
-                </router-link>
-              </b-nav-item>
-
-              <b-nav-item v-if="userInfo && userInfo.role == 'ROLE_LANLORD'">
-              <router-link :to="{ name: 'createHouse' }">
-                <h2 class="mypage-box" id="createHouse">매물 등록</h2>
-              </router-link>
-            </b-nav-item>
-              <!-- after login -->
-              <div class="d-flex justify-content-center" v-if="userInfo">
-                <b-nav-item>
-                  <h2>{{ userInfo.name }} 님</h2>
-                </b-nav-item>
-                <b-nav-item @click="onClickLogout">
-                  <img class="logout" alt="logout" src="@/assets/logout.png" />
-                </b-nav-item>
-              </div>
-
-              <!-- before login -->
-              <div class="d-flex justify-content-center" v-else>
-                <b-nav-item>
-                  <router-link :to="{ name: 'join' }">
-                    <img
-                      class="signup"
-                      alt="signUp"
-                      src="@/assets/signup-button.png"
-                    />
-                  </router-link>
-                </b-nav-item>
-                <b-nav-item>
-                  <router-link :to="{ name: 'login' }">
-                    <img
-                      class="login"
-                      alt="login"
-                      src="@/assets/login-button.png"
-                    />
-                  </router-link>
-                </b-nav-item>
-              </div>
-            </b-navbar-nav>
-          </b-collapse>
-        </b-navbar>
-      </div>
-    </div>
+    <house-header></house-header>
     <div id="wrapper">
       <the-kakao-map></the-kakao-map>
       <div id="searchBox" class="card">
@@ -321,9 +243,8 @@
                         v-if="isLogin"
                         :enabled="currentInterest[index]"
                         :index="index"
-                        
                         @changeHeartBtn="toggleInterest"
-                        style="padding-top: 0.7rem; padding-left: 1rem;"
+                        style="padding-top: 0.7rem; padding-left: 1rem"
                       ></HeartBtn>
                     </b-col>
                   </b-row>
@@ -362,6 +283,7 @@ import StarRating from "vue-star-rating";
 import ReviewInsertModal from "@/components/ReviewInsertModal.vue";
 import { Modal } from "bootstrap";
 import HeartBtn from "@/components/icon/HeartBtn.vue";
+import HouseHeader from "@/components/HouseHeader.vue";
 
 const memberStore = "memberStore";
 const dealInfoStore = "dealInfoStore";
@@ -375,6 +297,7 @@ export default {
     StarRating,
     ReviewInsertModal,
     HeartBtn,
+    HouseHeader,
   },
   data() {
     return {
@@ -392,18 +315,42 @@ export default {
       t: false,
     };
   },
-  created() {
+  async created() {
+    if (this.fromMainHouse) {
+      console.log(this.fromMainHouse.dongCode);
+      this.selectSido = this.fromMainHouse.dongCode.substring(0, 2);
+      this.selectGuName = this.fromMainHouse.dongCode.substring(2, 5);
+      this.selectDongName = this.fromMainHouse.dongCode.substring(5, 10);
+
+      await this.onDongMenuChange();
+      this.houseList.forEach((house, index) => {
+        console.log(house);
+        console.log(this.fromMainHouse);
+
+        if (house.aptCode == this.fromMainHouse.aptCode) {
+          this.SET_CURRENT_INDEX(index);
+          return;
+        }
+      });
+      this.SET_HOUSE();
+      this.CLEAR_SIDO_LIST();
+      this.CLEAR_GUGUN_LIST();
+      this.CLEAR_DONG_LIST();
+      this.selectSido= null,
+      this.selectGuName= null,
+      this.selectDongName= null,
+      this.getSido();
+      return;
+    }
     this.CLEAR_SIDO_LIST();
     this.CLEAR_GUGUN_LIST();
     this.CLEAR_DONG_LIST();
     this.getSido();
-    console.log(this.sidos);
-    if(this.fromMainKeyword){
+    if (this.fromMainKeyword) {
       this.inputKeyword = this.fromMainKeyword;
       this.CLEAR_KEYWORD();
-      this.searchType = 'K';
+      this.searchType = "K";
       this.onKeywordSearch();
-
     }
   },
   watch: {
@@ -447,7 +394,7 @@ export default {
       "getDealInfo",
     ]),
     ...mapActions(reviewStore, ["getReview"]),
-    ...mapActions(interestStore, ["getInterests","addInterest"]),
+    ...mapActions(interestStore, ["getInterests", "addInterest"]),
     ...mapMutations(dealInfoStore, [
       "CLEAR_SIDO_LIST",
       "CLEAR_GUGUN_LIST",
@@ -456,8 +403,9 @@ export default {
       "SET_CURRENT_INDEX",
       "SET_CURRENT_INTEREST",
       "SET_INTEREST",
+      "SET_HOUSE",
     ]),
-    ...mapMutations(interestStore, ["SET_INTEREST_LIST",]),
+    ...mapMutations(interestStore, ["SET_INTEREST_LIST"]),
     findInterest(index) {
       console.log("findInter");
       console.log(index);
@@ -533,17 +481,14 @@ export default {
     async onDongMenuChange() {
       if (this.selectDongName !== null) {
         this.eventFrom = "dong";
-        await this.getHouseListByDong(
-          "0"
-        );
+
         await this.getHouseListByDong(
           this.selectSido + this.selectGuName + this.selectDongName
         );
-        
+
         if (this.isLogin) {
           await this.getInterests(this.userInfo.id);
           await this.SET_CURRENT_INTEREST(this.interestList);
-
         }
       }
       console.log(this.houseList.length);
@@ -595,6 +540,7 @@ export default {
       "fromMainKeyword",
       "houseDealInfo",
       "currentInterest",
+      "fromMainHouse",
     ]),
     ...mapState(reviewStore, ["reviewList"]),
     ...mapState(interestStore, ["interestList"]),

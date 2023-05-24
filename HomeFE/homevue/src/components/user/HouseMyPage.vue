@@ -125,7 +125,7 @@ export default {
       await this.modifyUser(this.user);
       await this.getUserInfo(sessionStorage.getItem("access-token"));
       this.user = { ...this.userInfo };
-      alert("회원 정보 수정을 완료했습니다.");
+      this.$swal("회원정보수정을 완료하였습니다.",{icon:'success'});
       this.cancel();
     },
     async deleteButton() {

@@ -1,7 +1,7 @@
 <template>
   <div>
     <house-header></house-header>
-
+    <house-banner></house-banner>
   <b-container class="bv-example-row mt-3">
     
     <b-row class="mb-1">
@@ -44,6 +44,7 @@ import { freeGetArticle } from "@/api/freeboard";
 import { mapState } from "vuex";
 import HouseHeader from '@/components/HouseHeader.vue';
 import HouseFooter from "@/components/layout/HouseFooter.vue";
+import HouseBanner from "@/components/layout/HouseBanner.vue";
 
 const memberStore = "memberStore";
 
@@ -52,6 +53,7 @@ export default {
   components: {
     HouseHeader,
     HouseFooter,
+    HouseBanner,
   },
   data() {
     return {

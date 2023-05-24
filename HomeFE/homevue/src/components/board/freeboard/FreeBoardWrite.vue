@@ -1,6 +1,7 @@
 <template>
   <div>
   <house-header></house-header>
+  <house-banner></house-banner>
   <b-container class="bv-example-row mt-3">
     <b-row>
       <b-col>
@@ -16,6 +17,7 @@
 <script>
 import BoardInputItem from "@/components/board/freeboard/FreeBoardInputItem";
 import HouseHeader from "@/components/HouseHeader.vue";
+import HouseBanner from "@/components/layout/HouseBanner.vue";
 import HouseFooter from "@/components/layout/HouseFooter.vue";
 export default {
 
@@ -26,7 +28,9 @@ export default {
 
   components: {
     BoardInputItem,
-    HouseHeader,HouseFooter
+    HouseHeader,
+    HouseFooter,
+    HouseBanner
   },
 };
 </script>

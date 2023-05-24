@@ -1,6 +1,7 @@
 <template>
   <div>
     <house-header></house-header>
+    <house-banner></house-banner>
     <board-main></board-main>
     <house-footer></house-footer>
   </div>
@@ -10,7 +11,7 @@
 import HouseHeader from '@/components/HouseHeader.vue';
 import BoardMain from "@/components/board/BoardMain.vue";
 import HouseFooter from "@/components/layout/HouseFooter.vue";
-
+import HouseBanner from '@/components/layout/HouseBanner.vue';
 // import HouseFooter from "@/components/layout/HouseFooter.vue";
 export default {
   name: "AppBoard",
@@ -19,6 +20,7 @@ export default {
     BoardMain,
     HouseFooter,
     // HouseFooter,
+    HouseBanner,
   }
 };
 </script>

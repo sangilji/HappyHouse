@@ -15,6 +15,7 @@ const dealInfoStore = {
     dongs: [{ value: null, text: "동 선택" }],
     houseList: [],
     fromMainKeyword: "",
+    fromMainHouse: "",
     currentIndex: null,
     houseDealInfo: [],
     currentInterest:[],
@@ -43,6 +44,9 @@ const dealInfoStore = {
       dongs.forEach((dong) => {
         state.dongs.push({ value: dong.dongCode, text: dong.dongName });
       });
+    },
+    SET_HOUSE(state, fromMainHouse) {
+      state.fromMainHouse = fromMainHouse;
     },
     SET_HOUSE_LIST(state, houseList) {
       state.houseList = houseList;

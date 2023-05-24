@@ -77,18 +77,13 @@
         </b-collapse>
       </b-navbar>
     </div>
-
     <div></div>
-    <div class="banner">
-      <router-link :to="{ name: 'home' }">
-        <img center src="../assets/header/Banner.png" class="img-fluid" alt="Responsive image" />
-      </router-link>
-    </div>
   </div>
 </template>
 
 <script>
 import { mapState, mapActions, mapGetters, mapMutations } from "vuex";
+
 const memberStore = "memberStore";
 const interestStore = "interestStore";
 export default {

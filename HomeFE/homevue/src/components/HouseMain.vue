@@ -17,7 +17,7 @@
       <h1>추천 매물</h1>
       <div class="d-flex justify-content-center" style="text-align: -webkit-center;">
         <div class="row">
-          <house-list-item
+          <house-list-item @moveHouseDetail="move"
             v-for="(house, index) in houseList"
             :key="index"
             v-bind="house"
@@ -80,7 +80,7 @@ export default {
   },
   async mounted() {},
   methods: {
-    ...mapMutations("dealInfoStore", ["SET_KEYWORD"]),
+    ...mapMutations("dealInfoStore", ["SET_KEYWORD","SET_HOUSE"]),
     search() {
       if (this.keyword == "") {
         this.$swal("키워드를 입력하세요.", { icon: "warning" });
@@ -89,7 +89,11 @@ export default {
       this.SET_KEYWORD(this.keyword);
       this.$router.push("/map").catch((error) => console.log(error));
     },
-    houseinfo() {},
+    async move(house){
+      await this.SET_HOUSE(house);
+      console.log(house);
+      await this.$router.push("/map").catch((error) => console.log(error));
+    }
   },
   computed: {
     ...mapState("interestStore", ["interestList"]),

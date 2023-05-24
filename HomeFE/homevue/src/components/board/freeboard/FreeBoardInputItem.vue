@@ -96,7 +96,7 @@ export default {
       !this.article.title && ((msg = "제목 입력해주세요"), (err = false), this.$refs.title.focus());
       err && !this.article.content && ((msg = "내용 입력해주세요"), (err = false), this.$refs.content.focus());
 
-      if (!err) alert(msg);
+      if (!err) this.$swal(msg,{icon:'success'});
       else this.type === "register" ? this.registArticle() : this.modifyArticle();
     },
     onReset(event) {
@@ -119,7 +119,7 @@ export default {
           if (data === "success") {
             msg = "등록이 완료되었습니다.";
           }
-          alert(msg);
+          this.$swal(msg,{icon:'success'});
           this.moveList();
         },
         (error) => {
@@ -141,7 +141,7 @@ export default {
           if (data === "success") {
             msg = "수정이 완료되었습니다.";
           }
-          alert(msg);
+          this.$swal(msg,{icon:'success'});
           // 현재 route를 /list로 변경.
           this.moveList();
         },

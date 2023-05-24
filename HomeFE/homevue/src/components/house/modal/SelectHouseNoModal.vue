@@ -96,7 +96,7 @@ export default {
         })
         .catch((error) => {
           console.log(error);
-          this.$swal("서버에 문제가 발생하였습니다.", { icon: "error" });
+          this.$swal("서버에 문제가 발생하였습니다.", { icon: "warning" });
         });
     },
     selectHouse(houseNo, houseName) {

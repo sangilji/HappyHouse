@@ -1,6 +1,7 @@
 <template>
   <div>
     <house-header></house-header>
+    <house-banner></house-banner>
     <div class="container my-5" style="border: 1px solid rgb(233, 233, 233); padding:1.0rem 1.0rem 1.0rem">
       <div class="row g-2">    
         <div class="col-lg-2 col-md-6"></div>
@@ -189,6 +190,8 @@ import { writeHouseDeal } from "@/api/house";
 import HouseFooter from "../../components/layout/HouseFooter.vue";
 import HouseHeader from "../../components/HouseHeader.vue";
 import { mapState, mapActions, mapGetters, mapMutations } from "vuex";
+import HouseBanner from "../layout/HouseBanner.vue";
+
 Vue.use(CKEditor);
 const dealInfoStore = "dealInfoStore";
 
@@ -197,6 +200,7 @@ export default {
   components: {
     HouseHeader,
     HouseFooter,
+    HouseBanner,
   },
   data() {
     return {
@@ -300,8 +304,8 @@ export default {
           if (data === "success") {
             msg = "등록이 완료되었습니다.";
           }
-          alert(msg);
-          // this.$router.push({ name: "home" });
+          this.$swal(msg,{icon:'success'});
+          this.$router.push({ name: "home" }).catch((error)=>console.log(error));
         },
         (error) => {
           console.log(error);

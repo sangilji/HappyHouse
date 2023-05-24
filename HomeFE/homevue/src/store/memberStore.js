@@ -122,7 +122,7 @@ const memberStore = {
       let decodeToken = jwtDecode(token);
       console.log("2. getUserInfo() decodeToken :: ", decodeToken);
       await findById(
-        decodeToken.user.id,
+        decodeToken.userid,
         ({ data }) => {
           if (data.message === "success") {
             commit("SET_USER_INFO", data.userInfo);
@@ -163,8 +163,9 @@ const memberStore = {
         "토큰 재발급 >> 기존 토큰 정보 : {}",
         sessionStorage.getItem("access-token")
       );
+      console.log(state.userInfo);
       await tokenRegeneration(
-        JSON.stringify(state.userInfo),
+          state.userInfo,
         ({ data }) => {
           if (data.message === "success") {
             let accessToken = data["access-token"];

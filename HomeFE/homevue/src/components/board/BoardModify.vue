@@ -1,6 +1,7 @@
 <template>
   <div>
   <house-header></house-header>
+  <house-banner></house-banner>
   <b-container class="bv-example-row mt-3">
     <b-row>
       <b-col>
@@ -17,6 +18,7 @@
 import HouseHeader from '@/components/HouseHeader.vue';
 import BoardInputItem from "@/components/board/BoardInputItem";
 import HouseFooter from "@/components/layout/HouseFooter.vue";
+import HouseBanner from '../layout/HouseBanner.vue';
 
 export default {
 
@@ -29,6 +31,7 @@ export default {
     HouseHeader,
     BoardInputItem,
     HouseFooter,
+    HouseBanner,
   },
 };
 </script>

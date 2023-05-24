@@ -21,7 +21,7 @@ export default {
         if (data === "success") {
           msg = "삭제가 완료되었습니다.";
         }
-        alert(msg);
+        this.$swal(msg,{icon:'success'});
         // 현재 route를 /list로 변경.
         this.$router.push({ name: "boardlist" });
       },

@@ -140,7 +140,7 @@ export default {
       await this.joinConfirm(this.user);
       // console.log("1. confirm() token >> " + token);
       if (this.isJoin) {
-        alert("회원가입이 완료되었습니다.");
+        this.$swal("회원가입이 완료되었습니다.",{icon:'success'});
         this.SET_IS_JOIN(false);
         // console.log("4. confirm() userInfo :: ", this.userInfo);
         this.$router.push({ name: "main" });

@@ -5,11 +5,15 @@
       <div class="text-dark">
         <h1>뉴스</h1>
         <b-table striped hover :items="newsList" :fields="fields">
-          <template #cell(title)="data">
-            <a :href="data.item.url">{{ data.item.title }}</a>
+          <template #cell(title)="data" >
+            <div class="overflow-hidden">
+            <a :href="data.item.url" >{{ data.item.title }}</a>
+          </div>
           </template>
           <template #cell(time)="data">
+            <div class="overflow-hidden">
             <p>{{ data.item.time }}</p>
+          </div>
           </template>
         </b-table>
       </div>

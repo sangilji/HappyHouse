@@ -10,7 +10,7 @@ import mapView from "@/views/map/MapView.vue";
 import MyPageView from "@/views/user/MyPageView.vue";
 import findPasswordView from "@/views/user/findPasswordView.vue"
 import store from "@/store";
-
+import { swal } from "vue-swal";
 Vue.use(VueRouter);
 
 const onlyAuthUser = async (to, from, next) => {
@@ -24,7 +24,8 @@ const onlyAuthUser = async (to, from, next) => {
     await store.dispatch("memberStore/getUserInfo", token);
   }
   if (!checkToken || checkUserInfo === null) {
-    alert("로그인이 필요한 페이지입니다..");
+    
+    swal("로그인이 필요한 페이지입니다..");
     // next({ name: "login" });
     router.push({ name: "login" });
   } else {
@@ -108,6 +109,7 @@ const routes = [
   {
     path: "/createHouse",
     name: "createHouse",
+    beforeEnter: onlyAuthUser,
     component: () => import(/* webpackChunkName: "board" */ "@/components/house/CreateHouse"),
   },
   {
