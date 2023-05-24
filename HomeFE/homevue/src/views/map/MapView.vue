@@ -38,6 +38,11 @@
                 </router-link>
               </b-nav-item>
 
+              <b-nav-item v-if="userInfo && userInfo.role == 'ROLE_LANLORD'">
+              <router-link :to="{ name: 'createHouse' }">
+                <h2 class="mypage-box" id="createHouse">매물 등록</h2>
+              </router-link>
+            </b-nav-item>
               <!-- after login -->
               <div class="d-flex justify-content-center" v-if="userInfo">
                 <b-nav-item>
