@@ -57,7 +57,7 @@
 
     <update id="newPassword" parameterType="Member">
         update member
-        set address = #{address}
+        set password = #{password}
         where userId = #{userId};
     </update>
 

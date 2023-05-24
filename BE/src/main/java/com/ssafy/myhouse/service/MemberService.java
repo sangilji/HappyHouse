@@ -189,7 +189,7 @@ public class MemberService {
         message.addRecipients(Message.RecipientType.TO,userDto.getEmail());
         message.setSubject(subject);
         message.setText(msg,"utf-8","html");
-        message.setFrom(new InternetAddress("wltkddlf0515@gmail.com","happyhouse"));
+        message.setFrom(new InternetAddress("null","happyhouse"));
 
         return message;
     }
