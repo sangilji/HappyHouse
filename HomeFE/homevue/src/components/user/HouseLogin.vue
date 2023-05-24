@@ -26,12 +26,12 @@
                 @keyup.enter="confirm"
               ></b-form-input>
             </b-form-group>
-            <div class="d-flex justify-content-center">
-              <div class="font-purple">아이디 찾기</div>
-              <div class="font-purple">비밀번호 찾기</div>
-              <div class="font-purple" @click="movePage">회원가입</div>
+            <div class="text-center">
+              <span class="font-purple" @click="moveFindPage">비밀번호 찾기</span>
+              <span class="font-purple" @click="movePage">회원가입</span>
+              <div></div>
+              <img class="login" alt="signUp" src="../../assets/login/login.png" @click="confirm"/>
             </div>
-			<img class="login" alt="signUp" src="../../assets/login/login.png" @click="confirm"/>
             <!-- <b-button type="button" variant="primary" class="m-1" @click="confirm">로그인</b-button> -->
             <!-- <b-button type="button" variant="success" class="m-1" @click="movePage">회원가입</b-button> -->
           </b-form>
@@ -76,6 +76,9 @@ export default {
     },
     movePage() {
       this.$router.push({ name: "join" });
+    },
+    moveFindPage() {
+      this.$router.push({ name: "findPassword" });
     },
   },
 };

@@ -253,7 +253,7 @@
                 <div class="d-flex w-100 justify-content-between">
                   <div>
                     <strong class="mb-1"
-                      >{{ review.memberId }}({{ review.name }})&nbsp;&nbsp;
+                      >{{ review.userId }}({{ review.name }})&nbsp;&nbsp;
                     </strong>
                     {{ review.createdDate }}
                   </div>

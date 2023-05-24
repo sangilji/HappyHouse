@@ -45,7 +45,7 @@ export default {
         fields: [
         { key: "announcementid", label: "글번호", tdClass: "tdClass" },
         { key: "title", label: "제목", tdClass: "tdSubject" },
-        { key: "memberid", label: "작성자", tdClass: "tdMemberId" },
+        { key: "userId", label: "작성자", tdClass: "tdUserId" },
     ],
     };
     },

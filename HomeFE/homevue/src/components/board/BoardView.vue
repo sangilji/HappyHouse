@@ -15,7 +15,7 @@
         <b-card
           :header-html="`<h1>${article.announcementid}.
           ${article.title} </h1>
-          <div><h5>작성자: ${article.memberid}</h5></div>
+          <div><h5>작성자: ${article.userId}</h5></div>
           <div><h5>작성시간: ${article.regtime}</h5></div>
           <div><h5>조회수: ${article.hit}</h5>`
           "

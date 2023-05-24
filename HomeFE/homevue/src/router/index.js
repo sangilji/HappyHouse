@@ -8,7 +8,7 @@ import BoardWriteView from "@/views/board/BoardWriteView.vue";
 import BoardViewview from "@/views/board/BoardViewview.vue";
 import mapView from "@/views/map/MapView.vue";
 import MyPageView from "@/views/user/MyPageView.vue";
-
+import findPasswordView from "@/views/user/findPasswordView.vue"
 import store from "@/store";
 
 Vue.use(VueRouter);
@@ -48,6 +48,11 @@ const routes = [
     path: "/login",
     name: "login",
     component: LoginView,
+  },
+  {
+    path: "/findPassword",
+    name: "findPassword",
+    component: findPasswordView,
   },
   {
     path: "/join",
