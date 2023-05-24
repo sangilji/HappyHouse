@@ -10,6 +10,7 @@ public class HouseDto {
     private int floor;
     private String buildYear;
     private String aptCode;
+    private String dongCode;
     private double lat;
     private double lng;
     private String apartmentName;

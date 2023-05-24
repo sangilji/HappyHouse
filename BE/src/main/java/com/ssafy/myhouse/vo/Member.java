@@ -4,6 +4,7 @@ package com.ssafy.myhouse.vo;
 import lombok.*;
 
 @Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

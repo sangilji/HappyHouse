@@ -5,8 +5,8 @@
 <mapper namespace="com.ssafy.myhouse.mapper.HouseMapper">
     <select id="selectAll" resultType="HouseDto">
         select count(*),round(avg(replace(hd.dealAmount,',','')),-3) as dealAmount, round(avg(hd.area),2) as area, max(hd.floor) as floor,
-               hd.aptCode, tmp.lat, tmp.lng, tmp.apartmentName, tmp.address,tmp.jibun,tmp.buildYear
-        from housedeal hd inner join (SELECT hi.aptCode, hi.apartmentName, concat(sidoName,' ',gugunName,' ',dong,' ',roadName,' ',jibun) address, lng, lat, jibun, buildYear
+               hd.aptCode, tmp.lat, tmp.lng, tmp.apartmentName, tmp.address,tmp.jibun,tmp.buildYear , tmp.dongCode
+        from housedeal hd inner join (SELECT hi.aptCode, hi.apartmentName, concat(sidoName,' ',gugunName,' ',dong,' ',roadName,' ',jibun) address, lng, lat, jibun, buildYear, hi.dongCode
                                       FROM houseinfo hi
                                                INNER JOIN dongcode dc ON hi.dongCode = dc.dongCode limit 100)
             tmp on hd.aptCode = tmp.aptCode

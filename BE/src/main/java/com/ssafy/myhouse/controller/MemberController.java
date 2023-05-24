@@ -21,7 +21,7 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-@Slf4j
+
 @RequestMapping("/user")
 public class MemberController {
     public static final Logger logger = LoggerFactory.getLogger(MemberController.class);
@@ -56,8 +56,8 @@ public class MemberController {
         try {
             Member loginUser = memberService.login(memberDto);
             if (loginUser != null) {
-                String accessToken = jwtService.createAccessToken("user", loginUser);// key, data
-                String refreshToken = jwtService.createRefreshToken("user", loginUser);// key, data
+                String accessToken = jwtService.createAccessToken("userid", loginUser.getUserId());// key, data
+                String refreshToken = jwtService.createRefreshToken("userid", loginUser.getUserId());// key, data
                 memberService.saveRefreshToken(memberDto.getUserid(), refreshToken);
                 logger.debug("로그인 accessToken 정보 : {}", accessToken);
                 logger.debug("로그인 refreshToken 정보 : {}", refreshToken);
@@ -95,15 +95,15 @@ public class MemberController {
 
     }
 
-    @GetMapping("/mypage/{id}")
-    public ResponseEntity<?> getMember(@PathVariable("id") int id, HttpServletRequest request) throws Exception {
+    @GetMapping("/mypage/{userid}")
+    public ResponseEntity<?> getMember(@PathVariable("userid") String userid, HttpServletRequest request) throws Exception {
         Map<String, Object> resultMap = new HashMap<>();
         HttpStatus status = HttpStatus.UNAUTHORIZED;
         if (jwtService.checkToken(request.getHeader("access-token"))) {
             logger.info("사용 가능한 토큰!!!");
             try {
 //				로그인 사용자 정보.
-                Member member = memberService.findById(id);
+                Member member = memberService.findOne(userid);
                 System.out.println(member.getRole());
                 resultMap.put("userInfo", member);
                 resultMap.put("message", SUCCESS);
@@ -166,22 +166,24 @@ public class MemberController {
     @PostMapping("/refresh")
     public ResponseEntity<?> refreshToken(@RequestBody Member member, HttpServletRequest request)
             throws Exception {
+        logger.info("memberDto : {}", member);
         Map<String, Object> resultMap = new HashMap<>();
         HttpStatus status = HttpStatus.ACCEPTED;
         String token = request.getHeader("refresh-token");
-        logger.debug("token : {}, memberDto : {}", token, member);
-        if (jwtService.checkToken(token)) {
+        logger.info("token : {}, memberDto : {}", token, member);
+        if (!jwtService.checkToken(token)) {
             if (token.equals(memberService.getRefreshToken(member.getUserId()))) {
-                String accessToken = jwtService.createAccessToken("user", member);
-                logger.debug("token : {}", accessToken);
-                logger.debug("정상적으로 액세스토큰 재발급!!!");
+                String accessToken = jwtService.createAccessToken("userid", member.getUserId());
+                logger.info("token : {}", accessToken);
+                logger.info("정상적으로 액세스토큰 재발급!!!");
                 resultMap.put("access-token", accessToken);
                 resultMap.put("message", SUCCESS);
                 status = HttpStatus.ACCEPTED;
             }
-        } else {
-            logger.debug("리프레쉬토큰도 사용불!!!!!!!");
-            status = HttpStatus.UNAUTHORIZED;
+            else {
+                logger.info("리프레쉬토큰도 사용불!!!!!!!");
+                status = HttpStatus.UNAUTHORIZED;
+            }
         }
         return new ResponseEntity<>(resultMap, status);
     }
@@ -189,7 +191,7 @@ public class MemberController {
     @PostMapping("/findPassword")
     public ResponseEntity<?> findPassword(@RequestBody Member member, HttpServletRequest request) {
         String findPasswordMember = memberService.findPassword(member);
-        log.info("controller result  " + member);
+        logger.info("controller result  " + member);
         if (findPasswordMember.equals("success")) {
             return new ResponseEntity<>("success", HttpStatus.OK);
         } else if (findPasswordMember.equals("notFound")) {

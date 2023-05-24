@@ -27,7 +27,8 @@
                apartmentname,
                concat(d.sidoName, ' ', d.gugunName, ' ', d.dongName) as address,
                housecomment,
-               flag
+               flag,
+               h.dongCode
         FROM user_houseinfo uh
                  inner join houseinfo h
                             on uh.houseinfo_aptcode = h.aptcode
