@@ -10,6 +10,7 @@ import lombok.*;
 public class Board {
     private int announcementid;
     private String memberid;
+    private String userId;
     private String title;
     private String content;
     private int hit;

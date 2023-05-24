@@ -2,6 +2,7 @@ package com.ssafy.myhouse.mapper;
 
 import com.ssafy.myhouse.vo.LoginMemberDto;
 import com.ssafy.myhouse.vo.Member;
+import com.ssafy.myhouse.vo.ModifyMemberDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.sql.SQLException;
@@ -31,4 +32,8 @@ public interface MemberMapper {
     void deleteRefreshToken(Map<String, String> map);
 
     Member login(LoginMemberDto memberDto);
+
+    ModifyMemberDto findPassword(String userId);
+
+    int newPassword(Member member);
 }

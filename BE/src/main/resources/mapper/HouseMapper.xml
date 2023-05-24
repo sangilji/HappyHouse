@@ -10,7 +10,7 @@
                                       FROM houseinfo hi
                                                INNER JOIN dongcode dc ON hi.dongCode = dc.dongCode limit 100)
             tmp on hd.aptCode = tmp.aptCode
-        group by hd.aptCode,hd.housecomment limit 100;
+        group by hd.aptCode limit 100;
     </select>
     
     <select id="searchByDongCode" resultType="HouseDto" parameterType="string">

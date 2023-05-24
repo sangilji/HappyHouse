@@ -18,6 +18,11 @@
         from member where id = #{id};
     </select>
 
+    <select id="findPassword" parameterType="string" resultType="ModifyMemberDto">
+        select name,userId,email, password, address, number, role
+        from member where userId = #{userId};
+    </select>
+
     <select id="login" parameterType="LoginMemberDto" resultType="Member">
         select id,name, userId, email,address,role
         from member
@@ -47,6 +52,12 @@
             email = #{email},
             address = #{address},
             number = #{number}
+        where userId = #{userId};
+    </update>
+
+    <update id="newPassword" parameterType="Member">
+        update member
+        set address = #{address}
         where userId = #{userId};
     </update>
 

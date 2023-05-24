@@ -185,4 +185,19 @@ public class MemberController {
         }
         return new ResponseEntity<>(resultMap, status);
     }
+
+    @PostMapping("/findPassword")
+    public ResponseEntity<?> findPassword(@RequestBody Member member, HttpServletRequest request) {
+        String findPasswordMember = memberService.findPassword(member);
+        log.info("controller result  " + member);
+        if (findPasswordMember.equals("success")) {
+            return new ResponseEntity<>("success", HttpStatus.OK);
+        } else if (findPasswordMember.equals("notFound")) {
+            return new ResponseEntity<>("fail", HttpStatus.NOT_FOUND);
+        } else {
+
+            return new ResponseEntity<>("serverError", HttpStatus.INTERNAL_SERVER_ERROR);
+
+        }
+    }
 }
