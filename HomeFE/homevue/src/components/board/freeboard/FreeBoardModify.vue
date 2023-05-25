@@ -1,20 +1,14 @@
 <template>
   <div style="width:100%">
-    <house-header></house-header>
-    <house-banner></house-banner>
-  <board-write></board-write>
-  <house-footer></house-footer>
-
+  <free-board-write></free-board-write>
   </div>
   
 </template>
 
 <script>
 // import BoardInputItem from "@/components/board/BoardInputItem";
-import HouseHeader from '@/components/HouseHeader.vue';
-import HouseFooter from "@/components/layout/HouseFooter.vue";
-import BoardWrite from "@/components/board/BoardWrite.vue";
-import HouseBanner from '@/components/layout/HouseBanner.vue';
+
+import FreeBoardWrite from "@/components/board/freeboard/FreeBoardWrite.vue";
 
 export default {
 
@@ -24,10 +18,7 @@ export default {
   },
 
   components: {
-    HouseHeader,
-    HouseFooter,
-    BoardWrite,
-    HouseBanner
+    FreeBoardWrite,
   },
 };
 </script>

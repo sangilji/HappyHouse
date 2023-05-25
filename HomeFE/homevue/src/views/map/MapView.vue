@@ -98,13 +98,16 @@
             <div
               class="p-3 border-bottom d-flex justify-content-between align-items-center"
             >
-            <b-col style="margin: auto">
-            <b-carousel controls :interval="0">
-              <b-carousel-slide :img-src="cImgList[0].name"></b-carousel-slide>
-              <b-carousel-slide :img-src="cImgList[1].name"></b-carousel-slide>
-              
-            </b-carousel>
-          </b-col>
+              <b-col style="margin: auto">
+                <b-carousel controls :interval="0">
+                  <b-carousel-slide
+                    :img-src="cImgList[0].name"
+                  ></b-carousel-slide>
+                  <b-carousel-slide
+                    :img-src="cImgList[1].name"
+                  ></b-carousel-slide>
+                </b-carousel>
+              </b-col>
               <b-col style="margin: auto">
                 <h4
                   class="m-0"
@@ -236,8 +239,8 @@
               >
                 <b-col
                   cols="4"
-                  
-                  :style="getImg()"
+                  class="houseImg"
+                  :style="{'background-image':'url('+imgList[index%15].name+')'}"
                   @click="detailButton(index)"
                 ></b-col>
                 <b-col cols="8">
@@ -306,6 +309,7 @@ export default {
   },
   data() {
     return {
+      index: 0,
       randomProfile: {
         name: require("@/assets/house/house-img.png"),
       },
@@ -327,9 +331,8 @@ export default {
         { name: require("@/assets/house/14.png") },
         { name: require("@/assets/house/15.png") },
         { name: require("@/assets/house/16.png") },
-
       ],
-      cImgList:[],
+      cImgList: [],
       searchType: "D",
       selectSido: null,
       selectGuName: null,
@@ -417,10 +420,10 @@ export default {
       this.randomProfile = this.imgList[randomNumber];
     },
     cRandomImg() {
-      console.log('11');
-      for (var i = 0; i < 5; i++){
+      console.log("11");
+      for (var i = 0; i < 5; i++) {
         var idx = Math.floor(Math.random() * this.imgList.length);
-        this.cImgList.push( this.imgList[idx]);
+        this.cImgList.push(this.imgList[idx]);
       }
       console.log(this.cImgList);
     },
@@ -534,7 +537,6 @@ export default {
           await this.SET_CURRENT_INTEREST(this.interestList);
         }
       }
-      console.log(this.houseList.length);
       this.$swal(`${this.houseList.length}건 검색 완료`, { icon: "success" });
       if (this.houseList.length == 0) {
         this.listVisible = false;
@@ -571,20 +573,6 @@ export default {
     initSearchByDongBox() {
       this.getGugun(11);
     },
-    getImg() {
-      this.randomImage();
-      console.log(this.randomProfile);
-
-      return {
-        'background-image' :`url(${this.randomProfile.name})`,
-        'background-repeat': 'none',
-        'background-position': 'center',
-        'background-size': 'cover',
-        width: '180px',
-        height: '170px',
-        
-      };
-    }
   },
   computed: {
     ...mapState(memberStore, ["isLogin", "userInfo"]),

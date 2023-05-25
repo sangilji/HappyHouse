@@ -8,7 +8,7 @@
 	<router-link v-if="currentPath !== '/boardlist'" :to="{name:'boardlist'}">
 			<img class="button" alt="goBoard" src="@/assets/board/add-read.png"/>
 		</router-link>
-    <router-link :to="{name:'boardwrite'}" v-if="userInfo && userInfo.role=='admin'">
+    <router-link :to="{name:'boardwrite'}" v-if="userInfo && userInfo.role=='ROLE_ADMIN'">
 			<img class="button" alt="moveWrite" src="@/assets/board/write.png"/>
 		</router-link>
     </div>

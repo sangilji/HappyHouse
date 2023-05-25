@@ -8,7 +8,7 @@
       <b-col class="text-left">
         <img src="@/assets/board/boardlist.png" alt="boardlist" class="board-button" @click="moveList">
       </b-col>
-      <b-col class="text-right" v-if="userInfo.id == article.memberid">
+      <b-col class="text-right" v-if="userInfo && userInfo.id == article.memberid">
         <img src="@/assets/board/boardmodify.png" alt="boardlist" class="board-button" @click="moveModifyArticle" style="margin:0 1.5rem;">
         <img src="@/assets/board/boarddelete.png" alt="boardlist" class="board-button" @click="deleteArticle">
       </b-col>
