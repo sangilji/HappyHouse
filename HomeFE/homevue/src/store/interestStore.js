@@ -9,6 +9,9 @@ const interestStore = {
   mutations: {
     SET_INTEREST_LIST(state, interestList) {
       state.interestList = interestList;
+      if (state.interestList == null) {
+        state.interestList = [];
+      }
     },
   },
   actions: {
