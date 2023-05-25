@@ -6,7 +6,7 @@
           <b-row class="text-center align-self-center">
             <b-col>
               <img
-                src="@/assets/house/house-img.png"
+                :src="randomProfile.name"
                 alt="home"
                 class="img-box"
               />
@@ -60,12 +60,36 @@ export default {
   data() {
     return {
       isColor: false,
+      randomProfile: {
+        name: require("@/assets/house/house-img.png"),
+      },
+      imgList: [
+        { name: require("@/assets/house/house-img.png") },
+        { name: require("@/assets/house/1.png") },
+        { name: require("@/assets/house/2.png") },
+        { name: require("@/assets/house/3.png") },
+        { name: require("@/assets/house/4.png") },
+        { name: require("@/assets/house/5.png") },
+        { name: require("@/assets/house/6.png") },
+        { name: require("@/assets/house/7.png") },
+        { name: require("@/assets/house/8.png") },
+        { name: require("@/assets/house/9.png") },
+        { name: require("@/assets/house/10.png") },
+        { name: require("@/assets/house/11.png") },
+        { name: require("@/assets/house/12.png") },
+        { name: require("@/assets/house/13.png") },
+        { name: require("@/assets/house/14.png") },
+        { name: require("@/assets/house/15.png") },
+        { name: require("@/assets/house/16.png") },
+
+      ],
     };
   },
   components: {
     HeartBtn,
   },
   created() {
+    this.randomImage();
   },
   props: {
     houseList: Array,
@@ -92,6 +116,11 @@ export default {
       };
       await this.addInterest(params);
     },
+    randomImage() {
+      let randomNumber = Math.floor(Math.random() * this.imgList.length);
+      this.randomProfile = this.imgList[randomNumber];
+      console.log(this.randomProfile);
+    }
   },
   computed: {
     ...mapState(interestStore, ["interestList"]),
