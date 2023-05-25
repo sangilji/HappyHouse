@@ -7,6 +7,7 @@
           <div id='wrap'>
             <footer>
               <nav style="margin:1.0rem 1.0rem;">
+                <br>
                 <a>이용약관</a> |
                 <a>개인정보처리방침</a> |
                 <a>사이트맵</a>
@@ -21,15 +22,62 @@
           </div>
         </div>
         <div class="col text-end">
-          <i class="bi bi-facebook"></i>&nbsp;&nbsp;
-          <i class="bi bi-instagram"></i>&nbsp;&nbsp;
-          <i class="bi bi-youtube"></i>&nbsp;&nbsp;
-          <i class="bi bi-twitter"></i>
+          <i class="bi bi-facebook" @click="shareFacebook"></i>&nbsp;&nbsp;
+          <i class="bi bi-instagram" @click="shareOnInstagram"></i>
+          <img src="@/assets/kakao.png" style="width:60px; margin: 0 0 0.7rem;" class="bi" @click="sendkakao">
+          <i class="bi bi-twitter" @click="shareOnTwitter"></i>
         </div>
       </div>
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  head() {
+            return {
+                script: [
+                    {src: '//developers.kakao.com/sdk/js/kakao.min.js'},
+                ],
+            }
+        },
+  methods: {
+    shareOnInstagram() {
+      const url = "https://www.instagram.com/";
+
+      window.open(url, "_blank");
+    },
+    shareOnTwitter() {
+    const url = "https://twitter.com/intent/tweet";
+    const text = "안전하게 나의 집을 찾는 방법! HAPPY HOUSE에서 쉽고 편하게 시작하세요!"; // 공유할 텍스트
+    const sendUrl = "https://www.naver.com";
+    const hashtags = "SSAFY_9기_FINAL_PROJECT_부동산"; // 해시태그
+    const twitterUrl = `${url}?text=${encodeURIComponent(text)}&hashtags=${hashtags}&url=${sendUrl}`;
+
+    window.open(twitterUrl, "_blank");
+    },
+    shareFacebook() {
+    var sendUrl = "https://www.naver.com"; // 전달할 URL
+    window.open("http://www.facebook.com/sharer/sharer.php?u=" + sendUrl);
+    },
+    sendkakao () {
+      window.Kakao.Link.sendDefault({
+        objectType: 'text',
+        text:
+          '기본 템플릿으로 제공되는 텍스트 템플릿은 텍스트를 최대 200자까지 표시할 수 있습니다. 텍스트 템플릿은 텍스트 영역과 하나의 기본 버튼을 가집니다. 임의의 버튼을 설정할 수도 있습니다. 여러 장의 이미지, 프로필 정보 등 보다 확장된 형태의 카카오링크는 다른 템플릿을 이용해 보낼 수 있습니다.',
+        link: {
+          mobileWebUrl:
+            'https://developers.kakao.com',
+          webUrl:
+            'https://developers.kakao.com'
+        }
+      }
+      )
+    }
+  },
+  
+};
+</script>
 
 
 <style scoped>

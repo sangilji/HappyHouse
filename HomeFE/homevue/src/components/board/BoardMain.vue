@@ -95,8 +95,9 @@ methods: {
 
 <style scoped>
 	.board-box{
-		background-color: #FBFBFB;
-		text-align:center; margin: 2.0rem 5.0rem 6.5rem;
+		background-color: #f8f8f8;
+        border-color:#f8f8f8;
+		text-align:center; margin: 2.0rem 2.0rem 0;
 	}
 	h1{
 		color: #4E4E4E;

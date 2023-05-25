@@ -3,11 +3,11 @@
   <div>
     <b-card class="board-box">
       <div class="text-dark">
-        <h1>뉴스</h1>
+        <h1>뉴스</h1><br>
         <b-table striped hover :items="newsList" :fields="fields">
           <template #cell(title)="data" >
             <div class="overflow-hidden">
-            <a :href="data.item.url" >{{ data.item.title }}</a>
+            <a :href="data.item.url" >{{ data.item.title.slice(0,20) }}...</a>
           </div>
           </template>
           <template #cell(time)="data">
@@ -57,8 +57,10 @@
 
 <style scoped>
 	.board-box{
-		background-color: #FBFBFB;
-		text-align:center; margin: 2.0rem 5.0rem 6.5rem;
+		background-color: #f8f8f8;
+		text-align:center; margin: 2.0rem 0 3.5rem;
+    border-color:#f8f8f8;
+
 	}
 	h1{
 		color: #4E4E4E;
