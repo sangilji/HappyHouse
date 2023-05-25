@@ -1,6 +1,7 @@
 <template>
   <div>
     <house-header></house-header>
+    <house-banner></house-banner>
     <h1>내가 찜한 매물</h1>
     <div class="d-flex justify-content-center" style="text-align: -webkit-center;">
       <div class="row">
@@ -25,6 +26,7 @@ import { mapState,mapMutations } from "vuex";
 import HouseHeader from "@/components/HouseHeader.vue";
 import HouseFooter from "@/components/layout/HouseFooter.vue";
 import HouseListItem from "@/components/house/HouseListItem";
+import HouseBanner from "./layout/HouseBanner.vue";
 
 const memberStore = "memberStore";
 const interestStore = "interestStore";
@@ -50,8 +52,9 @@ export default {
   },
   components: {
     HouseHeader,
+    HouseBanner,
     HouseFooter,
-    HouseListItem,
+    HouseListItem
   },
   methods:{
     ...mapMutations("dealInfoStore", ["SET_HOUSE"]),
