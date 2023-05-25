@@ -100,8 +100,9 @@
             >
             <b-col style="margin: auto">
             <b-carousel controls :interval="0">
-              <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=52"></b-carousel-slide>
-              <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=54"></b-carousel-slide>
+              <b-carousel-slide :img-src="cImgList[0].name"></b-carousel-slide>
+              <b-carousel-slide :img-src="cImgList[1].name"></b-carousel-slide>
+              
             </b-carousel>
           </b-col>
               <b-col style="margin: auto">
@@ -235,7 +236,8 @@
               >
                 <b-col
                   cols="4"
-                  class="houseImg"
+                  
+                  :style="getImg()"
                   @click="detailButton(index)"
                 ></b-col>
                 <b-col cols="8">
@@ -304,6 +306,30 @@ export default {
   },
   data() {
     return {
+      randomProfile: {
+        name: require("@/assets/house/house-img.png"),
+      },
+      imgList: [
+        { name: require("@/assets/house/house-img.png") },
+        { name: require("@/assets/house/1.png") },
+        { name: require("@/assets/house/2.png") },
+        { name: require("@/assets/house/3.png") },
+        { name: require("@/assets/house/4.png") },
+        { name: require("@/assets/house/5.png") },
+        { name: require("@/assets/house/6.png") },
+        { name: require("@/assets/house/7.png") },
+        { name: require("@/assets/house/8.png") },
+        { name: require("@/assets/house/9.png") },
+        { name: require("@/assets/house/10.png") },
+        { name: require("@/assets/house/11.png") },
+        { name: require("@/assets/house/12.png") },
+        { name: require("@/assets/house/13.png") },
+        { name: require("@/assets/house/14.png") },
+        { name: require("@/assets/house/15.png") },
+        { name: require("@/assets/house/16.png") },
+
+      ],
+      cImgList:[],
       searchType: "D",
       selectSido: null,
       selectGuName: null,
@@ -319,6 +345,8 @@ export default {
     };
   },
   async created() {
+    this.cRandomImg();
+    this.randomImage();
     if (this.fromMainHouse) {
       console.log(this.fromMainHouse.dongCode);
       this.selectSido = this.fromMainHouse.dongCode.substring(0, 2);
@@ -384,6 +412,18 @@ export default {
   },
 
   methods: {
+    randomImage() {
+      let randomNumber = Math.floor(Math.random() * this.imgList.length);
+      this.randomProfile = this.imgList[randomNumber];
+    },
+    cRandomImg() {
+      console.log('11');
+      for (var i = 0; i < 5; i++){
+        var idx = Math.floor(Math.random() * this.imgList.length);
+        this.cImgList.push( this.imgList[idx]);
+      }
+      console.log(this.cImgList);
+    },
     toNumber(stars) {
       return Number(stars);
     },
@@ -531,6 +571,20 @@ export default {
     initSearchByDongBox() {
       this.getGugun(11);
     },
+    getImg() {
+      this.randomImage();
+      console.log(this.randomProfile);
+
+      return {
+        'background-image' :`url(${this.randomProfile.name})`,
+        'background-repeat': 'none',
+        'background-position': 'center',
+        'background-size': 'cover',
+        width: '180px',
+        height: '170px',
+        
+      };
+    }
   },
   computed: {
     ...mapState(memberStore, ["isLogin", "userInfo"]),
@@ -563,7 +617,7 @@ export default {
   height: 1px;
 }
 .houseImg {
-  background-image: url("@/assets/house/house-img.png");
+  /* background-image: url("@/assets/house/house-img.png"); */
   background-repeat: none;
   background-position: center;
   background-size: cover;
