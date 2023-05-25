@@ -5,6 +5,7 @@ import com.ssafy.myhouse.service.boardservice.FreeBoardService;
 import com.ssafy.myhouse.vo.Board;
 import com.ssafy.myhouse.vo.BoardParameterDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Description;
@@ -16,6 +17,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
+@Slf4j
 public class FreeBoardController {
     private static final String SUCCESS = "success";
     private static final String FAIL = "fail";
@@ -33,6 +35,7 @@ public class FreeBoardController {
     @Description("게시글 READ")
     @GetMapping("freeboardlist")
     public ResponseEntity<List<Board>> listArticle(BoardParameterDto boardParameterDto) throws Exception {
+        log.info("{}",freeboardService.listArticle(boardParameterDto));
         return new ResponseEntity<List<Board>>(freeboardService.listArticle(boardParameterDto), HttpStatus.OK);
     }
 

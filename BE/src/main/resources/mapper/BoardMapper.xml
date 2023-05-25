@@ -72,12 +72,13 @@
     </insert>
 
     <select id="freeListArticle" parameterType="map" resultType="Board">
-        select boardid, member_id memberid, title, content, hit,
+        select boardid, userId,f.member_id memberid, title, content, hit,
         case when date_format(regtime, '%Y%m%d') = date_format(now(), '%Y%m%d')
         then date_format(regtime, '%H:%i:%s')
         else date_format(regtime, '%y.%m.%d')
         end regtime
-        from freeboard
+        from freeboard f inner join member m
+        on f.member_id = m.id
         <if test="word != null and word != ''">
             <if test="key == 'title'">
                 where title like concat('%', #{word}, '%')
@@ -104,8 +105,9 @@
     </select>
 
     <select id="freeGetArticle" parameterType="int" resultType="Board">
-        select boardid, member_id memberid, title, content, hit, regtime
-        from freeboard
+        select boardid, userId, member_id memberid, title, content, hit, regtime
+        from freeboard f inner join member m
+        on f.member_id = m.id
         where boardid = #{boardid}
     </select>
 
