@@ -56,9 +56,11 @@ export default {
     };
   },
   created() {
+    
     const tmp = [];
     getHouseList(
       ({ data }) => {
+        
         for (let i = 0; i <= 5; i++) {
           let randomIdx = Math.floor(Math.random() * data.length);
           tmp.push(data[randomIdx]);
@@ -71,6 +73,7 @@ export default {
             }
           });
         });
+        
         this.houseList = tmp;
       },
       (error) => {
