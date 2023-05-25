@@ -2,8 +2,8 @@
   <div>
     <div class="col-6">
       <div class="text-center align-self-center">
-        <div class="house-box" @click="goHouse">
-          <b-row class="text-center align-self-center">
+        <div class="house-box">
+          <b-row class="text-center align-self-center" @click="goHouse">
             <b-col>
               <img
                 :src="randomProfile.name"
@@ -33,7 +33,7 @@
               </div>
             </b-col>
           </b-row>
-          <b-row
+          <b-row @click="goHouse"
             sm="5"
             md="5"
             lg="5"
