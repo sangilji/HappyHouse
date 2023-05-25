@@ -98,9 +98,12 @@
             <div
               class="p-3 border-bottom d-flex justify-content-between align-items-center"
             >
-              <b-col style="margin: auto">
-                <div class="houseImg" style="width: auto; height: 120px"></div>
-              </b-col>
+            <b-col style="margin: auto">
+            <b-carousel controls :interval="0">
+              <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=52"></b-carousel-slide>
+              <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=54"></b-carousel-slide>
+            </b-carousel>
+          </b-col>
               <b-col style="margin: auto">
                 <h4
                   class="m-0"
@@ -336,10 +339,10 @@ export default {
       this.CLEAR_SIDO_LIST();
       this.CLEAR_GUGUN_LIST();
       this.CLEAR_DONG_LIST();
-      this.selectSido= null,
-      this.selectGuName= null,
-      this.selectDongName= null,
-      this.getSido();
+      (this.selectSido = null),
+        (this.selectGuName = null),
+        (this.selectDongName = null),
+        this.getSido();
       return;
     }
     this.CLEAR_SIDO_LIST();

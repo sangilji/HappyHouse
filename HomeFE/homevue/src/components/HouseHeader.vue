@@ -1,55 +1,70 @@
 <template>
   <div>
     <div>
-      <b-navbar toggleable="lg" type="white">
+      <b-navbar toggleable="lg" type="light">
+        <b-navbar-brand style="margin: 0rem 3rem 0rem; font-weight: bolder">
         <router-link :to="{ name: 'home' }">
-          <b-navbar-brand style="margin: 0rem 3rem 0rem; font-weight: bolder">
             <img src="@/assets/header/logo.png" style="width: 150px" />
-          </b-navbar-brand>
-        </router-link>
+          </router-link>
+        </b-navbar-brand>
+        
+        <b-navbar-toggle target="nav-collapse" ></b-navbar-toggle>
+
         <b-collapse id="nav-collapse" is-nav>
-          <b-navbar-nav class="collapse navbar-collapse justify-content-end">
+          <b-navbar-nav class="ml-auto">
             <b-nav-item>
               <router-link :to="{ name: 'map' }">
-                <h2 class="heart-box">지도</h2>
+                <h3 class="heart-box">지도</h3>
               </router-link>
             </b-nav-item>
+            </b-navbar-nav>
+            <b-navbar-nav class="justify-content-end">
             <b-nav-item v-if="userInfo">
               <router-link :to="{ name: 'interests', params: { id: userInfo.id } }">
-                <h2 class="heart-box" id="heart">찜</h2>
+                <h3 class="heart-box" id="heart">찜</h3>
               </router-link>
             </b-nav-item>
             <b-nav-item v-else>
               <router-link :to="{ name: 'interests', params: { id: null } }">
-                <h2 class="heart-box" id="heart">찜</h2>
+                <h3 class="heart-box" id="heart">찜</h3>
               </router-link>
             </b-nav-item>
+          </b-navbar-nav>
+            <b-navbar-nav class="justify-content-end">
             <b-nav-item>
               <router-link :to="{ name: 'boardlist' }">
-                <h2 class="board-box" id="board">공지사항</h2>
+                <h3 class="board-box" id="board">공지사항</h3>
               </router-link>
             </b-nav-item>
+          </b-navbar-nav>
+            <b-navbar-nav class="justify-content-end">
             <b-nav-item>
               <router-link :to="{ name: 'freeboardlist' }">
-                <h2 class="mypage-box" id="freeboardlist">자유게시판</h2>
+                <h3 class="mypage-box" id="freeboardlist">자유게시판</h3>
               </router-link>
             </b-nav-item>
+          </b-navbar-nav>
+            <b-navbar-nav class="justify-content-end">
             <b-nav-item>
               <router-link :to="{ name: 'mypage' }">
-                <h2 class="mypage-box" id="mypage">마이페이지</h2>
+                <h3 class="mypage-box" id="mypage">마이페이지</h3>
               </router-link>
             </b-nav-item>
+          </b-navbar-nav>
+            <b-navbar-nav class="justify-content-end">
             <b-nav-item v-if="userInfo && userInfo.role == 'ROLE_LANLORD'">
               <router-link :to="{ name: 'createHouse' }">
-                <h2 class="mypage-box" id="createHouse">매물 등록</h2>
+                <h3 class="mypage-box" id="createHouse">매물 등록</h3>
               </router-link>
             </b-nav-item>
-
+          </b-navbar-nav>
+            <b-navbar-nav class="justify-content-end">
             <!-- after login -->
             <div class="d-flex justify-content-center" v-if="userInfo">
               <b-nav-item>
-                <h2 style="margin:2.9rem 0 0">{{ userInfo.name }} 님</h2>
+                <h3 style="margin:2.9rem 0 0">{{ userInfo.name }} 님</h3>
               </b-nav-item>
+              
               <b-nav-item @click="onClickLogout">
                 <img class="logout" alt="logout" src="../assets/logout.png" />
               </b-nav-item>
@@ -134,7 +149,7 @@ h1 {
   font-weight: 900;
   margin: 2.5rem 0 1.5rem;
 }
-h2 {
+h3 {
   color: #231656;
   font-weight: 900;
   margin: 2.5rem 0 1.5rem;
