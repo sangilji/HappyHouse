@@ -2,7 +2,7 @@
   <div>
     <house-header></house-header>
     <h1>내가 찜한 매물</h1>
-    <div class="d-flex justify-content-center">
+    <div class="d-flex justify-content-center" style="text-align: -webkit-center;">
       <div class="row">
         <house-list-item
           v-for="(interest, index) in interestList"
