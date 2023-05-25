@@ -7,10 +7,10 @@
           <b-form-input
             id="memberid"
             :disabled="true"
-            v-model="userInfo.id"
+            
             required
-            :placeholder="userInfo.id.toString()"
-            :value="userInfo.id"></b-form-input>
+            :placeholder="userInfo.userId"
+            :value="userInfo.userId"></b-form-input>
         </b-form-group>
 
         <b-form-group id="subject-group" label="제목" label-for="subject" description="제목을 입력하세요.">

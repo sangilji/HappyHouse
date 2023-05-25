@@ -5,7 +5,7 @@
     <b-th class="text-left">
       <router-link :to="{ name: 'boardview', params: { announcementid: announcementid } }">{{ title }}</router-link>
     </b-th>
-    <b-td>{{ memberid }}</b-td>
+    <b-td>{{ userId }}</b-td>
     <!-- <b-td>{{ regtime | dateFormat }}</b-td> -->
   </b-tr>
 </template>
@@ -22,6 +22,7 @@ export default {
     title: String,
     hit: Number,
     regtime: String,
+    userId:String,
   },
   filters: {
     dateFormat(regtime) {
